@@ -1,0 +1,106 @@
+.logo {
+    position: relative;
+    height: 6.3rem;
+    padding: .5rem .6rem;
+    fill: url(#Gradient1);
+    background-color: var(--color-grey-dark-1);
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    z-index: 10;
+    transform: translateY(0);
+    transition: transform .3s ease-in-out;
+}
+
+.stop1 {
+    stop-color: var(--color-pink);
+}
+
+.stop2 {
+    stop-color: var(--color-orange);
+}
+
+.stop3 {
+    stop-color: var(--color-yellow);
+}
+
+.logo.open {
+
+    transform: translateY(10rem) scale(1.3);
+}
+
+.burger {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
+    transition: all ease-in-out .3s;
+    background-color: transparent;
+    border: none;
+    z-index: 2;
+}
+
+.burger span {
+    position: absolute;
+    width: 100%;
+    height: .4rem;
+    left: 0;
+    transform: rotate(0deg);
+    opacity: 1;
+    transition: all ease-in-out .3s;
+    border-radius: .4rem;
+}
+
+.burger span:nth-child(1) {
+    top: 0;
+    background-color: var(--color-pink);
+}
+
+.burger span:nth-child(2),
+.burger span:nth-child(3){
+    top: 1.1rem;
+    background-color: var(--color-orange);
+}
+
+.burger span:nth-child(4) {
+    top: 2.2rem;
+    background-color: var(--color-yellow);
+}
+
+.burger.open span:nth-child(1){
+    top: 1.1rem;
+    width: 0%;
+    left: 50%;
+}
+
+.burger.open span:nth-child(2){
+    transform: rotate(45deg);
+}
+.burger.open span:nth-child(3){
+    transform: rotate(-45deg);
+}
+.burger.open span:nth-child(4){
+    top: 1.1rem;
+    width: 0%;
+    left: 50%;
+}
+
+.menu_background {
+    position: absolute;
+    height: 100dvh;
+    width: 100dvw;
+    transform: translateY(-100%);
+    transition: transform ease-in .3s;
+    background-color: var(--color-grey-dark-1);
+}
+
+.menu_background.open {
+    transform: translateY(0);
+}
+
+@media (min-width:768px) {
+    .burger {
+        display: none;
+    }
+}

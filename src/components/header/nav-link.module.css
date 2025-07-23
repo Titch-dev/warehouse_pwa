@@ -1,0 +1,36 @@
+.nav_item {
+    position: relative;
+    font-size: 2.5rem;
+    color: var(--color-grey-light-3);
+    text-decoration: none;
+}
+
+.nav_item.active {
+    color: var(--color-orange);
+}
+
+@media (min-width:768px) {
+    .nav_item {
+        font-size: 2rem;
+    }
+
+    .nav_item.active {
+        color: currentColor;
+    }
+
+    .nav_item::before{
+        position: absolute;
+        bottom: -.5rem;
+        width: 100%;
+        height: 0.2rem;
+        transform: scaleX(0);
+        transition: transform ease-in-out .2s;
+        background-color: currentColor;
+        content: '';
+    }
+
+    .nav_item:hover::before,
+    .nav_item.active::before {
+        transform: scaleX(1);
+    }
+}

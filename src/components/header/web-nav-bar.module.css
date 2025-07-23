@@ -1,0 +1,96 @@
+/* Mobile */
+.wrapper{
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 4.5rem;
+    background-color: var(--color-grey-dark-1);
+}
+
+.container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    /* background-color: aqua; */
+}
+
+.mobile_nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.tablet_nav {
+    display: none;
+}
+
+.logo {
+    display: none;
+}
+
+/* Tablet */
+@media (min-width:768px) {
+
+    .logo {
+        position: relative;
+        display: block;
+        height: 8.5rem;
+        padding: 1rem 1rem .7rem;
+        margin-left: 1rem;
+        fill: url(#Gradient);
+        background-color: var(--color-grey-dark-1);
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+
+    .stop1 {
+        stop-color: var(--color-pink);
+    }
+
+    .stop2 {
+        stop-color: var(--color-orange);
+    }
+
+    .stop3 {
+        stop-color: var(--color-yellow);
+    }
+
+    .wrapper {
+        height: 6rem;
+    }
+
+    .container{
+        justify-content: left;
+        width: 100%;
+    }
+
+    .mobile_nav {
+        display: none;
+    }
+
+    .tablet_nav {
+        display: flex;
+        width: 100%;
+        align-items: center;
+    }
+
+}
+
+/* Laptop */
+@media (min-width:1024px){
+
+    .wrapper{
+        height: 7rem;
+    }
+
+    .container{
+        max-width: var(--laptop);
+    }
+
+    .logo {
+        height: 9.5rem;
+    }
+}

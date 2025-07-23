@@ -1,0 +1,70 @@
+:root {
+  /* Color swatch */
+  --color-grey-light-1: #faf9f9;
+  --color-grey-light-2: #f4f2f2;
+  --color-grey-light-3: #f0eeee;
+  --color-grey-light-4: #ccc;
+
+  --color-grey-dark-1: #242424;
+  --color-grey-dark-2: #333;
+  --color-grey-dark-3: #777;
+  --color-grey-dark-4: #999;
+
+  --color-blue: #6172C5;
+  --color-pink: #ED2EA5;
+  --color-orange: #FA8057;
+  --color-yellow: #FAD009;
+
+  /* Breakpoints (min-width) */
+  --tablet: 768px;   /* Tablets */
+  --laptop: 1024px;  /* Laptops */
+
+  /* Box shadow */
+  --shadow-dark: 10px 10px 25px black;
+  --shadow-light: 0px 0px 20px white;
+
+
+  --color-grad-right: linear-gradient(
+        to right,
+        var(--color-pink),
+        var(--color-orange),
+        var(--color-yellow)
+    );
+
+  --color-grad-bottom: linear-gradient(
+      to bottom,
+      var(--color-pink),
+      var(--color-orange),
+      var(--color-yellow)
+    );
+  
+  --color-grad-top: linear-gradient(
+      to top,
+      var(--color-pink),
+      var(--color-orange),
+      var(--color-yellow)
+  );
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1rem = 10px */
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  font-family: Helvetica, sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.7;
+  background-color: var(--color-grey-dark-3);
+  color: var(--color-grey-light-3);
+}
