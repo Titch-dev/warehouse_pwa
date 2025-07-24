@@ -20,7 +20,7 @@
     display: none;
 }
 
-@media (min-width: 1024px){
+@media (min-width: 768px){
     .mobile {
         display: none;
     }
@@ -29,4 +29,11 @@
         display: block;
     }
 
+    /* if border not to appear  */
+    .desktop.mobile_only {
+        display: none;
+    }
+
 }
+
+

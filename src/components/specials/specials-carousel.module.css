@@ -1,0 +1,89 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3rem;
+}
+
+.title {
+    font-size: 3.4rem;
+    color: var(--color-grey-light-3);
+    margin: 3rem 0 1rem 0;
+}
+
+.embla {
+    display: flex;
+    position: relative;
+    max-width: 100vw;
+    max-height: 40rem;
+}
+
+.embla__viewport{
+    overflow: hidden;
+    height: fit-content;
+}
+
+.embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    display: none;
+}
+
+.embla__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+
+}
+
+.embla__dot {
+    position: relative;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-grey-light-3);
+    cursor: pointer;
+}
+
+.embla__dot_selected{
+    border-radius: 50%;
+    background: var(--color-grad-bottom);
+}
+
+@media (min-width:768px) {
+
+    .title{
+        font-size: 4rem;
+    }
+
+    .embla {
+        max-width: 50rem;
+    }
+
+    .btn {
+        display: block;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .embla {
+        max-width: 50rem;
+    }
+
+    
+}

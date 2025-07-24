@@ -28,6 +28,15 @@
 /* Tablet */
 @media (min-width:768px) {
 
+    .wrapper {
+        height: 6rem;
+    }
+
+    .container{
+        justify-content: left;
+        width: 100%;
+    }
+
     .logo {
         position: relative;
         display: block;
@@ -50,15 +59,6 @@
 
     .stop3 {
         stop-color: var(--color-yellow);
-    }
-
-    .wrapper {
-        height: 6rem;
-    }
-
-    .container{
-        justify-content: left;
-        width: 100%;
     }
 
     .tablet_nav {

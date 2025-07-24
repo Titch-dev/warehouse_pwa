@@ -1,0 +1,21 @@
+/* mobile layout */
+.main {
+    padding-top: 4.5rem;
+    max-width: 100%;
+    background-color: var(--color-grey-dark-2);
+    overflow-x: hidden;
+}
+
+/* tablet layout */
+@media (min-width: 768px){
+    .main {
+        padding-top: 6rem;
+    }
+}
+@media (min-width: 1024px){
+    .main {
+        padding-top: 7rem;
+    }
+}
+
+/* dektop layout */

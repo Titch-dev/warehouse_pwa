@@ -7,6 +7,7 @@ import { spartanFont } from "@/lib/fonts";
 import { colors } from "@/lib/colors";
 
 import "./globals.css";
+import styles from './layout.module.css';
 
 export const metadata = {
   title: "Westville Warehouse",
@@ -55,7 +56,9 @@ export default function RootLayout({ children }) {
       </head>
           <body className={spartanFont.className}>
             <WebNavBar/>
-            {children}
+            <main className={styles.main}>
+              {children}
+            </main>
             <WebFooter/>
           </body>
     </html>

@@ -1,4 +1,273 @@
-.test {
-    height: 100dvh;
-    background-color: aqua;
+/* ///// Hero section ////// */
+
+.section_hero {
+    display: flex;
+    justify-content: center;
+}
+
+.hero_image {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),
+                url('/assets/home/hero_mobile.png');
+    width: 95%;
+    height: 70dvh;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: sepia(.3);
+}
+
+.hero_logo {
+    height: 12rem;
+    fill: var(--color-grey-light-3);
+}
+
+/* ///// About ///// */
+
+.about {
+    display: flex;
+    padding-bottom: 3rem;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    background-color: var(--color-grey-dark-2);
+}
+
+.about_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content_background {
+    display: none;
+
+}
+
+.about_text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-grey-light-3);
+    padding: 4rem 0;
+}
+
+.about_title {
+    position: relative;
+    display: inline-block;
+    font-size: 4rem;
+    color: var(--color-grey-light-3);
+    margin-bottom: 3rem;
+}
+
+.about_title::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0.3rem;
+    background-image: var(--color-grad-right);
+}
+
+.about_text p {
+    position: relative;
+    font-size: 2rem;
+    text-align: left;
+    padding: 1rem 2.5rem;
+}
+
+.vid_container {
+    position: relative;
+    overflow: hidden;
+    height: 55rem;
+    width: fit-content;
+    border: 2rem solid;
+    border-image-slice: 1;
+    border-image-source: var(--color-grad-top);
+}
+
+.vid_container video{
+    height: 55.5rem;
+}
+
+/* ////// Event ////// */
+.event {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 4rem 0;
+    background-image: var(--color-grad-bottom);
+}
+
+.event_title {
+    font-size: 4rem;
+    color: var(--color-grey-light-3);
+    margin-bottom: 3rem;
+}
+
+.event_wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.event_link {
+    margin-top: 3rem;
+    font-size: 2.5rem;
+    font-weight: 900;
+    padding: 0 1.5rem;
+    text-decoration: none;
+    color: var(--color-grey-dark-1);
+    cursor: pointer;
+}
+
+/* ///// Specials ////// */
+
+.specials {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    background: var(--mono-grad-bottom);
+    padding: 4rem 2rem;
+}
+
+.specials_title {
+    position: relative;
+    font-size: 4rem;
+    color: var(--color-grey-light-3);
+}
+
+.specials_title::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0.3rem;
+    background-image: var(--color-grad-right);
+}
+
+
+/* Tablet */
+@media (min-width: 768px) {
+
+    /* ///// Hero section ////// */
+    .hero_image {
+        background-image: linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),
+                        url('/assets/home/hero_desktop.png');
+        height: 50dvh;
+    }
+
+    .hero_logo {
+        height: 20rem;
+    }
+
+    /* ///// About ///// */
+    .about {
+        padding: 5rem 0;
+    }
+
+    .about_content {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .content_background {
+        position: absolute;
+        display: block;
+        width: 130rem;
+        transform: scale(-1, 1);
+        fill: var(--color-grey-dark-1);
+    }
+
+    .about_text {
+        max-width: 50%;
+        order: 1;
+    }
+
+    /* ///// Event ///// */
+    .event {
+        padding: 6rem 0 6rem;
+    }
+
+    .event_link {
+        margin-top: 6rem;
+        font-size: 3rem;
+    }
+
+    /* ///// Specials ////// */
+    .specials {
+        padding: 7rem 0;
+    }
+
+    .specials_title{
+        font-size: 5rem;
+    }
+
+}
+
+/* Laptop */
+@media (min-width: 1024px) {
+
+    /* ///// Hero section ////// */
+    .hero_image {
+        height: 85dvh;
+    }
+
+    /* ///// About ///// */
+    .content_background {
+        width: 115rem;
+    }
+
+    .about_text {
+        max-width: 55rem;
+        margin-left: 5rem;
+    }
+
+    .about_title {
+        font-size: 5rem;
+    }
+
+    /* ///// Event ///// */
+    .event {
+        padding: 8rem 0 8rem;
+    }
+
+    .event_title {
+        font-size: 5rem;
+    }
+
+    .event_link {
+        font-size: 3.5rem;
+    }
+
+    .event_link:hover {
+        color: var(--color-grey-light-3);
+    }
+
+    /* ///// Specials ////// */
+    .specials {
+        padding: 7rem 0;
+    }
+
+    .specials_title{
+        font-size: 5rem;
+    }
+
+    .specials_container{
+        display: flex;
+        gap: 3rem;
+    }
+
 }

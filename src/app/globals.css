@@ -24,6 +24,13 @@
   --shadow-light: 0px 0px 20px white;
 
 
+  /* Gradients */
+  --mono-grad-bottom: linear-gradient(
+      180deg, 
+      var(--color-grey-dark-1) 0%,
+      var(--color-grey-dark-2) 100%);
+
+
   --color-grad-right: linear-gradient(
         to right,
         var(--color-pink),
