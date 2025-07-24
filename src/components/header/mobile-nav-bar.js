@@ -1,14 +1,16 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 import NavMenu from './nav-menu';
 
-import Logo from '@/components/assets/logo/WWLogoSVG';
-import styles from './burger-toggle.module.css';
+import Logo from '@/components/assets/logo/logo-svg';
+import styles from './mobile-nav-bar.module.css';
 import Link from 'next/link';
 
-export default function BurgerToggle() {
+export default function MobileNavBar() {
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const [open, setOpen] = useState(false);
   const [showNavMenu, setShowNavMenu] = useState(false);
   
@@ -32,6 +34,9 @@ export default function BurgerToggle() {
     }
   }, [open]);
 
+  
+  if (!isMobile) return null;
+  
   return (
     <>
       <Link href='/' onClick={closeMenu}>

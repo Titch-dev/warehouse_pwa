@@ -1,5 +1,5 @@
 import * as React from "react"
-const WWLogoSVG = ({ className, children }) => (
+const LogoSVG = ({ className, children }) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 2283 1024"
@@ -12,4 +12,4 @@ const WWLogoSVG = ({ className, children }) => (
     <path d="M1340.675 41.437v15.269h926.766v901.168h-928.862v15.269h944.131V41.437zM0 42.485v931.856h942.035v-15.269H15.419V57.904h928.712V42.485z" />
   </svg>
 )
-export default WWLogoSVG
+export default LogoSVG

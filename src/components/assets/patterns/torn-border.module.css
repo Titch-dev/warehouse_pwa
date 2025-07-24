@@ -1,0 +1,32 @@
+.border {
+    position: absolute;
+    width: 100%;
+}
+
+.top {
+    bottom: 99%;
+}
+
+.bottom {
+    top: 99%;
+    transform: rotate(180deg);
+}
+
+.mobile {
+    display: block;
+}
+
+.desktop {
+    display: none;
+}
+
+@media (min-width: 1024px){
+    .mobile {
+        display: none;
+    }
+
+    .desktop{
+        display: block;
+    }
+
+}

@@ -1,10 +1,10 @@
 import Link from "next/link";
 import NavMenu from "./nav-menu";
-import BurgerToggle from "./burger-toggle";
+import MobileNavBar from "./mobile-nav-bar";
 
 import styles from "./web-nav-bar.module.css";
 
-import Logo from '@/components/assets/logo/WWLogoSVG';
+import Logo from '@/components/assets/logo/logo-svg';
 
 export default function WebNavbar() {
 
@@ -24,9 +24,7 @@ export default function WebNavbar() {
                     <div className={styles.tablet_nav}>
                         <NavMenu />
                     </div>
-                    <div className={styles.mobile_nav}>
-                        <BurgerToggle/>
-                    </div>
+                    <MobileNavBar/>
                 </div>
             </header>
         </>

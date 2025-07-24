@@ -7,17 +7,11 @@
     width: 100%;
     height: 4.5rem;
     background-color: var(--color-grey-dark-1);
+    z-index: 10;
 }
 
 .container{
     position: relative;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    /* background-color: aqua; */
-}
-
-.mobile_nav {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -65,10 +59,6 @@
     .container{
         justify-content: left;
         width: 100%;
-    }
-
-    .mobile_nav {
-        display: none;
     }
 
     .tablet_nav {
