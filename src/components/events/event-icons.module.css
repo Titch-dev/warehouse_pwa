@@ -16,17 +16,17 @@
     width: 2.5rem;
     height: 2.5rem;
     margin-bottom: 1rem;
-    fill: currentColor;
+    fill: var(--color-grey-dark-4);
 }
 
-@media (min-width:1024px){
+.icon_container p {
+    color: var(--color-grey-dark-4);
+}
+
+@media (min-width:768px){
     
     .icon_container p {
         font-size: 1.6rem;
     }
     
-    .icon {
-        width: 3rem;
-        height: 3rem;
-    }
 }
