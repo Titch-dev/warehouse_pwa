@@ -56,6 +56,32 @@
     grid-row: 4;
     padding-bottom: 1rem;
     width: 80%;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    overflow: hidden;
+    max-height: 1000px; /* enough to show all text */
+    opacity: 1;
+}
+
+.description.hidden {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.toggle_button {
+    background-color: transparent;
+    border: none;
+}
+
+.toggle_button svg {
+    width: 4rem;
+    height: 4rem;
+    fill: var(--color-grey-light-3);
+    transition: transform .3s ease-in-out;
+}
+
+.toggle_button.show svg{
+    transform: rotate(180deg);
 }
 
 @media (min-width: 768px){
@@ -127,7 +153,7 @@
     .container{
         align-items: center;
         justify-content: center;
-        width: 100dvw;
+        width: fit-content;
         background-color: transparent;
     }
 
