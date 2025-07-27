@@ -30,7 +30,7 @@ export default function EventsPage() {
       <section className={styles.event_wrapper}>
           {events.map((event, index) => (
               <div key={event.id} className={styles.event_item_wrapper}>
-                <h2 className={styles.event_date}>{eventDateParser(event.start)}:</h2>
+                <h2 className={`${rubikFont.className} ${styles.event_date}`}>{eventDateParser(event.start)}:</h2>
                 <EventItem key={event.id} props={event} isReversed={index % 2 === 1}/>
               </div>
           ))}
