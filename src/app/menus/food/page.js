@@ -1,7 +1,7 @@
-import React from 'react'
+import MenuDisplay from '@/components/menus/menu-display';
 
-export default function page() {
-  return (
-    <div>page</div>
-  )
+export default function FoodMenuPage() {
+
+  return <MenuDisplay imageSrc='/assets/menus/food-menu.png' alt='food menu'/>
+
 }
