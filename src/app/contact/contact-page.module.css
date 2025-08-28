@@ -1,0 +1,120 @@
+.wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-grey-dark-4);
+    background-image: url('/assets/contact/tiles_dark.png');
+    padding: 8rem 0;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    gap: 4rem;
+    background-color: var(--color-grey-dark-1);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 3rem;
+}
+
+.title {
+    position: relative;  
+    font-size: 4rem;
+    margin-top: 2rem;
+}
+
+.title::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.3rem;
+    bottom: 0;
+    background: var(--color-grad-right);
+}
+
+.content p {
+    padding: 0 3rem;
+}
+
+.open_times {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.open_times p {
+    color: var(--color-grey-dark-4);
+    padding: 0;
+}
+
+.open_times p:first-child {
+    text-align: center;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+.open_times span {
+    float: right;
+}
+
+@media (min-width:768px) {
+
+    .container {
+        max-width: 90%;
+        width: fit-content;
+        flex-direction: row;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+
+    .form_container {
+        width: 50%;
+    }
+    
+    .content {
+        max-width: 50%;
+    }
+    
+    .title {
+        margin-top: 0;
+    }
+    
+    .content p {
+        font-size: 2rem;
+    }
+    
+    .open_times {
+        padding-bottom: 2rem;
+    }
+
+}
+
+@media (min-width:1024px) {
+    
+
+    .form_container {
+        width: 45rem;
+    }
+    
+    .content {
+        width: 45rem;
+        gap: 0;
+    }
+    
+    .title {
+        margin-top: 0;
+    }
+    
+    .content p {
+        font-size: 2rem;
+    }
+
+}

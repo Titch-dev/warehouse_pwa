@@ -1,0 +1,91 @@
+.menu_container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    box-shadow: -8px 0px 30px 0px black;
+    background-color: var(--color-grey-dark-2);
+    color: var(--color-grey-light-3);
+    padding: 5rem 0;
+}
+
+.food {
+    background-image: url('/assets/menus/lonestar-dark.png');
+}
+
+.cocktails {
+    background-image: url('/assets/menus/otd-dark.png');
+}
+
+.beer {
+    background-image: url('/assets/menus/craft-dark.png');
+}
+
+.menu_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    border-radius: 2rem;
+    box-shadow: 0px 0px 30px 0px black;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    background-color: var(--color-grey-dark-1);
+}
+
+
+.menu_title {
+    position: relative;
+    display: inline-block;
+    font-size: 4rem;
+}
+
+.menu_title::before{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0.3rem;
+    background: var(--color-grad-right);
+    content: '';
+}
+
+.menu_description {
+    padding: 0 2.5rem;
+}
+
+
+.icon_container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.icon_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+
+}
+
+.icon_content:hover{
+    color: var(--color-grey-light-3);
+    fill: var(--color-grey-light-3);
+}
+
+.view_icon {
+    width: 4rem;
+    fill: var(--color-grey-light-3);
+}
+
+@media (min-width: 1024px){
+    .menu_content {
+        width: 70%;
+    }
+
+    .food {
+        padding-top: 5rem;
+    }
+}

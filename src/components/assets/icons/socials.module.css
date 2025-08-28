@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    gap: 4rem;
+}
+
+.icon {
+    fill: var(--color-grey-light-3);
+}
+
+.icon:hover {
+    fill: url(#Gradient1);
+}
+
+.stop1 {
+    stop-color: var(--color-pink);
+}
+
+.stop2 {
+    stop-color: var(--color-orange);
+}
+
+.stop3 {
+    stop-color: var(--color-yellow);
+}
