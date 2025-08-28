@@ -29,6 +29,7 @@ export default function WebFooter() {
               <Link href='/menus'>Menus</Link>
               <Link href='/gallery'>Gallery</Link>
               <Link href='/contact'>Contact</Link>
+              <Link href='/privacy'>Privacy</Link>
             </div>
           </div>
           <Link className={styles.address_container} href={mapUrl} target='_blank'>
