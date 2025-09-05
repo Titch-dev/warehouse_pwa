@@ -1,4 +1,4 @@
-import MenuDisplay from '@/components/menus/menu-display';
+import MenuDisplay from '@/components/menus/to-delete/menu-display';
 
 export default function BeerMenuPage() {
 

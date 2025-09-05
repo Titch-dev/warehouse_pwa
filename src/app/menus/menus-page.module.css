@@ -19,7 +19,6 @@
     }
     
     .container {
-        flex-direction: row;
         max-width: 128rem;
     }
 }

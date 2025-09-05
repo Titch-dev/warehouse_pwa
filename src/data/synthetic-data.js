@@ -215,3 +215,181 @@ const event_firestore = {
     createdAt: 'firebase.firestore.FieldValue.serverTimestamp()',
     updatedAt: 'firebase.firestore.FieldValue.serverTimestamp()'
 }
+
+
+
+export const food = [
+    {
+        id: 1,
+        category: "Burgers",
+        items: [
+            {
+                id: 11,
+                itemName: "Lonestar Stack",
+                itemDesc: "Our beef patty comes with lettuce, pickled onion, and a slather of our house-made burger sauce.",
+                itemDiet: "meat",
+                itemPrice: [51, 75, 97],
+                itemSides: 26,
+                itemCheese: null
+            },
+            {
+                id: 12,
+                itemName: "Cheesy Texan",
+                itemDesc: "Melted cheese, juicy beef patty, layered with crunchy lettuce, pickled onions and a rich burger sauce.",
+                itemDiet: "meat",
+                itemPrice: [61, 92, 115],
+                itemSides: 26,
+                itemCheese: null
+            },
+            {
+                id: 13,
+                itemName: "Tumbleweed Veggie Star",
+                itemDesc: "This plant-based patty is grilled to perfection, tucked in a soft bun, and served just the way nature intended - uncomplicated.",
+                itemDiet: "vegetarian",
+                itemPrice: [61, 92, 115],
+                itemSides: 26,
+                itemCheese: [10, 18, 25]
+            },
+            {
+                id: 14,
+                itemName: "The Southern Sizzler",
+                itemDesc: "Juicy fried chicken marinated in buttermilk and coated in crunch. Topped with pickle slices, red onion, lettuce, and a fiery-sweet sauce.",
+                itemDiet: "meat",
+                itemPrice: [57],
+                itemSides: 26,
+                itemCheese: null
+            },
+            {
+                id: 15,
+                itemName: "Bacon Wrangler",
+                itemDesc: "Beef, crispy bacon, cheese, lettuce, pickled onions and a hit of our burger sauce.",
+                itemDiet: "meat",
+                itemPrice: [69, 107, 149],
+                itemSides: 26,
+                itemCheese: null
+            },
+
+        ]
+    },
+    {
+        id: 2,
+        category: "Chicken",
+        items: [
+            {
+                itemName: "Ranchfire chicken strips",
+                itemDesc: "Crispy chicken strips marinated in tangy buttermilk and coated with a southern spice blend - fried to perfection.",
+                itemPrice: [56],
+                itemSides: 26
+            },
+            {
+                itemName: "Buttermilk Blazing Bites",
+                itemDesc: "Chicken bites soaked in rich buttermilk and coated with a bold southern blend of spices with a crispy edge and a peppery kick.",
+                itemPrice: [32, 81],
+                itemSides: 26
+            },
+        ],
+        itemDip: [
+            {
+                itemName: "Smokey Texan BBQ",
+                itemHeat: 1,
+                itemPrice: 13
+            },
+            {
+                itemName: "Sweet Chilli & Lime",
+                itemHeat: 0,
+                itemPrice: 17
+            },
+            {
+                itemName: "Creamy Sriracha",
+                itemHeat: 0,
+                itemPrice: 21
+            },
+            {
+                itemName: "Sticky Sweet",
+                itemHeat: 0,
+                itemPrice: 31
+            }
+        ]
+    },
+    {
+        id: 3,
+        category: "Ribs",
+        items: [
+            {
+                itemName: "Cowboys Corn Ribs",
+                itemDesc: "Corn Ribs with a crispy outside and juicy inside. Serves with either a creamy sriracha or sweet chilli & lime dip.",
+                itemDiet: "vegetarian",
+                itemHeat: 0,
+                itemPrice: [66],
+                itemSides: 26
+            },
+            {
+                itemName: "Houston Heat Wave Ribs",
+                itemDesc: "Marinated pork ribs cooked with a sweet and spicy dry rub.",
+                itemDiet: "meat",
+                itemHeat: 1,
+                itemPrice: [100, 191, 284],
+                itemSides: 26
+            },
+            {
+                itemName: "Smoked Texan BBQ",
+                itemDesc: "Glazed with our Spicy Texan BBQ Sauce.",
+                itemDiet: "meat",
+                itemHeat: 1,
+                itemPrice: [94, 179, 266],
+                itemSides: 26
+            },
+            {
+                itemName: "The Dallas Dusk Ribs",
+                itemDesc: "Sweet southerndry rub. Served with a honey dipper.",
+                itemDiet: "meat",
+                itemHeat: 0,
+                itemPrice: [106, 203, 286],
+                itemSides: 26
+            },
+            {
+                itemName: "Big Tex Glazed BBQ Ribs",
+                itemDesc: "Smothered in our signature big tex BBQ glaze.",
+                itemDiet: "meat",
+                itemHeat: 0,
+                itemPrice: [99, 189, 281],
+                itemSides: 26
+            },
+            {
+                itemName: "Crunch Back Ribs",
+                itemDesc: "Corn coated and deep fried, served with a spicy tabasco sauce.",
+                itemDiet: "meat",
+                itemHeat: 1,
+                itemPrice: [137, 266, 397],
+                itemSides: 26
+            },
+
+        ]
+    },
+    {
+        id: 4,
+        category: "Sides",
+        items: [
+            {
+                itemName: "Coleslaw",
+                itemDesc: "Shredded Cabbage and carrots tossed in a creamy, tangy dressing with justy the right hint of sweetness",
+                itemPrice: [30]
+            },
+            {
+                itemName: "Smashed Potato Salad",
+                itemDesc: "Smashed potatoes with herbs and a mustard mayo",
+                itemPrice: [30]
+            },
+            {
+                itemName: "Cornribs Side",
+                itemDesc: "Served with either a creamy Sriracha drizzle or a sweet chilli and lime drizzle",
+                itemPrice: [33]
+            },
+            {
+                itemName: "Fries",
+                itemDesc: "Crispy golden fries tossed in our bold signature spice blend",
+                itemPrice: [30, 45]
+            },
+        ]
+    }
+]

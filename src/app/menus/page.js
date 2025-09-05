@@ -1,12 +1,22 @@
+import MenuHeader from '@/components/menus/menu-header';
+import MenuNavigation from '@/components/menus/menu-navigation';
+
 import styles from './menus-page.module.css';
-import MenuCard from '@/components/menus/menu-card';
+
+
+// import MenuCard from '@/components/menus/to-delete/menu-card';
+
+
 
 export default function MenusPage() {
   
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <MenuCard
+        <MenuHeader/>
+        <MenuNavigation/>
+
+        {/* <MenuCard
           title="Food"
           description="Check out Lone Star's bold and smokey flavours, comfort food with a southern kick"
           download="/assets/menus/food_menu.pdf"
@@ -26,7 +36,7 @@ export default function MenusPage() {
           download="/assets/menus/beer_menu.pdf"
           view="/menus/beer"
           className='beer'
-        />
+        /> */}
       </div>
 
     </div>

@@ -12,7 +12,7 @@ import LogoSVG from '@/components/assets/logo/logo-svg';
 import { colors } from '@/lib/colors';
 import { rubikFont } from '@/lib/fonts';
 
-import styles from './page.module.css';
+import styles from './home-page.module.css';
 
 export default function HomePage() {
   const nextEvent = events[0];
