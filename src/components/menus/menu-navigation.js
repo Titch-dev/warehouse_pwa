@@ -1,45 +1,73 @@
 'use client'
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 import MenuContainer from './menu-container';
 
-import { food } from '@/data/synthetic-data';
+import { food, drinks } from '@/data/synthetic-data';
 
 import styles from './menu-navigation.module.css';
 
 import { rubikFont } from '@/lib/fonts';
 
-export default function MenuNavigation() {
-  const [menu, setMenu] = useState('food');
+import DownloadSVG from '../assets/icons/download-svg';
 
-  const menuSelect = (menu) => {
-    setMenu(menu);
-  }
+export default function MenuNavigation() {
+  const [selectedMenu, setSelectedMenu] = useState('food');
+
+  // helper to map key → actual menu data
+  const getMenuData = (menuKey) => {
+    switch (menuKey) {
+      case 'drink':
+        return drinks;
+      default:
+        return food;
+    }
+  };
+
 
   return (
     <section className={styles.menu}>
       <div className={styles.menu_header}>
         <ul>
-          <li>
+          <li className={styles.menu_header_content}>
             <button
-              onClick={() => menuSelect('food')}
-              className={rubikFont.className}
+              onClick={() => setSelectedMenu('food')}
+              className={`
+                ${selectedMenu === 'food' ? styles.active : ''} 
+                ${rubikFont.className}
+              `}
             >
               Food Menu
             </button>
+            <a
+              href="/assets/menus/food-menu.pdf"
+              download="food-menu.pdf"
+            >
+              <DownloadSVG className={styles.menu_download}/>
+            </a>
           </li>
-          <li>
+          <li className={styles.menu_header_content}>
             <button
-              onClick={() => menuSelect('drink')}
-              className={rubikFont.className}  
+              onClick={() => setSelectedMenu('drink')}
+              className={`
+                ${selectedMenu === 'drink' ? styles.active : ''} 
+                ${rubikFont.className}
+              `} 
             >
               Drinks Menu
             </button>
+            <a
+              href="/assets/menus/drink-menu.pdf"
+              download="drink-menu.pdf"
+            >
+              <DownloadSVG className={styles.menu_download}/>
+            </a>
           </li>
         </ul>
       </div>
-      <MenuContainer />
+      <MenuContainer menu={getMenuData(selectedMenu)}/>
     </section>
   )
 }

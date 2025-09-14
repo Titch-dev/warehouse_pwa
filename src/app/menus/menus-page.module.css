@@ -15,7 +15,7 @@
 
 @media (min-width:1024px) {
     .wrapper {
-        min-height: 90dvh;
+        /* min-height: 90dvh;    */
     }
     
     .container {

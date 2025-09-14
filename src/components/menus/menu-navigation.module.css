@@ -1,12 +1,23 @@
 .menu {
     width: 100%;
     height: 100%;
-    background-color: var(--color-grey-dark-2);
+    background: linear-gradient(
+        130deg,
+        #242424 0%,
+        #242424 20%,
+        #2B2B2B 35%,
+        #2B2B2B 50%,
+        #242424 55%,
+        #242424 65%,
+        #2B2B2B 70%,
+        #2B2B2B 80%,
+        #242424 90%
+    );
 }
 
 .menu_header {
     min-width: 102rem;
-    padding: 2rem 0;
+    padding: 8rem 0 5rem;
 }
 
 .menu_header ul {
@@ -16,8 +27,30 @@
     list-style-type: none;
 }
 
-.menu_header button {
+.menu_header_content{
+    display: flex;
+    align-items: start;
+    gap: 2rem;
+}
+
+.menu_header_content button {
     background-color: transparent;
     border: none;
     color: var(--color-grey-light-3);
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.menu_header button.active {
+    color: burlywood;
+}
+
+.menu_download {
+    width: 3.5rem;
+    height: 3.5rem;
+    fill: var(--color-grey-light-3);
+}
+
+.menu_download:hover {
+    fill: burlywood;
 }

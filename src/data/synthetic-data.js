@@ -228,6 +228,7 @@ export const food = [
                 itemName: "Lonestar Stack",
                 itemDesc: "Our beef patty comes with lettuce, pickled onion, and a slather of our house-made burger sauce.",
                 itemDiet: "meat",
+                itemDenom: ["Single", "Double", "Triple"],
                 itemPrice: [51, 75, 97],
                 itemSides: 26,
                 itemCheese: null
@@ -237,6 +238,7 @@ export const food = [
                 itemName: "Cheesy Texan",
                 itemDesc: "Melted cheese, juicy beef patty, layered with crunchy lettuce, pickled onions and a rich burger sauce.",
                 itemDiet: "meat",
+                itemDenom: ["Single", "Double", "Triple"],
                 itemPrice: [61, 92, 115],
                 itemSides: 26,
                 itemCheese: null
@@ -246,6 +248,7 @@ export const food = [
                 itemName: "Tumbleweed Veggie Star",
                 itemDesc: "This plant-based patty is grilled to perfection, tucked in a soft bun, and served just the way nature intended - uncomplicated.",
                 itemDiet: "vegetarian",
+                itemDenom: ["Single", "Double", "Triple"],
                 itemPrice: [61, 92, 115],
                 itemSides: 26,
                 itemCheese: [10, 18, 25]
@@ -264,6 +267,7 @@ export const food = [
                 itemName: "Bacon Wrangler",
                 itemDesc: "Beef, crispy bacon, cheese, lettuce, pickled onions and a hit of our burger sauce.",
                 itemDiet: "meat",
+                itemDenom: ["Single", "Double", "Triple"],
                 itemPrice: [69, 107, 149],
                 itemSides: 26,
                 itemCheese: null
@@ -284,6 +288,7 @@ export const food = [
             {
                 itemName: "Buttermilk Blazing Bites",
                 itemDesc: "Chicken bites soaked in rich buttermilk and coated with a bold southern blend of spices with a crispy edge and a peppery kick.",
+                itemDenom: ["100g", "300g"],
                 itemPrice: [32, 81],
                 itemSides: 26
             },
@@ -328,6 +333,7 @@ export const food = [
                 itemDesc: "Marinated pork ribs cooked with a sweet and spicy dry rub.",
                 itemDiet: "meat",
                 itemHeat: 1,
+                itemDenom: ["300g", "600g", "900g"],
                 itemPrice: [100, 191, 284],
                 itemSides: 26
             },
@@ -336,6 +342,7 @@ export const food = [
                 itemDesc: "Glazed with our Spicy Texan BBQ Sauce.",
                 itemDiet: "meat",
                 itemHeat: 1,
+                itemDenom: ["300g", "600g", "900g"],
                 itemPrice: [94, 179, 266],
                 itemSides: 26
             },
@@ -344,6 +351,7 @@ export const food = [
                 itemDesc: "Sweet southerndry rub. Served with a honey dipper.",
                 itemDiet: "meat",
                 itemHeat: 0,
+                itemDenom: ["300g", "600g", "900g"],
                 itemPrice: [106, 203, 286],
                 itemSides: 26
             },
@@ -352,6 +360,7 @@ export const food = [
                 itemDesc: "Smothered in our signature big tex BBQ glaze.",
                 itemDiet: "meat",
                 itemHeat: 0,
+                itemDenom: ["300g", "600g", "900g"],
                 itemPrice: [99, 189, 281],
                 itemSides: 26
             },
@@ -360,6 +369,7 @@ export const food = [
                 itemDesc: "Corn coated and deep fried, served with a spicy tabasco sauce.",
                 itemDiet: "meat",
                 itemHeat: 1,
+                itemDenom: ["300g", "600g", "900g"],
                 itemPrice: [137, 266, 397],
                 itemSides: 26
             },
@@ -373,22 +383,282 @@ export const food = [
             {
                 itemName: "Coleslaw",
                 itemDesc: "Shredded Cabbage and carrots tossed in a creamy, tangy dressing with justy the right hint of sweetness",
+                itemDiet: "vegetarian",
                 itemPrice: [30]
             },
             {
                 itemName: "Smashed Potato Salad",
                 itemDesc: "Smashed potatoes with herbs and a mustard mayo",
+                itemDiet: "vegetarian",
                 itemPrice: [30]
             },
             {
                 itemName: "Cornribs Side",
                 itemDesc: "Served with either a creamy Sriracha drizzle or a sweet chilli and lime drizzle",
+                itemDiet: "vegetarian",
                 itemPrice: [33]
             },
             {
                 itemName: "Fries",
                 itemDesc: "Crispy golden fries tossed in our bold signature spice blend",
+                itemDiet: "vegetarian",
+                itemDenom: ["Small", "Large"],
                 itemPrice: [30, 45]
+            },
+        ]
+    }
+]
+
+export const drinks = [
+    {
+        id: 1,
+        category: "Craft Beers",
+        items: [
+            {
+                itemName: "Lupulin Shift Disorder",
+                itemDesc: "Are you tough enough for this bold beer?",
+                itemBrewery: "That Brewing Company",
+                itemDenom: ["340ml","500ml"],
+                itemPrice: [48, 67],
+                itemImage: '/assets/menus/emblems/TBC-lupulin.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "That Blonde",
+                itemDesc: "A light, gold, crisp and refreshing ale made for session drinking",
+                itemBrewery: "That Brewing Company",
+                itemDenom: ["340ml","500ml", "1 ltr"],
+                itemPrice: [36, 50, 91],
+                itemImage: '/assets/menus/emblems/TBC-that-blonde-ale.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "El' Juicy",
+                itemDesc: "The most swahbuckling on tap beer there ever was",
+                itemBrewery: "That Brewing Company",
+                itemDenom: ["340ml","500ml"],
+                itemPrice: [44, 62],
+                itemImage: '/assets/menus/emblems/TBC-el-juicy.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Back Alley Brew",
+                itemDesc: "Defined by its rich reqarding chill brew form Langtons",
+                itemBrewery: "Langtons",
+                itemDenom: ["340ml","500ml", "1 ltr"],
+                itemPrice: [25, 35, 65],
+                itemImage: '/assets/menus/emblems/L-back-alley-brew.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Oktoberfest Lager",
+                itemDesc: "A refreshing any time any day beer that satisfies with every sip",
+                itemBrewery: "That Brewing Company",
+                itemDenom: ["340ml","500ml", "1 ltr"],
+                itemPrice: [37, 54, 103],
+                itemImage: '/assets/menus/emblems/TBC-oktoberfest.png',
+                itemImageAlt: "Drinks emblem"
+            },
+        ]
+    },
+    {
+        id: 2,
+        category: "Pre-mixed",
+        items: [
+            {
+                itemName: "Kiwi Melon Twist",
+                itemDesc: "Kiwi and watermelon delish",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [42, 56],
+                itemImage: '/assets/menus/emblems/OTD-kiwi-melon.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Strawberry Lime Twist",
+                itemDesc: "Sweet and tart, just like my heart",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [45, 57],
+                itemImage: '/assets/menus/emblems/OTD-strawberry-lime.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Watermelon Breeze",
+                itemDesc: "A delectable sparkler will keep you pleasantly refreshed",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [41, 51],
+                itemImage: '/assets/menus/emblems/OTD-watermelon-breeze.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Jamaican Me Crazy",
+                itemDesc: "Cocnut, pineapple and banana flavour rum cocktail, for when you're feeling the Carribean vibes",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [56, 66],
+                itemImage: '/assets/menus/emblems/OTD-jamaican-me-crazy.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Gin and Tonic",
+                itemDesc: "Just pure ice cold low calorie enjoyment. Perfect any day, any time.",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [37, 56],
+                itemImage: '/assets/menus/emblems/OTD-gin-tonic.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Brandy and Coke",
+                itemDesc: "Flowing ice cold straight from our tap. Perfect at the end of the day when you want to chill with mates",
+                itemBrewery: "OTD",
+                itemDenom: ["Double"],
+                itemPrice: [40],
+                itemImage: '/assets/menus/emblems/OTD-brandy-coke.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Spiced Gold and Coke",
+                itemDesc: "This refreshing masterpiece is only served as a double, just the way the captain likes it",
+                itemBrewery: "OTD",
+                itemDenom: ["Double"],
+                itemPrice: [40],
+                itemImage: '/assets/menus/emblems/OTD-spiced-gold.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Rum and Strawberry",
+                itemDesc: "Rum and strawberry for that yummy sweet deliciousness",
+                itemBrewery: "OTD",
+                itemDenom: ["Double"],
+                itemPrice: [46],
+                itemImage: '/assets/menus/emblems/OTD-rum-strawberry.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Coke on tap",
+                itemDesc: "Refreshing ice cold coca cola on tap",
+                itemBrewery: "OTD",
+                itemDenom: ["Regular"],
+                itemPrice: [19],
+                itemImage: '/assets/menus/emblems/OTD-coca-cola.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Apple Bomb",
+                itemDesc: "A sweet apple creation, with a playful vodka kick",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [41, 51],
+                itemImage: '/assets/menus/emblems/OTD-apple-bomb.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Cherry Bomb",
+                itemDesc: "A sweet and sour creation, with a playful vodka kick",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [39, 48],
+                itemImage: '/assets/menus/emblems/OTD-cherry-bomb.png',
+                itemImageAlt: "Drinks emblem"
+            },
+            {
+                itemName: "Punch Berry",
+                itemDesc: "When you want to look and feel like a million bucks",
+                itemBrewery: "OTD",
+                itemDenom: ["Single", "Double"],
+                itemPrice: [37, 49],
+                itemImage: '/assets/menus/emblems/OTD-punch-berry.png',
+                itemImageAlt: "Drinks emblem"
+            }
+        ]
+    },
+    {
+        id: 3,
+        category: "Cocktails",
+        items: [
+            {
+                itemName: "Sex On The Beach",
+                itemDesc: "A combination of vodka, peach schnapps, orange, and cranberry juice",
+                itemPrice: [65]
+            },
+            {
+                itemName: "Gin Blush",
+                itemDesc: "Gin and tonic with a splash of cranberry and raspberry",
+                itemPrice: [68]
+            },
+            {
+                itemName: "White Russian",
+                itemDesc: "A perfect creamy combination of coffee liqeur, vodka, and cream",
+                itemPrice: [72]
+            },
+            {
+                itemName: "Long Island Iced Tea",
+                itemDesc: "5 white spirits shaken and topped with a splash of coke",
+                itemPrice: [76]
+            },
+            {
+                itemName: "Mango Peach Sangria",
+                itemDesc: "Sweet or dry white wine, shaken with peach schnapps and a splash of mango syrup",
+                itemPrice: [79]
+            },
+            {
+                itemName: "Dark and stormy",
+                itemDesc: "Exactly what it sounds like. Dark rum and ginger ale with a splash of bitters",
+                itemPrice: [79]
+            },
+            {
+                itemName: "California Iced Tea",
+                itemDesc: "5 white spirits shaken, topped with cranberry and orange juice",
+                itemPrice: [88]
+            },
+        ]
+    },
+    {
+        id: 4,
+        category: "Shooters",
+        items: [
+            {
+                itemName: "Springbok",
+                itemPrice: [22]
+            },
+            {
+                itemName: "Blowjob",
+                itemPrice: [24]
+            },
+            {
+                itemName: "Rascal",
+                itemPrice: [24]
+            },
+            {
+                itemName: "Dirty Rascal",
+                itemPrice: [26]
+            },
+            {
+                itemName: "Chocolate Cake",
+                itemPrice: [25]
+            },
+            {
+                itemName: "Suitcase",
+                itemPrice: [39]
+            },
+            {
+                itemName: "Briefcase",
+                itemPrice: [39]
+            },
+            {
+                itemName: "Cactus Jack Triple",
+                itemPrice: [42]
+            },
+            {
+                itemName: "2 Shots Pancake",
+                itemPrice: [44]
+            },
+            {
+                itemName: "2 Shots Cajun Fireball",
+                itemPrice: [64]
             },
         ]
     }

@@ -1,8 +1,8 @@
-import styles from './menu-category.module.css';
+import styles from './menu-category-navigation.module.css';
 
 import { rubikFont } from '@/lib/fonts';
 
-export default function MenuCategory({action, category}) {
+export default function MenuCategoryNavigation({action, category}) {
 
   return (
     <button 

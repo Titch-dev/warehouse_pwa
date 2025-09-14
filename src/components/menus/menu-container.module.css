@@ -5,12 +5,12 @@
 }
 
 .menu_categories {
-    min-width: 20%;
-    background-color: var(--color-grey-dark-2);
+    width: 22rem;
+    border-right: solid 0.1rem var(--color-grey-dark-3);
 }
 
 .active {
-    color: var(--color-orange);
+    color: burlywood;
 }
 
 .menu_categories ul{
@@ -27,16 +27,14 @@
 .menu_items_wrapper {
     display: flex;
     justify-content: flex-start;
+    width: 100%;
 }
 
 .menu_items_container {
     display: flex;
     flex-direction: column;
-}
-
-.menu_items_container main {
-    height: 50dvh;
-    overflow-y: scroll;
+    width: inherit;
+    padding-left: 2rem;
 }
 
 .items_header {
@@ -55,11 +53,9 @@
 }
 
 .items_content {
-    padding: 2rem 0 0 2rem;
-}
-
-.items_content li {
-    list-style-type: none;
+    height: 50dvh;
+    padding-top: 2rem;
+    overflow-y: scroll;
 }
 
 

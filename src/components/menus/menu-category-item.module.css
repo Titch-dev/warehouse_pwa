@@ -1,0 +1,78 @@
+.item_container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 4rem;
+    gap: 5rem;
+    align-items: center;
+}
+
+/* item image */
+.item_image {
+    width: 10rem;
+    height: 10rem;
+}
+
+/* item description */
+.item_desc {
+    display: flex;
+    flex-direction: column;
+    max-width: 35rem;
+    flex-grow: 2;
+}
+
+.item_diet {
+    color: yellowgreen;
+}
+
+.item_heat {
+    padding-left: 1rem;
+}
+
+.item_heat svg{
+    width: 2rem;
+    fill: var(--color-orange);
+}
+
+.item_brewery{
+    color: burlywood;
+}
+
+/* item pricing */
+.item_price {
+    display: flex;
+    justify-content: start;
+    flex-grow: 1;
+}
+
+.item_table {
+    letter-spacing: .15rem;
+    border-collapse: collapse;
+}
+
+.item_table th,
+.item_table td {
+    border-right: .1rem solid var(--color-grey-dark-3);
+    text-align: center;
+}
+
+.item_table th{
+    padding: 0 1rem;
+    font-weight: 900;
+    color: var(--color-grey-dark-4);
+}
+
+.item_table td {
+    padding: 1rem 1rem 0;
+}
+
+
+.item_table th:first-child,
+.item_table th:last-child,
+.item_table td:last-child {
+    border-right: none;
+}
+
+.item_table th:first-child{
+    border-bottom: none;
+    padding-top: 1rem;
+}

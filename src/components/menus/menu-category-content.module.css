@@ -1,0 +1,30 @@
+.category_item_list {
+    padding: 2rem 0 0 2rem;
+}
+
+.item_dip_header {
+    width: 100%;
+    text-align: center;
+}
+
+.item_dip_container {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 2rem 0;
+    width: 100%;
+}
+
+.item_dip_name span {
+    padding: 0 1rem;
+}
+
+.item_dip_name svg{
+    width: 2rem;
+    fill: var(--color-orange);
+}
+
+.item_dip_price {
+    color: greenyellow;
+}
+
