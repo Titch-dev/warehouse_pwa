@@ -15,6 +15,7 @@
 @media (min-width: 1024px){
     .main {
         padding-top: 7rem;
+        overflow-x: visible;
     }
 }
 

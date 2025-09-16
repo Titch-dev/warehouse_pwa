@@ -1,0 +1,7 @@
+.button{
+    background-color: transparent;
+    border: none;
+    font-size: 2.8rem;
+    color: inherit;
+    cursor: pointer;
+}

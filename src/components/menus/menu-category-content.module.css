@@ -1,0 +1,58 @@
+.items_scroll_wrapper {
+    height: 60dvh;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.category_item_list {
+    padding: 1rem;
+    width:100%;
+}
+
+.item_dip_header {
+    width: 100%;
+    text-align: center;
+}
+
+.item_dip_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 2rem 0 4rem;
+    width: 100%;
+}
+
+.item_dip_name span {
+    padding-right: .5rem;
+}
+
+.item_dip_name svg{
+    width: 2rem;
+    fill: var(--color-orange);
+}
+
+.item_dip_price {
+    color: greenyellow;
+}
+
+@media(min-width:1024px) {
+
+    .items_scroll_wrapper {
+        height: 70dvh;
+    }
+
+    .category_item_list {
+        padding: 4rem;
+        padding-bottom: 0;
+    }
+
+    .item_dip_container {
+        flex-wrap: nowrap;
+    }
+
+    .item_dip_name span {
+        padding: 0 1rem;
+    }
+
+}

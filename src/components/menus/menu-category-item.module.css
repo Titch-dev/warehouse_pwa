@@ -1,0 +1,164 @@
+.item_container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    gap: 1rem;
+    align-items: center;
+    border-bottom: solid .2rem var(--color-grey-dark-3);
+    justify-content: center;
+    width: 100%;
+}
+
+.item_container:last-child {
+    border-bottom: none;
+}
+
+/* item image */
+.item_image {
+    width: 25%;
+    height: auto;
+}
+
+/* item description */
+.item_desc {
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    max-width: 100%;
+    flex-grow: 2;
+    text-align: center;
+}
+
+.item_desc h3 {
+    letter-spacing: .1rem;
+    padding-bottom: .5rem;
+}
+
+.item_diet {
+    color: yellowgreen;
+}
+
+.item_heat {
+    padding-left: 1rem;
+}
+
+.item_heat svg{
+    width: 2rem;
+    fill: var(--color-orange);
+}
+
+.item_brewery{
+    color: burlywood;
+}
+
+/* item pricing */
+.item_price {
+    width: auto;
+        flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+.item_table {
+    letter-spacing: .15rem;
+    border-collapse: collapse;
+}
+
+.item_table th,
+.item_table td {
+    border-right: .1rem solid var(--color-grey-dark-3);
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+.item_table th{
+    padding: 0 1rem .5rem;
+    font-weight: 900;
+    color: var(--color-grey-dark-4);
+}
+
+
+.item_table th:first-child,
+.item_table th:last-child,
+.item_table td:last-child {
+    border-right: none;
+}
+
+.item_table th:first-child{
+    border-bottom: none;
+}
+
+@media(min-width:1024px) {
+
+    .item_container {
+        display: flex;
+        flex-wrap: nowrap;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: solid .2rem var(--color-grey-dark-3);
+        justify-content: unset;
+    }
+    .item_container {
+        padding-bottom: 3rem;
+        gap: 3rem;
+        align-items: center;
+        
+    }
+
+    /* item image */
+    .item_image {
+        width: 10rem;
+        height: auto;
+    }
+
+    /* item description */
+    .item_desc {
+        display: flex;
+        flex-direction: column;
+        max-width: 35rem;
+        flex-grow: 2;
+    }
+
+    /* item pricing */
+    .item_price {
+        display: flex;
+        justify-content: start;
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .item_table {
+        letter-spacing: .15rem;
+        border-collapse: collapse;
+    }
+
+    .item_table th,
+    .item_table td {
+        border-right: .1rem solid var(--color-grey-dark-3);
+        text-align: center;
+    }
+
+    .item_table th{
+        padding: 0 1rem;
+        font-weight: 900;
+        color: var(--color-grey-dark-4);
+    }
+
+    .item_table td {
+        padding: 1rem 1rem 0;
+    }
+
+
+    .item_table th:first-child,
+    .item_table th:last-child,
+    .item_table td:last-child {
+        border-right: none;
+    }
+
+    .item_table th:first-child{
+        border-bottom: none;
+        padding-top: 1rem;
+    }
+}
