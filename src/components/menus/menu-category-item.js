@@ -37,17 +37,18 @@ export default function MenuCategoryItem({ item }) {
         </div>
         <div className={styles.item_price}>
             <table className={styles.item_table}>
-                <thead>
-                <tr>
-                    <th scope="col"></th>
-                    {item.itemDenom ? 
-                    item.itemDenom.map((denomination, idx) => (
-                        <th key={`denom-${idx}`} scope="col">{denomination}</th>
-                    )) :
-                    ""
-                    }
-                </tr>
+                {item.itemDenom &&
+                    <thead>
+                    <tr>
+                        <th scope="col"></th>
+                            {item.itemDenom.map((denomination, idx) => (
+                                <th key={`denom-${idx}`} scope="col">{denomination}</th>
+                            ))
+                            }
+                    </tr>
                 </thead>
+                }
+                
                 <tbody>
                     <tr>
                         <th scope="row"></th>

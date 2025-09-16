@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 import MenuCategoryNavigation from "./menu-category-navigation";
 import MenuCategoryContent from "./menu-category-content";
@@ -11,15 +12,19 @@ import { rubikFont } from "@/lib/fonts";
 export default function MenuContainer({menu}) {
   const [selectedCategory, setSelectedCategory] = useState(menu[0]?.category || "");
 
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   useEffect(() => {
     // reset selectedCategory whenever the menu prop changes
     setSelectedCategory(menu[0]?.category || "");
   }, [menu]);
 
+  // function to handle category changes
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
   }
 
+  // function to get category data
   const getCategoryData = (categoryName) => {
     return menu.find((cat) => cat.category === categoryName || null);
   }
@@ -29,7 +34,20 @@ export default function MenuContainer({menu}) {
   return (
     <div className={styles.menu_content}>
         <div className={styles.menu_categories}>
-          <ul>
+          {isMobile?
+            <>
+              <select
+                className={`${rubikFont.className} ${styles.dropdown}`}
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {menu.map((menu) => (
+                  <option value={menu.category}>{menu.category}</option>
+                ))}
+              </select>
+            </>
+            :
+            <ul>
             {menu.map((menu) => (
               <li 
                 key={menu.id} 
@@ -38,16 +56,9 @@ export default function MenuContainer({menu}) {
               </li>
             ))}
           </ul>
+          }
         </div>
-        <div className={styles.menu_items_wrapper}>
-            <div className={styles.menu_items_container}>
-              <header className={`${styles.items_header} ${rubikFont.className}`}>{selectedCategory}</header>
-              <main className={styles.items_content}>
-               <MenuCategoryContent categoryData={catData}/>
-              </main>
-            </div>
-
-        </div>
+        <MenuCategoryContent categoryData={catData}/>
     </div>
   )
 }

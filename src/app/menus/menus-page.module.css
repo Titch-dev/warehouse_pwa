@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     width: 100dvw;
-    height: 100%;
     background-color: var(--color-grey-dark-1);
 }
 
@@ -14,9 +13,6 @@
 }
 
 @media (min-width:1024px) {
-    .wrapper {
-        /* min-height: 90dvh;    */
-    }
     
     .container {
         max-width: 128rem;
