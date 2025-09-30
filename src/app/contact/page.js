@@ -10,7 +10,7 @@ import { rubikFont } from '@/lib/fonts';
 export default function ContactPage() {
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.page_wrapper}>
       <div className={styles.container}>
         <TornBorder top={true} color={colors.greydark1}/>
         <div className={styles.content}>

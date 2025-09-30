@@ -1,4 +1,4 @@
-.wrapper{
+.page_wrapper{
     width: 100%;
     display: flex;
     justify-content: center;
@@ -6,6 +6,7 @@
     background-color: var(--color-grey-dark-4);
     background-image: url('/assets/contact/tiles_dark.png');
     padding: 8rem 0;
+    height: 100%;
 }
 
 .container {

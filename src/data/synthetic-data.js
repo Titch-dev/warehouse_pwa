@@ -1,3 +1,13 @@
+export const openingTimes = {
+    0: { start: "12:00", end: "21:00" }, // Sunday
+    1: { start: "12:00", end: "00:00" }, // Monday
+    2: { start: "12:00", end: "00:00" }, // Tuesday
+    3: { start: "12:00", end: "02:00" }, // Wednesday
+    4: { start: "12:00", end: "00:00" }, // Thursday
+    5: { start: "12:00", end: "02:00" }, // Friday
+    6: { start: "12:00", end: "02:00" }, // Saturday
+}
+
 export const events = [
     {
         id: 1,
@@ -7,22 +17,22 @@ export const events = [
         or a rockstar in the making, this is your chance to shine. 
         Grab a mic, enjoy awesome drinks, and vibe with a crowd that 
         loves a good time. No judgment—just pure fun!`,
-        start: "2025-05-01T19:00:00Z",
-        end: "2025-05-01T22:00:00Z",
+        start: "2025-09-29T19:00:00Z",
+        end: "2025-09-29T22:00:00Z",
         price: 0,
         img: '/assets/events/karaoke_event.png',
         alt: "Karaoke poster"
     },
     {
         id: 2,
-        title: "Fashionistas",
+        title: "Fashionistas with technology",
         description: `Strut your style and own the night at Fashionista—the 
         ultimate fusion of fashion and beats. Join the city’s trendsetters 
         and dance to the electrifying sounds of DJ Jayytentacion, spinning 
         everything from hip-hop to house. Dress to impress, vibe hard, and 
         let your fit speak louder than words. `,
-        start: "2025-04-30T21:00:00Z",
-        end: "2025-04-30T23:30:00Z",
+        start: "2025-10-05T10:00:00Z",
+        end: "2025-10-05T23:30:00Z",
         price: 0,
         img: '/assets/events/fashionista_event.png',
         alt: "Fashionista poster"
@@ -35,8 +45,8 @@ export const events = [
         Featuring the hilarious Kwanda Radebe, the quick-witted Liam Whitcher, 
         and a killer lineup of rising stars, this is your midweek serotonin 
         boost – good drinks, great jokes, and even better company.`,
-        start: "2025-04-29T19:00:00Z",
-        end: "2025-04-29T23:00:00Z",
+        start: "2025-10-08T19:00:00Z",
+        end: "2025-10-08T23:00:00Z",
         price: 60,
         img: '/assets/events/comedy_night_event.png',
         alt: "Comedy night poster"
@@ -49,8 +59,8 @@ export const events = [
         smooth beats, and an electric atmosphere made for dancing, laughing, 
         and letting loose. Whether you're celebrating something or just need 
         a night out, this is your perfect excuse!`,
-        start: "2025-05-02T19:00:00Z",
-        end: "2025-05-03T01:00:00Z",
+        start: "2025-10-14T19:00:00Z",
+        end: "2025-10-15T01:00:00Z",
         price: 0,
         img: '/assets/events/ladies_night_event.png',
         alt: "Ladies' night poster"
@@ -663,3 +673,4 @@ export const drinks = [
         ]
     }
 ]
+

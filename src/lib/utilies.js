@@ -1,0 +1,59 @@
+import dayjs from "dayjs";
+import { openingTimes } from "@/data/synthetic-data";
+
+import { colors } from "./colors";
+
+// format event date
+export const formatEventDate = (dateString) => {
+    const date = dayjs(dateString);
+    const today = dayjs();
+    const tomorrow = today.add(1, 'day');
+    
+    if (date.isSame(today, 'day')) {
+      return 'Today';
+    } else if (date.isSame(tomorrow, 'day')) {
+      return 'Tomorrow';
+    } else if (date.isSame(today, 'week')) {
+      return date.format('dddd');
+    } else {
+      return date.format('ddd D MMM');
+    }
+  };
+
+// format event time
+export const formatEventTime = (startString, endString) => {
+    const start = dayjs(startString);
+    const end = dayjs(endString);
+    return `${start.format('h:mm A')} - ${end.format('h:mm A')}`;
+  };
+
+// Get the opening time for today
+export function getOpeningHoursForToday() {
+  const dayIndex = dayjs().day(); // 0 = Sunday, 6 = Saturday
+  const { start, end } = openingTimes[dayIndex];
+  return {
+    start,
+    end,
+  };
+}
+
+// Get events in date order
+export function sortEvents(events) {
+    return [...events].sort((a, b) => dayjs(a.start).diff(dayjs(b.start))
+  )
+};
+
+// Get event Status
+export const getEventStatus = (event) => {
+    const now = dayjs();
+    const eventStart = dayjs(event.start);
+    const eventEnd = dayjs(event.end);
+    
+    if (now.isBefore(eventStart)) {
+      return { status: 'upcoming', color: colors.blue };
+    } else if (now.isBetween(eventStart, eventEnd)) {
+      return { status: 'live', color: colors.pink};
+    } else {
+      return { status: 'past', color: colors.greydark3 };
+    }
+  }; 

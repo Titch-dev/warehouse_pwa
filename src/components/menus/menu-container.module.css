@@ -49,6 +49,7 @@
         padding-top: 2rem;
         width: 30rem;
         border-right: .2rem solid var(--color-grey-dark-3);
+        border-bottom: none;
     }
 
     .menu_categories ul{

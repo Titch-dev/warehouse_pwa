@@ -1,0 +1,73 @@
+/* Container */
+.calendarContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-grey-dark-1);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-dark-sm);
+  }
+
+/* Custom day wrapper for positioning dot */
+.dayWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Override MUI Calendar styles */
+.calendar {
+  color: var(--color-grey-light-3) !important;
+  width: 100% !important;
+}
+
+/* Calendar days */
+.customDay {
+  color: var(--color-grey-light-3) !important;
+  font-size: 1.3rem !important;
+}
+
+.todayDay {
+  color: white !important;
+  border: .2rem solid rgba(250, 128, 87, 1) !important;
+}
+
+.eventDay {
+  font-weight: bold !important;
+}
+
+.eventDay:hover {
+  border: .2rem solid rgba(250, 128, 87, 1) !important;
+}
+
+.selectedEventDay {
+  background-color: rgba(250, 128, 87, .6) !important;
+  color: var(--color-grey-dark-1);
+}
+
+.notEventDay {
+  color: var(--color-grey-dark-3) !important;
+} 
+
+/* Event dot styling */
+.eventDot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-orange);
+  border-radius: 50%;
+  border: .1rem solid var(--color-grey-light-3);
+  pointer-events: none;
+}
+
+.opening_time_container {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+
+.opening_time_container h3{
+  text-align: center;
+}

@@ -1,0 +1,7 @@
+.opening_hours {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    color: var(--color-grey-light-3);
+    font-size: 1.8rem;
+}
