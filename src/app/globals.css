@@ -20,7 +20,8 @@
   --laptop: 1024px;  /* Laptops */
 
   /* Box shadow */
-  --shadow-dark: 10px 10px 25px black;
+  --shadow-dark-lg: 10px 10px 25px black;
+  --shadow-dark-sm: 0 6px 16px black;
   --shadow-light: 0px 0px 20px white;
 
 
@@ -53,6 +54,8 @@
   );
 }
 
+
+
 *,
 *::before,
 *::after {
@@ -62,12 +65,17 @@
 }
 
 html {
+  height: 100%;
   box-sizing: border-box;
   font-size: 62.5%; /* 1rem = 10px */
 }
 
 body {
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100vh;
   font-family: Helvetica, sans-serif;
   font-size: 1.8rem;
   line-height: 1.7;

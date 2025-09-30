@@ -11,7 +11,7 @@ import styles from './menus-page.module.css';
 export default function MenusPage() {
   
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.page_wrapper}>
       <div className={styles.container}>
         <MenuNavigation/>
       </div>
