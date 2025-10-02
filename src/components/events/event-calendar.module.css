@@ -7,7 +7,6 @@
   width: 100%;
   background-color: var(--color-grey-dark-1);
   border-radius: 1rem;
-  box-shadow: var(--shadow-dark-sm);
   }
 
 /* Custom day wrapper for positioning dot */
@@ -68,6 +67,10 @@
   padding-bottom: 2rem;
 }
 
-.opening_time_container h3{
-  text-align: center;
+.opening_hours {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    color: var(--color-grey-light-3);
+    font-size: 1.8rem;
 }

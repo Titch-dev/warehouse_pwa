@@ -54,7 +54,7 @@
   );
 }
 
-
+ 
 
 *,
 *::before,
@@ -74,11 +74,19 @@ body {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 100vh;
+  height: auto;
+  min-height: auto;
   font-family: Helvetica, sans-serif;
-  font-size: 1.8rem;
+  font-size: 2rem;
   line-height: 1.7;
   background-color: var(--color-grey-dark-3);
   color: var(--color-grey-light-3);
+}
+
+/* enable sticky-footer layout on desktop only */
+@media (min-width: 1024px) {
+  body {
+    height: 100%;
+    min-height: 100vh;
+  }
 }

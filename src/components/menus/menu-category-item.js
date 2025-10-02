@@ -18,17 +18,18 @@ export default function MenuCategoryItem({ item }) {
         : ''}
         <div className={styles.item_desc}>
             <h3 className={rubikFont.className}>
-                {item.itemName} 
-                {item.itemDiet && item.itemDiet === 'vegetarian' ? 
-                <span className={styles.item_diet}>{` (V)`}</span> : ""}
-                {item.itemHeat ? 
+                <span className={styles.item_name}>{item.itemName}</span>
+                {item.itemDiet && item.itemDiet === 'vegetarian' ? (
+                    <span className={styles.item_diet}>(V)</span>
+                ) : null}
+                {item.itemHeat ? (
                     <span className={styles.item_heat}>
                         {Array.from({ length: item.itemHeat }, (_, idx) => (
                             <FireSVG key={idx} />
                         ))}
-                    </span> 
-                    : ""
-                }
+                    </span>
+                ) : null
+                }                  
             </h3>
             {item.itemBrewery ? 
             <p className={styles.item_brewery}>Brewery: {item.itemBrewery}</p>:""}

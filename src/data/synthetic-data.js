@@ -25,7 +25,7 @@ export const events = [
     },
     {
         id: 2,
-        title: "Fashionistas with technology",
+        title: "Fashionistas",
         description: `Strut your style and own the night at Fashionista—the 
         ultimate fusion of fashion and beats. Join the city’s trendsetters 
         and dance to the electrifying sounds of DJ Jayytentacion, spinning 

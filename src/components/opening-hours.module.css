@@ -1,7 +1,29 @@
-.opening_hours {
+.open_times {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     width: 100%;
     color: var(--color-grey-light-3);
     font-size: 1.8rem;
+}
+
+.times_row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.days span::after {
+    content: ', ';
+}
+
+.days span:last-child::after{
+    content:none;
+}
+
+.highlight{
+    color: var(--color-orange);
+}
+
+.times {
+    padding: 0;
+    margin: 0;
 }

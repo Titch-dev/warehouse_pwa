@@ -36,6 +36,36 @@ export function getOpeningHoursForToday() {
     end,
   };
 }
+// grouped opening times for the week
+
+export function groupOpeningTimes(openingTimes) {
+  const groups = [];
+
+  for (let i = 0; i < 7; i++) {
+    const entryDay = openingTimes[i];
+    let foundGroup = false;
+
+    // check if there is already a group with same start & end
+    for (let group of groups) {
+      if (group.start === entryDay.start && group.end === entryDay.end) {
+        group.days.push(i);
+        foundGroup = true;
+        break;
+      }
+    }
+
+    // if no existing group matched, create a new one
+    if (!foundGroup) {
+      groups.push({
+        days: [i],
+        start: entryDay.start,
+        end: entryDay.end,
+      });
+    }
+  }
+
+  return groups;
+}
 
 // Get events in date order
 export function sortEvents(events) {
@@ -56,4 +86,4 @@ export const getEventStatus = (event) => {
     } else {
       return { status: 'past', color: colors.greydark3 };
     }
-  }; 
+  };

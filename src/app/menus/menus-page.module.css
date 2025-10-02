@@ -1,9 +1,61 @@
 .page_wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100dvw;
     background-color: var(--color-grey-dark-1);
     height: 100%;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image:
+        linear-gradient(
+            to right, 
+            rgba(222, 184, 135, .5)0%, 
+            rgba(222, 184, 135, .68)30%, 
+            rgba(222, 184, 135, .68)70%, 
+            rgba(222, 184, 135, .5) 100%
+        ),
+        url('/assets/menus/food_animation.png');
+
+    background-repeat: repeat;
+    background-size: auto 100%, 100% cover;
+    background-position: 0 0, 0 center;
+
+    height: 50vh;
+    width: 100%;
+
+    animation: animateBackground 500s linear infinite;
+}
+
+@keyframes animateBackground {
+    0% {
+        background-position: 0 0, 0 center;
+    }
+    100% {
+        background-position: 0 0, -10000px 0;
+    }
+}
+
+.header_content {
+    max-width: 80rem;
+    text-align: center;
+    color: var(--color-grey-dark-1);
+    font-weight: bold;
+    letter-spacing: .08rem;
+    word-spacing: .8rem;
+}
+
+.border_container{
+    position: relative;
+    top: 1px;
+    width: 100%;
+    height: auto;
 }
 
 .container {

@@ -43,6 +43,7 @@
     position: relative;
     text-align: center;
     font-size: 2rem;
+    letter-spacing: .08rem;
 }
 
 .nav_title::before {
@@ -71,7 +72,7 @@
 }
 
 .nav_menu a:hover{
-    color: var(--color-grey-dark-2);
+    color: var(--color-grey-dark-4);
 }
 
 .address_container {

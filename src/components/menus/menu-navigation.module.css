@@ -23,7 +23,6 @@
     padding-bottom: 2rem;
 }
 
-
 .dropdown {
     min-width: 80%;
     height: 4.5rem;
@@ -56,24 +55,6 @@
     list-style-type: none;
 }
 
-.menu_header_content {
-    display: flex;
-    align-items: start;
-    gap: 2rem;
-}
-
-.menu_header_content button {
-    background-color: transparent;
-    border: none;
-    color: var(--color-grey-light-3);
-    font-size: 3rem;
-    cursor: pointer;
-}
-
-.menu_header_content.active button {
-    color: burlywood;
-}
-
 .menu_download {
     width: 3.5rem;
     height: 3.5rem;
@@ -100,5 +81,26 @@
         align-items: unset;
         height: auto;
         overflow-y: visible;
+    }
+
+
+    .menu_header_content {
+        display: flex;
+        align-items: start;
+        gap: 2rem;
+    }
+
+    .menu_header_content button {
+        background-color: transparent;
+        border: none;
+        color: var(--color-grey-light-3);
+        font-size: 3rem;
+        cursor: pointer;
+        text-transform: capitalize;
+        
+    }
+
+    .menu_header_content.active button {
+        color: burlywood;
     }
 }

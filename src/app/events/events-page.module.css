@@ -23,6 +23,8 @@
     justify-content: center;
     width: auto;
     height: auto;
+    box-shadow: var(--shadow-dark-sm);
+    border-radius: 1rem;
 }
 
 .calendar_wrapper {
@@ -30,6 +32,8 @@
     justify-content: center;
     width: 100%;
     height: auto;
+    box-shadow: var(--shadow-dark-sm);
+    border-radius: 1rem;
 }
 
 .event_list_wrapper {

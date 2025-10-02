@@ -4,10 +4,11 @@ import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 import SpecialsItem from "./specials-item";
-import Chevron from '@/components/assets/icons/chevron-svg';
 
 import styles from "./specials-carousel.module.css";
 import { rubikFont } from "@/lib/fonts";
+import ChevronLeft from "@/components/assets/icons/chevron-left-svg";
+import ChevronRight from "../assets/icons/chevron-right-svg";
 
 
 export default function SpecialsCarousel({ title, specials }) {
@@ -47,7 +48,13 @@ export default function SpecialsCarousel({ title, specials }) {
         <h1 className={`${styles.title} ${rubikFont.className}`}>{title}</h1>
         <div className={styles.embla} >
             <button className={styles.btn} onClick={scrollPrev}>
-                <Chevron direction="left" />
+                <ChevronLeft className={styles.btn_icon}>
+                    <linearGradient id="Gradient" x2="0" y2="1">
+                        <stop className={styles.stop1} offset="0%" />
+                        <stop className={styles.stop2} offset="50%" />
+                        <stop className={styles.stop3} offset="100%" />
+                    </linearGradient>
+                </ChevronLeft>
             </button>
             <div className={styles.embla__viewport} ref={emblaRef}>
                 <div className={styles.embla__container}>
@@ -59,7 +66,13 @@ export default function SpecialsCarousel({ title, specials }) {
                 </div>
             </div>
             <button className={styles.btn} onClick={scrollNext}>
-                <Chevron direction="right" />
+                <ChevronRight className={styles.btn_icon}>
+                    <linearGradient id="Gradient" x2="0" y2="1">
+                        <stop className={styles.stop1} offset="0%" />
+                        <stop className={styles.stop2} offset="50%" />
+                        <stop className={styles.stop3} offset="100%" />
+                    </linearGradient>
+                </ChevronRight>
             </button>
         </div>
         <div className={styles.embla__dots}>
