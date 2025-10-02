@@ -5,12 +5,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 
-import Chevron from "@/components/assets/icons/chevron-svg";
+
 
 import { galleryList } from "@/data/synthetic-data";
 
 import PaintStrokeSVG from '@/components/assets/patterns/paint-stroke-svg';
-
+import ChevronLeft from "@/components/assets/icons/chevron-left-svg";
+import ChevronRight from "@/components/assets/icons/chevron-right-svg";
 import TornBorder from "@/components/assets/patterns/torn-border";
 
 import styles from "./gallery-page.module.css";
@@ -60,10 +61,16 @@ export default function GalleryPage() {
 
   return (
     <div className={styles.gallery_wrapper}>
-      <h1 className={`${styles.title} ${rubikFont.className}`}>Gallery</h1>     
+      <h1 className={`${styles.title} ${rubikFont.className}`}>Gallery</h1>
       <section className={styles.viewing_section}>
         <button onClick={scrollPrev} className={styles.btn}>
-          <Chevron direction="left" />
+          <ChevronLeft className={styles.btn_icon}>
+              <linearGradient id="Gradient" x2="0" y2="1">
+                  <stop className={styles.stop1} offset="0%" />
+                  <stop className={styles.stop2} offset="50%" />
+                  <stop className={styles.stop3} offset="100%" />
+              </linearGradient>
+          </ChevronLeft>
         </button>
         <PaintStrokeSVG className={styles.viewing_bg}>
           <linearGradient id="Gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -82,7 +89,13 @@ export default function GalleryPage() {
           </div>
         </div> 
         <button onClick={scrollNext} className={styles.btn}>
-          <Chevron direction="right" />
+          <ChevronRight className={styles.btn_icon}>
+              <linearGradient id="Gradient" x2="0" y2="1">
+                  <stop className={styles.stop1} offset="0%" />
+                  <stop className={styles.stop2} offset="50%" />
+                  <stop className={styles.stop3} offset="100%" />
+              </linearGradient>
+          </ChevronRight>
         </button>
         <TornBorder top={false} color={colors.greydark1}/>
       </section>

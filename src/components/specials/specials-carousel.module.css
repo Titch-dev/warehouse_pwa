@@ -56,7 +56,7 @@
     cursor: pointer;
 }
 
-.embla__dot_selected{
+.embla__dot_selected {
     border-radius: 50%;
     background: var(--color-grad-bottom);
 }
@@ -76,6 +76,36 @@
         cursor: pointer;
         background-color: transparent;
         border: none;
+    }
+
+    .btn_icon {
+        position: relative;
+        height: 4rem;
+        width: 4rem;
+        fill: url(#Gradient1);
+        transition: transform ease-in-out .2s;
+        transform: scale(1);
+        filter: drop-shadow(0 0 1rem black);
+    }
+
+    .btn:hover .btn_icon{
+        transform: scale(1.1);
+    }
+
+    .btn:active{
+        top: .1rem;
+    }
+
+    .stop1 {
+        stop-color: var(--color-pink);
+    }
+
+    .stop2 {
+        stop-color: var(--color-orange);
+    }
+
+    .stop3 {
+        stop-color: var(--color-yellow);
     }
 }
 

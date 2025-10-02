@@ -1,6 +1,5 @@
 import Link from 'next/link';
 
-import EventItem from '@/components/events/event-item';
 import SpecialsCarousel from '@/components/specials/specials-carousel';
 
 import { events, specialsFood, specialsDrink } from '@/data/synthetic-data';
@@ -13,6 +12,7 @@ import { colors } from '@/lib/colors';
 import { rubikFont } from '@/lib/fonts';
 
 import styles from './home-page.module.css';
+import EventView from '@/components/events/event-view';
 
 export default function HomePage() {
   const nextEvent = events[0];
@@ -36,7 +36,7 @@ export default function HomePage() {
               </h1>
               <p>Chalk up and chill out at The Westville Warehouse — where 
                 craft beers flow, cocktails come on tap, and the pool tables 
-                are ready.</p>
+                are racked up and ready.</p>
               <p>Whether you're here to shoot your shot, 
                 catch a talented band, or just unwind with your crew, 
                 we’ve got the perfect combo of laid-back vibes and high-energy 
@@ -54,17 +54,21 @@ export default function HomePage() {
        
         <section className={styles.event}>
             <h1 className={`${styles.event_title} ${rubikFont.className}`}>Coming Up ...</h1>
-            <EventItem props={nextEvent} />
+            <div className={styles.event_view_wrapper}>
+              <TornBorder top={true} color={colors.greydark1}/>
+              <EventView events={events}/>
+              <TornBorder top={false} color={colors.greydark1}/>
+            </div>
             <Link 
               href='/events' 
               className={styles.event_link}>
-                ...see more events
+                ...see more
             </Link>
         </section>
 
         
         <section className={styles.specials}>
-          <TornBorder top={true} color={colors.greydark1}/>
+          <TornBorder top={true} color={colors.greydark2}/>
           <h1 className={`${styles.specials_title} ${rubikFont.className}`}>Our Specials</h1>
           <div className={styles.specials_container}>
             <SpecialsCarousel title='Food' specials={specialsFood}></SpecialsCarousel>

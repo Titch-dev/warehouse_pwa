@@ -210,24 +210,9 @@
     .title {
         position: relative;
         font-size: 5rem;
-        align-self: start;
-        top: 5rem;
-        left: 12rem;
-        z-index: 1;
-    }
-
-    .title::before{
-        content: "";
-        position: absolute;
-        height: 0.3rem;
-        width: 100%;
-        bottom: 0;
-        background: linear-gradient(
-            to right,
-            var(--color-pink),
-            var(--color-orange),
-            var(--color-yellow)
-        );
+        align-self: center;
+        z-index: 2;
+        letter-spacing: .1rem;
     }
 
     .viewing_section{
@@ -247,6 +232,36 @@
         cursor: pointer;
         z-index: 1;
     }  
+
+    .btn_icon {
+        position: relative;
+        height: 4rem;
+        width: 4rem;
+        fill: url(#Gradient1);
+        transition: transform ease-in-out .2s;
+        transform: scale(1);
+        filter: drop-shadow(0 0 1rem black);
+    }
+
+    .btn:hover .btn_icon{
+        transform: scale(1.1);
+    }
+
+    .btn:active{
+        top: .1rem;
+    }
+
+    .stop1 {
+        stop-color: var(--color-pink);
+    }
+
+    .stop2 {
+        stop-color: var(--color-orange);
+    }
+
+    .stop3 {
+        stop-color: var(--color-yellow);
+    }
 
     .viewing_bg {
         max-width: 70rem;

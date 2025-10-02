@@ -68,7 +68,7 @@ export default function MenuNavigation() {
                   onClick={() => {setSelectedMenu(menuOption)}}
                   className={rubikFont.className}
                 >
-                  {`${menuOption.charAt(0).toUpperCase()}${menuOption.substring(1).toLowerCase()}`} Menu
+                  {`${menuOption} Menu`}
                 </button>
                 <a
                   href={`/assets/menus/${menuOption}-menu.pdf`}

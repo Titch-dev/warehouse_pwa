@@ -5,7 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { createTheme, ThemeProvider} from '@mui/material/styles';
-import OpeningHours from '../opening-hours';
+import { getOpeningHoursForToday } from '@/lib/utilies';
 
 import styles from './event-calendar.module.css';
 
@@ -67,6 +67,7 @@ const calendarTheme = createTheme({
 const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs(selectedEvent.start));
   const today = dayjs();
+  const {start, end} = getOpeningHoursForToday();
 
   // Get events for a specific date
   const getEventsForDate = (date) => {
@@ -142,7 +143,11 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
         </LocalizationProvider>
       </ThemeProvider>
       <div className={styles.opening_time_container}>
-        <OpeningHours date={today}/>
+        {/* <OpeningHours date={today}/> */}
+        <div className={styles.opening_hours}>
+          <p><strong>Open Today</strong></p> 
+          <p>{start} – {end}</p>
+        </div>
       </div>
     </div>
   );

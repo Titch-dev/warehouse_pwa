@@ -7,7 +7,6 @@
     background-color: var(--color-grey-dark-1);
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: var(--shadow-dark-sm);
 }
 
 .header {
@@ -58,6 +57,7 @@
     content: "";
     position: absolute;
     bottom: -.5rem;
+    left: 0;
     width: 100%;
     height: 0.3rem;
     background-image: var(--color-grad-right);
@@ -158,7 +158,7 @@
     .body {
         padding-top: 1rem;
         padding-bottom: 2rem;
-        cursor: none;
+        cursor:default;
 
         /* unset mobile styling */
         max-height: unset;

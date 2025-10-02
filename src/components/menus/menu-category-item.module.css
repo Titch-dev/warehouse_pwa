@@ -31,16 +31,27 @@
 }
 
 .item_desc h3 {
+    display: flex;
+    justify-content: space-evenly; /* name left, icons right */
+    align-items: center;
     letter-spacing: .1rem;
+    word-spacing: .8rem;
     padding-bottom: .5rem;
+    line-height: 3rem;
+}
+
+.item_name {
+    flex: 1;
+}
+
+.item_meta {
+    display: flex;
+    align-items: center;
+    gap: .3rem; /* spacing between (V) and fire icons */
 }
 
 .item_diet {
     color: yellowgreen;
-}
-
-.item_heat {
-    padding-left: 1rem;
 }
 
 .item_heat svg{
@@ -55,7 +66,7 @@
 /* item pricing */
 .item_price {
     width: auto;
-        flex-shrink: 0;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     padding-top: 1rem;
