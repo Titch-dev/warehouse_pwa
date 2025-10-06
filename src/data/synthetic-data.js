@@ -73,7 +73,7 @@ export const events = [
 export const specialsDrink = [
     {
         id: 4,
-        img: '/assets/specials/drink/tuesday_tequila.png',
+        img: '/assets/specials/drink/tuesday.webp',
         title: 'Tequila Tuesday!',
         day: 'Tuesday',
         offers: [
@@ -89,7 +89,7 @@ export const specialsDrink = [
     },
     {
         id: 5,
-        img: '/assets/specials/drink/wednesday_combo.png',
+        img: '/assets/specials/drink/wednesday.webp',
         title: 'Wednesday Combo',
         day: 'Wednesday',
         offers: [
@@ -105,7 +105,7 @@ export const specialsDrink = [
     },
     {
         id: 6,
-        img: '/assets/specials/drink/thursday_thirsty.png',
+        img: '/assets/specials/drink/thursday.webp',
         title: 'Thirsty Thursdays',
         day: 'Thursday',
         offers: [
@@ -129,7 +129,7 @@ export const specialsDrink = [
     },
     {
         id: 7,
-        img: '/assets/specials/drink/saturday_student.png',
+        img: '/assets/specials/drink/saturday.webp',
         title: 'Student Night',
         day: 'Saturday',
         offers: [
@@ -157,7 +157,7 @@ export const specialsDrink = [
 export const specialsFood= [
     {
         id: 1,
-        img: '/assets/specials/food/tuesday.png',
+        img: '/assets/specials/food/tuesday.webp',
         title: "Twos days Tuesdays",
         day: 'Tuesday',
         offers: [
@@ -430,7 +430,7 @@ export const drinks = [
                 itemBrewery: "That Brewing Company",
                 itemDenom: ["340ml","500ml"],
                 itemPrice: [48, 67],
-                itemImage: '/assets/menus/emblems/TBC-lupulin.png',
+                itemImage: '/menu/emblems/TBC-lupulin.png',
                 itemImageAlt: "Drinks emblem"
             },
             {
