@@ -4,4 +4,5 @@
     font-size: 2.8rem;
     color: inherit;
     cursor: pointer;
+    text-transform: capitalize;
 }

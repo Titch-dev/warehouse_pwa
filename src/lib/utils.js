@@ -1,5 +1,4 @@
 import dayjs from "dayjs";
-import { openingTimes } from "@/data/synthetic-data";
 
 import { colors } from "./colors";
 
@@ -28,13 +27,14 @@ export const formatEventTime = (startString, endString) => {
   };
 
 // Get the opening time for today
-export function getOpeningHoursForToday() {
-  const dayIndex = dayjs().day(); // 0 = Sunday, 6 = Saturday
-  const { start, end } = openingTimes[dayIndex];
-  return {
-    start,
-    end,
-  };
+export function getOpeningHoursForToday(openingTimes = []) {
+  const todayIndex = dayjs().day(); // 0 = Sunday, 6 = Saturday
+  const today = openingTimes.find(entry => entry.day === todayIndex);
+
+  if (!today) return { start: null, end: null };
+
+  const { start, end } = today;
+  return { start, end };
 }
 // grouped opening times for the week
 
@@ -87,3 +87,20 @@ export const getEventStatus = (event) => {
       return { status: 'past', color: colors.greydark3 };
     }
   };
+
+// Slugify names of docs - 'Chicken Burger' => 'chicken_burger'
+export function slugify(str) {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, '_')
+    .replace(/[^\w-]/g, '')
+}
+
+// Get unique categories from a flattened menu array
+export function getUniqueCategories(menuItems) {
+  const categoriesSet = new Set()
+  menuItems.forEach(item => {
+    if (item.itemCategory) categoriesSet.add(item.itemCategory)
+  })
+  return Array.from(categoriesSet)
+}

@@ -1,15 +1,9 @@
-import MenuHeader from '@/components/menus/menu-header';
 import MenuNavigation from '@/components/menus/menu-navigation';
 
 import styles from './menus-page.module.css';
 import TornBorder from '@/components/assets/patterns/torn-border';
 import { colors } from '@/lib/colors';
-import { spartanFont, rubikFont } from '@/lib/fonts';
-
-
-// import MenuCard from '@/components/menus/to-delete/menu-card';
-
-
+import { rubikFont } from '@/lib/fonts';
 
 export default function MenusPage() {
   

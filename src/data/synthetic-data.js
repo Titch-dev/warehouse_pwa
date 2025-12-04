@@ -17,8 +17,8 @@ export const events = [
         or a rockstar in the making, this is your chance to shine. 
         Grab a mic, enjoy awesome drinks, and vibe with a crowd that 
         loves a good time. No judgment—just pure fun!`,
-        start: "2025-09-29T19:00:00Z",
-        end: "2025-09-29T22:00:00Z",
+        start: "2025-12-05T19:00:00Z",
+        end: "2025-12-05T22:00:00Z",
         price: 0,
         img: '/assets/events/karaoke_event.png',
         alt: "Karaoke poster"
@@ -31,8 +31,8 @@ export const events = [
         and dance to the electrifying sounds of DJ Jayytentacion, spinning 
         everything from hip-hop to house. Dress to impress, vibe hard, and 
         let your fit speak louder than words. `,
-        start: "2025-10-05T10:00:00Z",
-        end: "2025-10-05T23:30:00Z",
+        start: "2025-12-10T10:00:00Z",
+        end: "2025-12-10T23:30:00Z",
         price: 0,
         img: '/assets/events/fashionista_event.png',
         alt: "Fashionista poster"
@@ -45,8 +45,8 @@ export const events = [
         Featuring the hilarious Kwanda Radebe, the quick-witted Liam Whitcher, 
         and a killer lineup of rising stars, this is your midweek serotonin 
         boost – good drinks, great jokes, and even better company.`,
-        start: "2025-10-08T19:00:00Z",
-        end: "2025-10-08T23:00:00Z",
+        start: "2025-12-14T19:00:00Z",
+        end: "2025-12-14T23:00:00Z",
         price: 60,
         img: '/assets/events/comedy_night_event.png',
         alt: "Comedy night poster"
@@ -59,8 +59,8 @@ export const events = [
         smooth beats, and an electric atmosphere made for dancing, laughing, 
         and letting loose. Whether you're celebrating something or just need 
         a night out, this is your perfect excuse!`,
-        start: "2025-10-14T19:00:00Z",
-        end: "2025-10-15T01:00:00Z",
+        start: "2025-12-22T19:00:00Z",
+        end: "2025-12-22T01:00:00Z",
         price: 0,
         img: '/assets/events/ladies_night_event.png',
         alt: "Ladies' night poster"
@@ -68,7 +68,7 @@ export const events = [
 
 ]
 
-
+// Warehouse specials image
 
 export const specialsDrink = [
     {
@@ -169,7 +169,7 @@ export const specialsFood= [
     },
     {
         id: 2,
-        img: '/assets/specials/food/wednesday.png',
+        img: '/assets/specials/food/wednesday.webp',
         title: "Stackin' Wednesdays",
         day: 'Wednesday',
         offers: [
@@ -181,7 +181,7 @@ export const specialsFood= [
     },
     {
         id: 3,
-        img: '/assets/specials/food/thursday.png',
+        img: '/assets/specials/food/thursday.webp',
         title: 'Rib Tickler',
         day: 'Thursday',
         offers: [
@@ -430,7 +430,7 @@ export const drinks = [
                 itemBrewery: "That Brewing Company",
                 itemDenom: ["340ml","500ml"],
                 itemPrice: [48, 67],
-                itemImage: '/menu/emblems/TBC-lupulin.png',
+                itemImage: 'assets/menus/emblems/TBC-lupulin.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -439,7 +439,7 @@ export const drinks = [
                 itemBrewery: "That Brewing Company",
                 itemDenom: ["340ml","500ml", "1 ltr"],
                 itemPrice: [36, 50, 91],
-                itemImage: '/assets/menus/emblems/TBC-that-blonde-ale.png',
+                itemImage: '/assets/menus/emblems/TBC-that-blonde-ale.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -448,16 +448,16 @@ export const drinks = [
                 itemBrewery: "That Brewing Company",
                 itemDenom: ["340ml","500ml"],
                 itemPrice: [44, 62],
-                itemImage: '/assets/menus/emblems/TBC-el-juicy.png',
+                itemImage: '/assets/menus/emblems/TBC-el-juicy.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
                 itemName: "Back Alley Brew",
-                itemDesc: "Defined by its rich reqarding chill brew form Langtons",
+                itemDesc: "Defined by its rich rewarding chill brew fromm Langtons brewery.",
                 itemBrewery: "Langtons",
                 itemDenom: ["340ml","500ml", "1 ltr"],
                 itemPrice: [25, 35, 65],
-                itemImage: '/assets/menus/emblems/L-back-alley-brew.png',
+                itemImage: '/assets/menus/emblems/L-back-alley-brew.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -466,7 +466,7 @@ export const drinks = [
                 itemBrewery: "That Brewing Company",
                 itemDenom: ["340ml","500ml", "1 ltr"],
                 itemPrice: [37, 54, 103],
-                itemImage: '/assets/menus/emblems/TBC-oktoberfest.png',
+                itemImage: '/assets/menus/emblems/TBC-oktoberfest.webp',
                 itemImageAlt: "Drinks emblem"
             },
         ]
@@ -481,7 +481,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [42, 56],
-                itemImage: '/assets/menus/emblems/OTD-kiwi-melon.png',
+                itemImage: '/assets/menus/emblems/OTD-kiwi-melon.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -490,7 +490,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [45, 57],
-                itemImage: '/assets/menus/emblems/OTD-strawberry-lime.png',
+                itemImage: '/assets/menus/emblems/OTD-strawberry-lime.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -499,7 +499,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [41, 51],
-                itemImage: '/assets/menus/emblems/OTD-watermelon-breeze.png',
+                itemImage: '/assets/menus/emblems/OTD-watermelon-breeze.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -508,7 +508,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [56, 66],
-                itemImage: '/assets/menus/emblems/OTD-jamaican-me-crazy.png',
+                itemImage: '/assets/menus/emblems/OTD-jamaican-me-crazy.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -517,7 +517,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [37, 56],
-                itemImage: '/assets/menus/emblems/OTD-gin-tonic.png',
+                itemImage: '/assets/menus/emblems/OTD-gin-tonic.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -526,7 +526,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Double"],
                 itemPrice: [40],
-                itemImage: '/assets/menus/emblems/OTD-brandy-coke.png',
+                itemImage: '/assets/menus/emblems/OTD-brandy-coke.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -535,7 +535,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Double"],
                 itemPrice: [40],
-                itemImage: '/assets/menus/emblems/OTD-spiced-gold.png',
+                itemImage: '/assets/menus/emblems/OTD-spiced-gold.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -544,7 +544,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Double"],
                 itemPrice: [46],
-                itemImage: '/assets/menus/emblems/OTD-rum-strawberry.png',
+                itemImage: '/assets/menus/emblems/OTD-rum-strawberry.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -553,7 +553,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Regular"],
                 itemPrice: [19],
-                itemImage: '/assets/menus/emblems/OTD-coca-cola.png',
+                itemImage: '/assets/menus/emblems/OTD-coca-cola.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -562,7 +562,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [41, 51],
-                itemImage: '/assets/menus/emblems/OTD-apple-bomb.png',
+                itemImage: '/assets/menus/emblems/OTD-apple-bomb.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -571,7 +571,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [39, 48],
-                itemImage: '/assets/menus/emblems/OTD-cherry-bomb.png',
+                itemImage: '/assets/menus/emblems/OTD-cherry-bomb.webp',
                 itemImageAlt: "Drinks emblem"
             },
             {
@@ -580,7 +580,7 @@ export const drinks = [
                 itemBrewery: "OTD",
                 itemDenom: ["Single", "Double"],
                 itemPrice: [37, 49],
-                itemImage: '/assets/menus/emblems/OTD-punch-berry.png',
+                itemImage: '/assets/menus/emblems/OTD-punch-berry.webp',
                 itemImageAlt: "Drinks emblem"
             }
         ]

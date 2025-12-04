@@ -1,14 +1,17 @@
 import dayjs from 'dayjs';
 
-import { groupOpeningTimes } from '@/lib/utilies';
+// import { getFirestoreCollection } from '@/lib/getFirestoreCollection';
+import { groupOpeningTimes } from '@/lib/utils';
 
 import styles from './opening-hours.module.css';
 
 import { openingTimes } from '@/data/synthetic-data';
 
-const OpeningHours = () => {
+export default async function OpeningHours() {
 
+  // const openingTimes = await getFirestoreCollection("openingTimes");
   const todayIndex = dayjs().day();
+  // const grouped = groupOpeningTimes(openingTimes[0].openingTimes);
   const grouped = groupOpeningTimes(openingTimes);
   console.log(openingTimes);
   console.log(grouped);
@@ -34,12 +37,15 @@ const OpeningHours = () => {
                 )
               })}
             </div>
-            <p className={styles.times}>{group.start} - {group.end}</p>
+            <p 
+              className={
+                `${styles.times} ${group.days.includes(todayIndex) ? styles.highlight : ''}`
+              }>
+                {group.start} - {group.end}
+            </p>
         </div>
         )
       })}
     </div>
   );
 };
-
-export default OpeningHours;

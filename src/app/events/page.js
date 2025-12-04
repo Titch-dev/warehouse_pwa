@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
-import { sortEvents } from '@/lib/utilies';
+import { sortEvents } from '@/lib/utils';
 
 import EventView from '@/components/events/event-view';
 import EventCalendar from '@/components/events/event-calendar';
@@ -40,7 +40,7 @@ export default function EventsPage() {
   // Handle changes to selected event
   useEffect(() => {
     if (selectedEvent) {  
-      console.log("Selected event changed:", selectedEvent);
+      // console.log("Selected event changed:", selectedEvent);
       
       
     }

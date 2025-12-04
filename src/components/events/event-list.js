@@ -1,6 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
-import { sortEvents, getEventStatus } from '@/lib/utilies';
+import { getEventStatus } from '@/lib/utils';
 import styles from './event-list.module.css';
 import EventListItem from './event-list-item';
 

@@ -2,18 +2,7 @@
     width: 100%;
     height: 100%;
     padding-top: 6rem;
-    background: linear-gradient(
-        130deg,
-        #242424 0%,
-        #242424 20%,
-        #2B2B2B 35%,
-        #2B2B2B 50%,
-        #242424 55%,
-        #242424 65%,
-        #2B2B2B 70%,
-        #2B2B2B 80%,
-        #242424 90%
-    );
+    background-color: transparent;
 }
 
 .menu_header {
@@ -63,6 +52,46 @@
 
 .menu_download:hover {
     fill: burlywood;
+}
+
+.loading_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh; /* center on screen */
+    gap: 1rem;
+    color: #fff; /* adjust for your theme */
+    font-family: 'Rubik', sans-serif;
+}
+
+.loading_content {
+ display: flex;
+ align-items: end;
+}
+
+.loading_content p {
+    letter-spacing: .1rem;
+    font-size: 3rem;
+    line-height: 1.2;
+    padding-right: .3rem;
+}
+
+.dots {
+  width: 4.5rem;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side,#f0eeee 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: d3 1s infinite linear;
+}
+@keyframes d3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
 }
 
 @media (min-width:1024px) {
