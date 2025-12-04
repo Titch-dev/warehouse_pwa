@@ -1,4 +1,4 @@
-import { formatEventTime, formatEventDate } from '@/lib/utilies';
+import { formatEventTime, formatEventDate } from '@/lib/utils';
 
 import CalendarSVG from '@/components/assets/icons/calendar-svg';
 import DoorSVG from '@/components/assets/icons/door-svg';

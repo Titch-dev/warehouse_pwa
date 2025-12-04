@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import FireSVG from '../assets/icons/fire-svg';
 
 import styles from './menu-category-item.module.css';
@@ -8,13 +6,12 @@ import { rubikFont } from '@/lib/fonts';
 export default function MenuCategoryItem({ item }) {
   return (
     <li className={styles.item_container}>
-        {item.itemImage? 
-            <Image 
-                src={item.itemImage} 
-                className={styles.item_image} 
-                width={200}
-                height={200}
-                alt={item.itemImageAlt}/>
+        {item.imageURL? 
+            <img 
+                src={item.imageURL} 
+                className={styles.item_image}
+                loading='lazy'
+                alt={item.imageAlt}/>
         : ''}
         <div className={styles.item_desc}>
             <h3 className={rubikFont.className}>

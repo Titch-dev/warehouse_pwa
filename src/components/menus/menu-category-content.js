@@ -10,7 +10,6 @@ import styles from './menu-category-content.module.css';
 import { rubikFont } from '@/lib/fonts';
 
 export default function MenuCategoryContent({ categoryData }) {
-
     const containerRef = useRef(null);
 
     useEffect(() => {
@@ -23,8 +22,9 @@ export default function MenuCategoryContent({ categoryData }) {
         return <p>No items found for this category.</p>;
     }
     
-    const categoryItems = categoryData.items;
-    const categoryDip = categoryData?.itemDip;
+   // Separate dips and regular items
+  const categoryDips = categoryData.filter(item => item.id.includes('_dip_'));
+  const categoryItems = categoryData.filter(item => !item.id.includes('_dip_'));
 
   return (
     <main ref={containerRef} className={styles.items_scroll_wrapper}>
@@ -33,11 +33,11 @@ export default function MenuCategoryContent({ categoryData }) {
                 <MenuCategoryItem key={idx} item={item}/>
             ))}
         </ul>
-        {categoryDip? 
+        {categoryDips > 0? 
             <>
                 <h3 className={`${styles.item_dip_header} ${rubikFont.className}`}>Add a dipping sauce:</h3>
                 <div className={styles.item_dip_container}>
-                    {categoryDip.map((dip, idx) => (
+                    {categoryDips.map((dip, idx) => (
                         <div key={idx} className={styles.item_dip_content}>
                             <p className={styles.item_dip_name}>{dip.itemName} 
                                 <span>

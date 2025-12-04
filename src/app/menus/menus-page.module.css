@@ -4,7 +4,18 @@
     justify-content: center;
     align-items: center;
     width: 100dvw;
-    background-color: var(--color-grey-dark-1);
+    background: linear-gradient(
+        130deg,
+        #242424 0%,
+        #242424 20%,
+        #2B2B2B 35%,
+        #2B2B2B 50%,
+        #242424 55%,
+        #242424 65%,
+        #2B2B2B 70%,
+        #2B2B2B 80%,
+        #242424 90%
+    );
     height: 100%;
 }
 

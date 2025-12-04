@@ -1,6 +1,6 @@
 import useMediaQuery from '@/hooks/useMediaQuery';
 
-import { formatEventDate } from '@/lib/utilies';
+import { formatEventDate } from '@/lib/utils';
 
 import styles from './event-list-item.module.css'
 import { rubikFont } from '@/lib/fonts';

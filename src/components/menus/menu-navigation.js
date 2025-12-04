@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react';
-
 import useMediaQuery from '@/hooks/useMediaQuery';
-
 import MenuContainer from './menu-container';
-
-import { food, drinks } from '@/data/synthetic-data';
+import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
+// import { food, drinks } from '@/data/synthetic-data';
 
 import styles from './menu-navigation.module.css';
 
@@ -18,19 +16,31 @@ import DownloadSVG from '../assets/icons/download-svg';
 const menus = ['food', 'drinks'];
 
 export default function MenuNavigation() {
+  
   const [selectedMenu, setSelectedMenu] = useState('food');
-
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+  // Fetch both menus
+  const { data: foodMenu, loading: foodLoading, error: foodError } = useFirestoreCollection('menuFoodItems', true)
+  const { data: drinksMenu, loading: drinksLoading, error: drinksError } = useFirestoreCollection('menuDrinkItems', true)
+
 
   // helper to map key → actual menu data
   const getMenuData = (menuKey) => {
-    switch (menuKey) {
-      case 'drinks':
-        return drinks;
-      default:
-        return food;
-    }
+    if (menuKey === 'drinks') { return drinksMenu };  
+    return foodMenu;
   };
+
+  if (foodLoading || drinksLoading) return (
+    <div className={styles.loading_wrapper}>
+     <div className={styles.loading_content}>
+       <p className={rubikFont.className}>Loading menus</p>
+       <div className={styles.dots}></div>
+     </div>
+      
+    </div>
+  );
+  if (foodError || drinksError) return <p>Error loading menu data</p>
 
   return (
     <section className={styles.menu}>
