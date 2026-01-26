@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "warehouse-37025"
-  }
+    "default": "warehouse-37025",
+    "warehouse-prod": "warehouse-37025"
+  },
+  "targets": {},
+  "etags": {}
 }

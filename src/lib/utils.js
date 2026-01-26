@@ -69,7 +69,7 @@ export function groupOpeningTimes(openingTimes) {
 
 // Get events in date order
 export function sortEvents(events) {
-    return [...events].sort((a, b) => dayjs(a.start).diff(dayjs(b.start))
+    return [...events].sort((a, b) => dayjs(a.start_time).diff(dayjs(b.start_time))
   )
 };
 

@@ -43,3 +43,9 @@ next-env.d.ts
 
 # public files
 public/assets
+
+# function log
+functions/firebase-debug.log
+
+# firebase
+.firebaserc

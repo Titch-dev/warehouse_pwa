@@ -6,7 +6,7 @@ import ClockSVG from '@/components/assets/icons/clock-svg';
 
 import styles from './event-icons.module.css'
 
-export default function EventIcons({column=false, date=null, price, start, end}) {
+export default function EventIcons({column=false, date=null, prices, start, end}) {
 
   return (
     <div className={`${styles.icons} ${column ? styles.column : ''}
@@ -33,7 +33,7 @@ export default function EventIcons({column=false, date=null, price, start, end})
             ${column ? styles.column : ''}
           `}>
             <DoorSVG className={styles.icon}></DoorSVG>
-            <p>{price === 0 ? "Free" : `R ${price} pp`}</p>
+            <p>{prices.length === 0 ? "Free entry" : `R ${price} pp`}</p>
         </div>
     </div>
   )

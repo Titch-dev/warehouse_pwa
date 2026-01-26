@@ -66,8 +66,8 @@ const calendarTheme = createTheme({
 });
 
 const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
-  const [selectedDate, setSelectedDate] = useState(dayjs(selectedEvent.start));
   const today = dayjs();
+  const [selectedDate, setSelectedDate] = useState(today);
   const openingTimes = useFirestoreCollection('openingTimes');
   const {start, end} = getOpeningHoursForToday(openingTimes.data);
 
@@ -75,7 +75,7 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
   // Get events for a specific date
   const getEventsForDate = (date) => {
     return events.filter(event => {
-      const eventDate = dayjs(event.start);
+      const eventDate = dayjs(event.start_time);
       return eventDate.isSame(date, 'day');
     });
   };
@@ -83,7 +83,7 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
  // Check if this day matches the currently selected event
   const isSelectedEventDay = (date) => {
     if (!selectedEvent) return false;
-    const eventDate = dayjs(selectedEvent.start);
+    const eventDate = dayjs(selectedEvent.startTime);
     return eventDate.isSame(date, 'day');
   };
 
