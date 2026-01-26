@@ -3,16 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 
+import useMediaQuery from '@/hooks/useMediaQuery';
+import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
+
 import { sortEvents } from '@/lib/utils';
 
 import EventView from '@/components/events/event-view';
 import EventCalendar from '@/components/events/event-calendar';
 import EventList from '@/components/events/event-list';
-import useMediaQuery from '@/hooks/useMediaQuery';
 
 import styles from './events-page.module.css';
 
-import { events } from '@/data/synthetic-data';
 import { rubikFont } from '@/lib/fonts';
 
 export default function EventsPage() {
@@ -21,14 +22,17 @@ export default function EventsPage() {
   const [mounted, setMounted] = useState(false);
   const isMobile = useMediaQuery('(max-width:768px)');
 
+  // Fetch Events data
+  const {data: events, loading: eventsLoading, error: eventsError } = useFirestoreCollection('events', true);
+
   // Handle client-side mounting
-  useEffect(() => {
+   useEffect(() => {
     setMounted(true);
     // Set initial selected event to the next upcoming event
     const now = dayjs();
     const upcomingEvents = events
-      .filter(event => dayjs(event.start).isAfter(now))
-      .sort((a, b) => dayjs(a.start).diff(dayjs(b.start)));
+      .filter(event => dayjs(event.start_time).isAfter(now))
+      .sort((a, b) => dayjs(a.start_time).diff(dayjs(b.start_time)));
     
     if (upcomingEvents.length > 0) {
       setSelectedEvent(upcomingEvents[0]);
@@ -40,11 +44,8 @@ export default function EventsPage() {
   // Handle changes to selected event
   useEffect(() => {
     if (selectedEvent) {  
-      // console.log("Selected event changed:", selectedEvent);
-      
-      
     }
-  }, [selectedEvent]); 
+  }, [selectedEvent]);
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
@@ -60,12 +61,27 @@ export default function EventsPage() {
     return null; // Prevent SSR mismatch
   }
 
+  //test
   const sortedEvents = sortEvents(events);
+  
   const filterOptions = ['all', 'next', 'week', 'month'];
 
   return (
     <div className={styles.page_wrapper}>
       <main className={styles.page_content}>
+{/* 
+        <section>
+          {fb_events.data.map(e => (
+            <>
+
+            <p>{e.id}</p>
+            <p>{e.start_time}</p>
+            <p>{e.description}</p>
+            <img src={e.cover.source}></img>
+            </>
+          )
+          )}
+        </section> */}
         <section className={styles.event_view_wrapper}>
           <EventView 
             selectedEvent={selectedEvent} 

@@ -21,7 +21,7 @@ const EventView = ({ selectedEvent, events }) => {
 
   const now = dayjs()
   // Sort events by date
-  const upcomingEvents = events.filter(e => dayjs(e.start).isAfter(now));
+  const upcomingEvents = events.filter(e => dayjs(e.start_time).isAfter(now));
   const nextEvent = upcomingEvents[0] || null;
 
   const currentEvent = selectedEvent || nextEvent;
@@ -45,17 +45,17 @@ const EventView = ({ selectedEvent, events }) => {
       <div className={styles.header}>
         <img 
           className={styles.header_image}
-          src={currentEvent.img}
-          alt={currentEvent.alt}/>
+          src={currentEvent.imageUrl}
+          alt={currentEvent.alt_image || currentEvent.name}/>
         <div className={styles.header_content}>
           <h3 className={`${rubikFont.className} ${styles.header_title}`}>
-            {currentEvent.title}
+            {currentEvent.name}
           </h3>
               <EventIcons
-                date={currentEvent.start} 
-                price={currentEvent.price} 
-                start={currentEvent.start} 
-                end={currentEvent.end}
+                date={currentEvent.start_time} 
+                prices={currentEvent.prices} 
+                start={currentEvent.start_time} 
+                end={currentEvent.end_time}
             />
         </div>
       </div>

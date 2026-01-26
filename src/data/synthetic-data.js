@@ -674,3 +674,77 @@ export const drinks = [
     }
 ]
 
+export const fb_events =
+{
+  "data": [
+    {
+      "id": "1364578491354635",
+      "name": "DEATHSTRIKE",
+      "start_time": "2026-02-06T18:00:00+0200",
+      "place": {
+        "name": "The Westville Warehouse",
+        "location": {
+          "city": "Westville",
+          "country": "South Africa",
+          "latitude": -29.835058,
+          "longitude": 30.915234,
+          "street": "48A Buckingham terrace",
+          "zip": "3629"
+        },
+        "id": "2031566960468299"
+      },
+      "cover": {
+        "offset_x": 50,
+        "offset_y": 50,
+        "source": "https://scontent-man2-1.xx.fbcdn.net/v/t39.30808-6/597387615_1498739652256712_7940734345737656692_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=g9uD37OhJt0Q7kNvwF-jaKP&_nc_oc=Adni7aJIuwJJTD-7L9nkwff1J0iIl7ZpUZOqNMXhzBC4lTe8P9jVOmTZTxQa-s7bScI&_nc_zt=23&_nc_ht=scontent-man2-1.xx&edm=ABTKTjYEAAAA&_nc_gid=2wmOfyedEMjsKcJFOhT0JA&_nc_tpa=Q5bMBQFpXflKsFKSnLU2rcfvDPPhZn5p5uqqFJMvnIjEXc6E5DyXw9lS67uxxOd5yXfu3P6HUmTRosDS0Q&oh=00_AfqVuWaT28FGaeaNFInLKPaITAcjXcT_I_AcQ3jMrtlaXA&oe=6973997C",
+        "id": "1498739622256715"
+      },
+      "description": "Devilnest presents: DEATHSTRIKE 6th of February 2026 The Westville Warehouse, Durban  Debuting in Durban, the Almighty DOOMTRIGGER from Cape Town will be accompanied by Pretoria's groundbreakers No Closure this summer. Your Cynical Sanity will be kicking off this hellish event followed by Imperious Vision to get you warmed up for the chaos that will ensue by the metal scenes provincial brethren bands. Early bird tickets are available, grab some before the holidays end! https://www.quicket.co.za/events/353648-deathstrike/" 
+      },
+      {
+      "id": "855377190633107",
+      "name": "Beats, Beer and Burgers",
+      "start_time": "2026-01-31T12:00:00+0200",
+      "place": {
+        "name": "48A Buckingham terrace, 3629 Westville, South Africa"
+      },
+      "cover": {
+        "offset_x": 50,
+        "offset_y": 50,
+        "source": "https://scontent-man2-1.xx.fbcdn.net/v/t39.30808-6/615945657_1373679297882105_8099737466471236707_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=SQoonx1dp-8Q7kNvwHO_dWi&_nc_oc=AdlYGESesobN5LfdMWgZfy83VsJMGuQFROaWB7KVyzvmQdIiIIGBig_rTtqa67yh254&_nc_zt=23&_nc_ht=scontent-man2-1.xx&edm=ABTKTjYEAAAA&_nc_gid=2wmOfyedEMjsKcJFOhT0JA&_nc_tpa=Q5bMBQFg0SpSX4T9tmiBvVdtxY580n7Q6f1ylSovYInYfxC5knMg_6FJqXojdcJebPRp6nfXFwfwb5fGnw&oh=00_Afo_OE5UX2MRnzNMu08xOvRpuDYIszOM0Jw0CHfWonZSaQ&oe=69739739",
+        "id": "1373679294548772"
+      },
+      "description": "🎶🍺🍔 Beats, Beer & Burgers! 🍔🍺🎶 Get ready, Westville — the ultimate day-to-night experience is here! 🔥 Beats, Beer & Burgers brings together everything you love in one epic festival: live bands 🎸, ice-cold craft beer 🍻, custom gourmet burgers 🍔, and DJs 🎧 who’ll keep the energy flowing long after the sun goes down 🌅➡️🌙 Spend the day soaking up live performances from local and guest artists 🎤, sip your way through a curated selection of craft brews 🍺, and build the perfect burger exactly the way you like it 🤤🔥. As evening hits, the festival transforms — the lights drop 💡, the DJs take over 🎶and the dance floor comes alive 💃🕺 Whether you’re here for the music 🎵, the food 🍔, the vibes ✨, or all three, Beats, Beer & Burgers is Westville’s newest signature celebration of flavour, sound, and community ❤️ What to Expect 👇 • 🍔 Burger Bar – Custom burger that will feed your soul • 🍺 Local Craft Beer – Featuring the best local breweries • 🎸 Live Bands by Day  • 🎧 DJs by Night – House, Afro, EDM & Commercial • 🛋️ Chill Zones & Social Spaces – Perfect for friends, families & good vibes • 👧🧒 Kids under 12 free entrance 📍 Location: The Westville Warehouse, 48a Buckingham Terrace, Westville 📅 Date: 31 Jan 🕒 Time: Day to Night Festival 12pm 🎟️ [PRICE] Tickets: R80 at the door [/PRICE] Join us for a celebration of music, taste, and community spirit 🎉 Bring your friends 👯, your appetite 🍔, and your dancing shoes 👟 — Beats, Beer & Burgers is where it all comes together! #BeatsBeerAndBurgers #WestvilleWarehouse #FoodFestival #CraftBeer #LiveMusic #BurgerLovers #DurbanEvents #FamilyFriendly #DayToNight #GoodVibesOnly 🍔🍺🎶"
+    },
+    {
+      "id": "1825394108119123",
+      "name": "F@ck it Friday",
+      "start_time": "2026-01-23T18:00:00+0200",
+      "place": {
+        "name": "48A Buckingham terrace, 3629 Westville, South Africa"
+      },
+      "cover": {
+        "offset_x": 50,
+        "offset_y": 50,
+        "source": "https://scontent-man2-1.xx.fbcdn.net/v/t39.30808-6/614901182_1375069481076420_9128394608165991637_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=5R39fC_2SagQ7kNvwFKjVxM&_nc_oc=AdlwIAIZ0S9sYMB8MvEfWr5JmSm0XehtLx4avjnMbRkeXidlK7D80iva5CEkuTVrMUI&_nc_zt=23&_nc_ht=scontent-man2-1.xx&edm=ABTKTjYEAAAA&_nc_gid=2wmOfyedEMjsKcJFOhT0JA&_nc_tpa=Q5bMBQFocGDCrfbzRBDzEVty1MfcQTPiB2VsJ4e2cyuwiLd9ZsDn1f_D_MMJnt8FwVvagDk9k7KJ_-WFmA&oh=00_Afr5BB0pcuYrgXOotK5pRWeAlzCbKYOVy26feS4_sKXGTQ&oe=6973946A",
+        "id": "1375069477743087"
+      },
+      "description": "🍻🔥 F#@k it Friday! 🔥🍻 Get ready for a wild one — Entrance only R250pp - R50 non drinking entrance! 🎟️Enjoy bottomless on-tap drinks 🍺🥃🍒 including Beer, Brandy and coke, Cherry bomb & more! (T’s & C’s apply) 💥 R.O.A.R — Right of Admission Reserved 📍 48a Buckingham Terrace, Westville 📞 WhatsApp 063 448 9165 for info! Let’s make the weekend unforgettable! 😎🎉"
+    },
+    {
+      "id": "2043978289703353",
+      "name": "New Years Eve Karaoke Party",
+      "start_time": "2025-12-31T19:00:00+0200",
+      "place": {
+        "name": "48A Buckingham terrace, 3629 Westville, South Africa"
+      },
+      "cover": {
+        "offset_x": 50,
+        "offset_y": 50,
+        "source": "https://scontent-man2-1.xx.fbcdn.net/v/t39.30808-6/594155867_1345380900711945_5811316598490328730_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=Z18ELTWwhdMQ7kNvwFjYesv&_nc_oc=AdmpQqqEK1TOO5u9XOqKII-SECQt900r-YNNNy8CzIcdfJ2EkwMGHM6SKeycm70VT0w&_nc_zt=23&_nc_ht=scontent-man2-1.xx&edm=ABTKTjYEAAAA&_nc_gid=2wmOfyedEMjsKcJFOhT0JA&_nc_tpa=Q5bMBQHsSmGkNdbe6jnmbvuni4yS7FJ-om-7ECVKrbDSVscYUDOnjx-xciZ70ZYkQoCTLcnvYryj92Z43g&oh=00_AfrHQAOSspWIhwVPwEpSXvccng_QTE5vTGQMjc410-AyQA&oe=69739F64",
+        "id": "1345380894045279"
+      },
+      "description": "🎤🎉 NEW YEAR’S EVE KARAOKE PARTY! 🎉🎤 Ring in 2026 the fun way at The Westville Warehouse! Get ready to sing your heart out with our epic NYE Karaoke Night — whether you’re a shower singer or a superstar, the mic is YOURS! 🎶🔥 ✨ Plus: 🍹 Awesome drink specials all night 🍻 Ice-cold beers 🎊 Party vibes till late Bring your friends, pick your song, and let’s end 2025 on a HIGH note! 🥂🎤💥 📍 48a Buckingham Terrace, Westville 📱 WhatsApp: 063 448 9165 #NYEKaraoke #SingInTheNewYear #WestvilleWarehouse #PartyTime #GoodVibes #DurbanEvents #CheersTo2026 🎉🎤✨"
+    },
+    ]
+}

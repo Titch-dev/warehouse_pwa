@@ -20,8 +20,8 @@ export default function EventListItem({event, isSelected, onClick}) {
         <div className={styles.image_container}>
             <img
                 className={styles.event_image}
-                src={event.img}
-                alt={event.alt}
+                src={event.imageUrl}
+                alt={event.alt_image || event.name}
             />
         </div>
         <div className={styles.event_shroud}></div>
@@ -38,7 +38,7 @@ export default function EventListItem({event, isSelected, onClick}) {
             </div>
             <div className={styles.date_container}>
                 <CalendarSVG className={styles.date_icon}></CalendarSVG>
-                <p>{formatEventDate(event.start)}</p>
+                <p>{formatEventDate(event.start_time)}</p>
             </div>
         </div>
         

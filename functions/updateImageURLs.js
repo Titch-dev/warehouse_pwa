@@ -1,6 +1,11 @@
 const { onDocumentWritten } = require("firebase-functions/v2/firestore");
 const { region } = require("firebase-functions/v2");
 
+// testing the fb connection
+const { onRequest } = require("firebase-functions/v2/https");
+const { defineSecret } = require("firebase-functions/params");
+
+
 // Whitelist collections to listen to
 const IMAGE_COLLECTIONS = ["menuDrinkItems", "specialsDrinkItems", "specialsFoodItems"];
 
