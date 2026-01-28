@@ -11,61 +11,81 @@ export const openingTimes = {
 export const events = [
     {
         id: 1,
-        title: "Karaoke",
-        description: `Get ready to hit the stage and belt out your favorite 
-        tunes at our Karaoke Night! Whether you're a shower singer 
-        or a rockstar in the making, this is your chance to shine. 
-        Grab a mic, enjoy awesome drinks, and vibe with a crowd that 
-        loves a good time. No judgment—just pure fun!`,
-        start: "2025-12-05T19:00:00Z",
-        end: "2025-12-05T22:00:00Z",
-        price: 0,
-        img: '/assets/events/karaoke_event.png',
-        alt: "Karaoke poster"
+        name: "Lucky 13 Launch party",
+        description: `LUCKY 13 BEER LAUNCH PARTY 
+
+ Friday the 13th | February 2026
+
+Some say Friday the 13th is unlucky… we say it’s the perfect excuse for great beer, great music, and a seriously good time.
+Join us from 6PM as we officially launch Lucky 13, our bold and beautifully balanced Märzen-style lager. Expect a malty, amber German lager with a clean, rich, toasty, bready malt flavour—the kind of beer traditionally poured at Oktoberfest and now brewed to bring a little festive magic to your glass. Lucky 13 is smooth, satisfying, and dangerously drinkable - made to quench your thirst and keep the celebration going.
+
+ Live music kicks off at 7PM bringing the energy, followed by a DJ from 10PM till late to keep the party rolling into the night.
+ Entrance: R30
+⏰ Doors open: 6PM
+Whether you’re a craft beer lover, a Märzen fan, or just looking for a legendary Friday night, this is one launch you don’t want to miss. Come raise a glass, tempt fate, and discover why Lucky 13 might just become your new favourite beer.
+Drink lucky. Drink festive. Drink Lucky 13.`,
+        start_time: "2025-12-05T19:00:00Z",
+        end_time: "2026-02-13T23:00:00.000Z",
+        prices: [],
+        imageUrl: 'https://scontent-sof1-2.xx.fbcdn.net/v/t39.30808-6/619385840_1382180933698608_2093340208717702224_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=WgcyL3RQ-SEQ7kNvwFlvZPu&_nc_oc=AdnJugk_U5Qe6qty_p2wKhhngWvByoM8RKzP2gub2fVHAS2_7LqDB9-T4fRB6rI6IaRuuo2LrcQSiQFDgogm991V&_nc_zt=23&_nc_ht=scontent-sof1-2.xx&edm=ABTKTjYEAAAA&_nc_gid=G_RPtcMR3v4gQz7RW7hU2Q&_nc_tpa=Q5bMBQF7MrWB1L_CPk_EeobHHyilw_mLUlxW-GXw_TOw3hRW6UivkLdXDHCVijl1mtkxXSQG_ZA2ebRf1w&oh=00_AfpTfPq2xOQASk-HzUyNSJdndNUzCAhoGBVy7o4nxaKxtg&oe=697CF992',
+        alt_image: "Lucky 13 Launch party at Westville Warehouse bar and events venue"
     },
     {
         id: 2,
-        title: "Fashionistas",
-        description: `Strut your style and own the night at Fashionista—the 
-        ultimate fusion of fashion and beats. Join the city’s trendsetters 
-        and dance to the electrifying sounds of DJ Jayytentacion, spinning 
-        everything from hip-hop to house. Dress to impress, vibe hard, and 
-        let your fit speak louder than words. `,
-        start: "2025-12-10T10:00:00Z",
-        end: "2025-12-10T23:30:00Z",
-        price: 0,
-        img: '/assets/events/fashionista_event.png',
-        alt: "Fashionista poster"
+        name: "DEATHSTRIKE",
+        description: `Devilnest presents:
+
+DEATHSTRIKE
+6th of February 2026
+The Westville Warehouse, Durban
+
+Debuting in Durban, the Almighty DOOMTRIGGER from Cape Town will be accompanied by Pretoria's groundbreakers No Closure this summer.
+Your Cynical Sanity will be kicking off this hellish event followed by Imperious Vision to get you warmed up for the chaos that will ensue by the metal scenes provincial brethren bands.
+
+Early bird tickets are available, grab some before the holidays end!
+
+https://www.quicket.co.za/events/353648-deathstrike/`,
+        start_time: "2026-02-06T16:00:00.000Z",
+        end_time: "2026-02-06T23:00:00.000Z",
+        prices: [],
+        imageUrl: 'https://scontent-sof1-2.xx.fbcdn.net/v/t39.30808-6/597387615_1498739652256712_7940734345737656692_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=PSlOAEjWf3IQ7kNvwEkiEvB&_nc_oc=AdkT8rAYO7jEtkvuU3J-z6aST76sCCic4e6F_28Srk87u6fUgq_nTLe6qU6x9EZdWpX8HeGIrRPCHAfOGXCC3IO5&_nc_zt=23&_nc_ht=scontent-sof1-2.xx&edm=ABTKTjYEAAAA&_nc_gid=G_RPtcMR3v4gQz7RW7hU2Q&_nc_tpa=Q5bMBQHYJCm0MPxpP2M1d_cPXoqwynGNzWunMaZ5VDoTD4106pZ82W4DKzP-UYHZOV3fk1rUtaQj6J8rew&oh=00_Afo7oH6d07eu7TdYRnpmu2rhSaLekZaEZA-kRJEOfTwcEw&oe=697D0C3C',
+        alt_image: "DEATHSTRIKE at Westville Warehouse bar and events venue"
     },
     {
         id: 3,
-        title: "Comedy Night",
-        description: `Ready for a night of nonstop laughs? Join us for Comedy 
-        Night, where the punchlines are sharp and the vibes are unmatched. 
-        Featuring the hilarious Kwanda Radebe, the quick-witted Liam Whitcher, 
-        and a killer lineup of rising stars, this is your midweek serotonin 
-        boost – good drinks, great jokes, and even better company.`,
-        start: "2025-12-14T19:00:00Z",
-        end: "2025-12-14T23:00:00Z",
-        price: 60,
-        img: '/assets/events/comedy_night_event.png',
-        alt: "Comedy night poster"
-    },
-    {
-        id: 4,
-        title: "Ladies' Night",
-        description: `This Friday, grab your girls and get ready to turn up 
-        the glam at Ladies' Night! We’re serving up signature cocktails, 
-        smooth beats, and an electric atmosphere made for dancing, laughing, 
-        and letting loose. Whether you're celebrating something or just need 
-        a night out, this is your perfect excuse!`,
-        start: "2025-12-22T19:00:00Z",
-        end: "2025-12-22T01:00:00Z",
-        price: 0,
-        img: '/assets/events/ladies_night_event.png',
-        alt: "Ladies' night poster"
-    },
+        name: "Beats, Beer and Burgers",
+        description: `Beats, Beer & Burgers! 
 
+Get ready, Westville — the ultimate day-to-night experience is here!
+Beats, Beer & Burgers brings together everything you love in one epic festival: live bands, ice-cold craft beer , custom gourmet burgers, and DJs who’ll keep the energy flowing long after the sun goes down,
+
+Spend the day soaking up live performances from local and guest artists, sip your way through a curated selection of craft brews and build the perfect burger exactly the way you like it. As evening hits, the festival transforms — the lights drop, the DJs take over and the dance floor comes alive.
+
+Whether you’re here for the music, the food, the vibes, or all three, Beats, Beer & Burgers is Westville’s newest signature celebration of flavour, sound, and community.
+
+What to Expect
+•  Burger Bar – Custom burger that will feed your soul
+•  Local Craft Beer – Featuring the best local breweries
+•  Live Bands by Day 
+•  DJs by Night – House, Afro, EDM & Commercial
+• ️ Chill Zones & Social Spaces – Perfect for friends, families & good vibes
+• Kids under 12 free entrance
+
+ Location: The Westville Warehouse, 48a Buckingham Terrace, Westville
+ Date: 31 Jan
+ Time: starts at 12pm goes all night
+️ Tickets: R80 at the door
+
+Join us for a celebration of music, taste, and community spirit 
+Bring your friends, your appetite, and your dancing shoes — Beats, Beer & Burgers is where it all comes together!
+
+#BeatsBeerAndBurgers #WestvilleWarehouse #FoodFestival #CraftBeer #LiveMusic #BurgerLovers #DurbanEvents #FamilyFriendly #DayToNight #GoodVibesOnly`,
+        start_time: "2026-01-31T10:00:00.000Z",
+        end_time: "2026-01-31T23:00:00.000Z",
+        prices: [],
+        imageUrl: 'https://scontent-sof1-2.xx.fbcdn.net/v/t39.30808-6/615945657_1373679297882105_8099737466471236707_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=9e60e4&_nc_ohc=3QrDvBaiyF8Q7kNvwG_2DR8&_nc_oc=Adku47TecQNDuaw1aYGJ1rzIGL3pE8zJOO7aTXcdJPoaOEl3JvBfybII3WpNG6Qn_5NLRCU3IusfMzRQJIPA8Gfc&_nc_zt=23&_nc_ht=scontent-sof1-2.xx&edm=ABTKTjYEAAAA&_nc_gid=G_RPtcMR3v4gQz7RW7hU2Q&_nc_tpa=Q5bMBQFiuGKJ9lEaAUN42W5tc1lteLgpa2aTLJpKQrKvzeQWVVY2vZPKoyIepkOKDLBU3qlfqznVOnxGug&oh=00_AfowZRvKC4RhGg8IeDN0nR1kKXy-weiAQjhCTCGAZFXcBw&oe=697D09F9',
+        alt_image: "Beats, Beer and Burgers at Westville Warehouse bar and events venue"
+    }
 ]
 
 // Warehouse specials image

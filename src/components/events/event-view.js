@@ -2,22 +2,20 @@
 
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
-
+import EventDescriptionModal from './event-description-modal';
+import LoadingData from '../loading-data';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
 import styles from './event-view.module.css';
 import { rubikFont } from '@/lib/fonts';
 import EventIcons from './event-icons';
 
-import ChevronDownSVG from '../assets/icons/chevron-down-svg';
-
 const EventView = ({ selectedEvent, events }) => {
-  const [ descShow, setDescShow ] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   useEffect(() => {
-    setDescShow(false);
-  }, [selectedEvent])
+  }, [selectedEvent, events])
 
   const now = dayjs()
   // Sort events by date
@@ -26,6 +24,12 @@ const EventView = ({ selectedEvent, events }) => {
 
   const currentEvent = selectedEvent || nextEvent;
 
+  if (!events || events.length === 0) {
+    return (
+      <LoadingData dataName={'next event'}/>
+    );
+  }
+
   if (!currentEvent) {
     return (
       // create element if no events
@@ -33,56 +37,50 @@ const EventView = ({ selectedEvent, events }) => {
     );
   }
 
-  const handleShowDesc = () => {
-    if (isMobile) {
-      setDescShow(prev => !prev)
-      console.log(descShow);
-    }
-  }
-
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <img 
-          className={styles.header_image}
-          src={currentEvent.imageUrl}
-          alt={currentEvent.alt_image || currentEvent.name}/>
-        <div className={styles.header_content}>
-          <h3 className={`${rubikFont.className} ${styles.header_title}`}>
+    <>
+      <div className={styles.container}>
+        <div className={styles.event_content}>
+          <div className={styles.event_image_wrapper}>
+            <img 
+            className={styles.event_image}
+            src={currentEvent.imageUrl}
+            alt={currentEvent.alt_image || currentEvent.name}/>
+          </div>
+          <h3 className={`${rubikFont.className} ${styles.event_title}`}>
             {currentEvent.name}
           </h3>
-              <EventIcons
-                date={currentEvent.start_time} 
-                prices={currentEvent.prices} 
-                start={currentEvent.start_time} 
-                end={currentEvent.end_time}
+          <div className={styles.icon_wrapper}>
+            <EventIcons
+              column={!isMobile}
+              date={currentEvent.start_time} 
+              prices={currentEvent.prices} 
+              start={currentEvent.start_time} 
+              end={currentEvent.end_time}
             />
-        </div>
-      </div>
-      <div
-        onClick={() => handleShowDesc()}
-        className={`
-          ${styles.body}
-          ${descShow ? styles.open : ''}
-        `}>
-        {isMobile &&
-        <div 
-          className={`
-            ${styles.body_icon}
-            ${descShow ? styles.open : ''}
-          `}>
-          <ChevronDownSVG />
-        </div>
-        }
-        <p 
-          className={`
-            ${styles.body_desc}
-            ${descShow ? styles.open : ''}
-          `}>
+          </div>
+            
+          <p className={styles.event_desc}>
             {currentEvent.description}
           </p>
+
+          <button
+            className={styles.see_more}
+            onClick={() => setIsModalOpen(true)}
+          >
+            See more
+          </button>
+        </div>
       </div>
-    </div>
+
+      {isModalOpen && (
+        <EventDescriptionModal
+          event={currentEvent}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+    </>
+    
   );
 };
 

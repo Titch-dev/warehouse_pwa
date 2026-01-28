@@ -1,5 +1,7 @@
-import React from 'react';
+import { useEffect } from 'react';
 import dayjs from 'dayjs';
+import LoadingData from '../loading-data';
+
 import { getEventStatus } from '@/lib/utils';
 import styles from './event-list.module.css';
 import EventListItem from './event-list-item';
@@ -8,30 +10,40 @@ const EventList = ({ events, selectedEvent, onEventSelect, selectedFilter }) => 
   const now = dayjs();
   
   // Sort events by date
-  const upcomingEvents = events.filter(e => dayjs(e.start).isAfter(now));
+  const upcomingEvents = events.filter(e => dayjs(e.start_time).isAfter(now));
   const nextEvent = upcomingEvents[0] || null;
 
-  const thisWeek = events.filter(e =>
-    dayjs(e.start).isSame(now, 'week')
-  );
-
   const thisMonth = events.filter(e =>
-    dayjs(e.start).isSame(now, 'month')
+    dayjs(e.start_time).isSame(now, 'month')
   );
 
-  let filteredEvents = [];
+  const nextMonthEvents = events.filter(e =>
+    dayjs(e.start_time).isSame(now.add(1, 'month'), 'month')
+  );
+
+  let filteredEvents;
+
   switch (selectedFilter) {
     case 'next':
       filteredEvents = nextEvent ? [nextEvent] : [];
       break;
-    case 'week':
-      filteredEvents = thisWeek;
-      break;
-    case 'month':
+    case 'this-month':
       filteredEvents = thisMonth;
       break;
+    case 'next-month':
+      filteredEvents = nextMonthEvents;
+      break;
+    case 'all':
     default:
       filteredEvents = events;
+  }
+
+  useEffect(() => {}, [events])
+
+  if (!events || events.length === 0) {
+    return (
+      <LoadingData dataName={'events'}/>
+    );
   }
 
   return (
@@ -57,13 +69,12 @@ const EventList = ({ events, selectedEvent, onEventSelect, selectedFilter }) => 
         <div className={styles.emptyState}>
           <h3>
             No events scheduled
-            
           </h3>
           <h3>
             {
               selectedFilter === 'all' ? '' :
               selectedFilter === 'next' ? '' :
-              selectedFilter === 'week' ? 'this week' : 'this month'
+              selectedFilter === 'this-month' ? 'this month' : 'next month'
             }
           </h3>
         </div>
