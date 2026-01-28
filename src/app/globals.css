@@ -77,7 +77,7 @@ body {
   height: auto;
   min-height: auto;
   font-family: Helvetica, sans-serif;
-  font-size: 2rem;
+  font-size: 1.8rem;
   line-height: 1.7;
   background-color: var(--color-grey-dark-3);
   color: var(--color-grey-light-3);
@@ -88,5 +88,6 @@ body {
   body {
     height: 100%;
     min-height: 100vh;
+    font-size: 2rem;
   }
 }

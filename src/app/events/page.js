@@ -16,6 +16,7 @@ import styles from './events-page.module.css';
 
 import { rubikFont } from '@/lib/fonts';
 
+
 export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -24,6 +25,7 @@ export default function EventsPage() {
 
   // Fetch Events data
   const {data: events, loading: eventsLoading, error: eventsError } = useFirestoreCollection('events', true);
+
 
   // Handle client-side mounting
    useEffect(() => {
@@ -64,24 +66,11 @@ export default function EventsPage() {
   //test
   const sortedEvents = sortEvents(events);
   
-  const filterOptions = ['all', 'next', 'week', 'month'];
+  const filterOptions = ['all', 'next', 'this-month', 'next-month'];
 
   return (
     <div className={styles.page_wrapper}>
       <main className={styles.page_content}>
-{/* 
-        <section>
-          {fb_events.data.map(e => (
-            <>
-
-            <p>{e.id}</p>
-            <p>{e.start_time}</p>
-            <p>{e.description}</p>
-            <img src={e.cover.source}></img>
-            </>
-          )
-          )}
-        </section> */}
         <section className={styles.event_view_wrapper}>
           <EventView 
             selectedEvent={selectedEvent} 
@@ -109,8 +98,8 @@ export default function EventsPage() {
                     >
                       {filter === 'all' ? 'All Events' :
                       filter === 'next' ? 'Next Event' :
-                      filter === 'week' ? 'This Week' :
-                      'This Month'}
+                      filter === 'this-month' ? 'This Month' :
+                      'Next Month'}
                     </option>
                     ))}
                   </select>
@@ -124,9 +113,9 @@ export default function EventsPage() {
                     onClick={() => setSelectedFilter(filter)}
                   >
                     {filter === 'all' ? 'All Events' :
-                    filter === 'next' ? 'Next Event' :
-                    filter === 'week' ? 'This Week' :
-                    'This Month'}
+                      filter === 'next' ? 'Next Event' :
+                      filter === 'this-month' ? 'This Month' :
+                      'Next Month'}
                   </button>
                 ))}  
                 </>

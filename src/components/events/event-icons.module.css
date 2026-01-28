@@ -29,13 +29,13 @@
 
 .icons.column {
     flex-direction: column;
-    width: auto;
     padding: 0;
+    gap: 2rem;
+    justify-content: center;
 }
-.icon_container.column {
+.icon_container.column .icon_container{
     flex-direction: row;
     align-items: center;
-    gap: 3rem;
     height: 100%;
 }
 
@@ -46,6 +46,7 @@
 @media (min-width: 1024px){
     .icons {
         display: flex;
+        flex-wrap: wrap;
         justify-content: center;
         width: 100%;
         gap: 1rem;
@@ -74,17 +75,24 @@
 
     .icons.column {
         flex-direction: column;
-        width: auto;
+        max-width: fit-content;
         padding: 0;
+        gap: 1.5rem;
     }
     .icon_container.column {
+        position: relative;
         flex-direction: row;
         align-items: center;
-        gap: 3rem;
+        gap: 3.5rem;
         height: 100%;
     }
 
+    .icon_container.column p {
+        font-size: 1.7rem;
+    }
+
     .icon_container.column svg {
-        margin-bottom: .5rem;
+        position: relative;
+        top: .4rem;
     }
 }

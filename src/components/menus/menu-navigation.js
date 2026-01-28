@@ -4,13 +4,13 @@ import { useState } from 'react';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import MenuContainer from './menu-container';
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
-// import { food, drinks } from '@/data/synthetic-data';
 
 import styles from './menu-navigation.module.css';
 
 import { rubikFont } from '@/lib/fonts';
 
 import DownloadSVG from '../assets/icons/download-svg';
+import LoadingData from '../loading-data';
 
 
 const menus = ['food', 'drinks'];
@@ -32,13 +32,7 @@ export default function MenuNavigation() {
   };
 
   if (foodLoading || drinksLoading) return (
-    <div className={styles.loading_wrapper}>
-     <div className={styles.loading_content}>
-       <p className={rubikFont.className}>Loading menus</p>
-       <div className={styles.dots}></div>
-     </div>
-      
-    </div>
+    <LoadingData dataName={'menus'}/>
   );
   if (foodError || drinksError) return <p>Error loading menu data</p>
 

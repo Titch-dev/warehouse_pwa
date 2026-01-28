@@ -28,7 +28,7 @@ export default function EventListItem({event, isSelected, onClick}) {
         <div className={styles.event_content_wrapper}>
             <div className={styles.event_content}>
                 <h3 className={`${rubikFont.className} ${styles.event_title}`}>
-                    {event.title}
+                    {event.name}
                 </h3>
                 {!isMobile &&
                     <p className={styles.event_desc}>

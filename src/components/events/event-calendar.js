@@ -68,8 +68,8 @@ const calendarTheme = createTheme({
 const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(today);
-  const openingTimes = useFirestoreCollection('openingTimes');
-  const {start, end} = getOpeningHoursForToday(openingTimes.data);
+  // const openingTimes = useFirestoreCollection('openingTimes'); testing
+  // const {start, end} = getOpeningHoursForToday(openingTimes.data);
 
 
   // Get events for a specific date
@@ -149,7 +149,7 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
         {/* <OpeningHours date={today}/> */}
         <div className={styles.opening_hours}>
           <p><strong>Open Today</strong></p> 
-          <p>{start} - {end}</p>
+          {/* <p>{start} - {end}</p>  testing*/}
         </div>
       </div>
     </div>
