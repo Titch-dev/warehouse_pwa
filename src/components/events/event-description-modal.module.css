@@ -17,6 +17,8 @@
     border-radius: 1rem;
     position: relative;
     z-index: 1;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .close_container {

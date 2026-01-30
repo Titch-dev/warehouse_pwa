@@ -18,7 +18,10 @@ export default function WebFooter() {
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.logo_container}>
-            <Socials size={30}/>
+            <Socials 
+              size={30}
+              insta
+              fb/>
             <LogoSVG className={styles.logo}/>
           </div>
           <div className={styles.nav_container}>

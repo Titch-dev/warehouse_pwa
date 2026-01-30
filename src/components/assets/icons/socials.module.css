@@ -1,13 +1,31 @@
 .container {
     display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     gap: 4rem;
+}
+
+.icon_button {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  
+}
+
+.icon_button:hover {
+    transform: translateY(-4px);
 }
 
 .icon {
     fill: var(--color-grey-light-3);
 }
 
-.icon:hover {
+.icon_button:hover .icon{
     fill: url(#Gradient1);
 }
 

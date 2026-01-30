@@ -14,6 +14,8 @@
   list-style: none;
   overflow: auto;
   gap: 2rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 /* Desktop responsiveness */

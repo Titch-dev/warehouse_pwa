@@ -6,21 +6,25 @@
     font-size: 1.8rem;
 }
 
+.open_times h3 {
+    text-align: center;
+}
 .times_row {
     display: flex;
     justify-content: space-between;
 }
 
-.days span::after {
-    content: ', ';
+.highlight{
+    color: var(--color-orange);
 }
 
 .days span:last-child::after{
-    content:none;
+    content: none;
 }
 
-.highlight{
-    color: var(--color-orange);
+.days span::after {
+    content: ', ';
+    color: var(--color-grey-light-3);
 }
 
 .times {
