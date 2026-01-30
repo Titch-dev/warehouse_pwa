@@ -1,10 +1,12 @@
 import * as React from "react"
-const TornBackgroundSVG = ({className, children}) => (
+const TornBackgroundSVG = ({className, height, width, children}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
     viewBox="0 0 440.829 172.026"
     className={className}
+    height={height}
+    width={width}
   >
     <defs>
         {children}

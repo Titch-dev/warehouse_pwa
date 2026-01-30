@@ -1,8 +1,10 @@
-const EnvelopeSVG = ({ className, children}) => (
+const EnvelopeSVG = ({ className, width, height, children}) => (
     <svg 
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 512 512" 
-        className={className}>
+        className={className}
+        width={width}
+        sheight={height}>
             <defs>
                 {children}
             </defs>

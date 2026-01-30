@@ -2,6 +2,8 @@
     height: 60dvh;
     overflow-y: scroll;
     width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .category_item_list {

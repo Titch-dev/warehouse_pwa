@@ -42,12 +42,12 @@ export function groupOpeningTimes(openingTimes) {
   const groups = [];
 
   for (let i = 0; i < 7; i++) {
-    const entryDay = openingTimes[i];
+    const entryDay =  openingTimes[i];
     let foundGroup = false;
 
     // check if there is already a group with same start & end
     for (let group of groups) {
-      if (group.start === entryDay.start && group.end === entryDay.end) {
+      if (group.open === entryDay.open && group.close === entryDay.close) {
         group.days.push(i);
         foundGroup = true;
         break;
@@ -58,8 +58,8 @@ export function groupOpeningTimes(openingTimes) {
     if (!foundGroup) {
       groups.push({
         days: [i],
-        start: entryDay.start,
-        end: entryDay.end,
+        open: entryDay.open,
+        close: entryDay.close,
       });
     }
   }
