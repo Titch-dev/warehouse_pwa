@@ -9,6 +9,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import styles from './event-view.module.css';
 import { rubikFont } from '@/lib/fonts';
 import EventIcons from './event-icons';
+import { getNextEvent } from '@/lib/utils';
 
 const EventView = ({ selectedEvent, events }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -17,12 +18,7 @@ const EventView = ({ selectedEvent, events }) => {
   useEffect(() => {
   }, [selectedEvent, events])
 
-  const now = dayjs()
-  // Sort events by date
-  const upcomingEvents = events.filter(e => dayjs(e.start_time).isAfter(now));
-  const nextEvent = upcomingEvents[0] || null;
-
-  const currentEvent = selectedEvent || nextEvent;
+  const currentEvent = selectedEvent || getNextEvent(events);
 
   if (!events || events.length === 0) {
     return (
@@ -68,7 +64,7 @@ const EventView = ({ selectedEvent, events }) => {
             className={styles.see_more}
             onClick={() => setIsModalOpen(true)}
           >
-            See more
+            ...details
           </button>
         </div>
       </div>

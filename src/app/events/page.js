@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
 
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
 
-import { sortEvents } from '@/lib/utils';
+import { getNextEvent, sortEvents } from '@/lib/utils';
 
 import EventView from '@/components/events/event-view';
 import EventCalendar from '@/components/events/event-calendar';
@@ -26,28 +25,21 @@ export default function EventsPage() {
   // Fetch Events data
   const {data: events, loading: eventsLoading, error: eventsError } = useFirestoreCollection('events', true);
 
-
-  // Handle client-side mounting
-   useEffect(() => {
+  // Handle client-side mounting (SSR safety only)
+  useEffect(() => {
     setMounted(true);
-    // Set initial selected event to the next upcoming event
-    const now = dayjs();
-    const upcomingEvents = events
-      .filter(event => dayjs(event.start_time).isAfter(now))
-      .sort((a, b) => dayjs(a.start_time).diff(dayjs(b.start_time)));
-    
-    if (upcomingEvents.length > 0) {
-      setSelectedEvent(upcomingEvents[0]);
-    } else if (events.length > 0) {
-      setSelectedEvent(events[0]);
-    }
   }, []);
 
-  // Handle changes to selected event
   useEffect(() => {
-    if (selectedEvent) {  
+    if (!events.length) return;
+    if (selectedEvent) return;
+
+    const nextEvent = getNextEvent(events);
+
+    if (nextEvent) {
+      setSelectedEvent(nextEvent);
     }
-  }, [selectedEvent]);
+  }, [events, selectedEvent]);
 
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
@@ -63,7 +55,6 @@ export default function EventsPage() {
     return null; // Prevent SSR mismatch
   }
 
-  //test
   const sortedEvents = sortEvents(events);
   
   const filterOptions = ['all', 'next', 'this-month', 'next-month'];

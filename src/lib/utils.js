@@ -1,6 +1,63 @@
 import dayjs from "dayjs";
 
-import { colors } from "./colors";
+// Week index for fallback
+const WEEK_DAYS = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+]
+
+// Order the specials by closest day
+export function orderSpecialsByClosestDay(specials = []) {
+  if (!specials.length) return []
+
+  const todayIndex = dayjs().day()
+
+  const withDayIndex = specials.map(s => ({
+    ...s,
+    dayIndex: s.dayIndex ?? WEEK_DAYS.indexOf(s.day),
+  }))
+
+  const sorted = [...withDayIndex].sort((a, b) => {
+    const aDiff = (a.dayIndex - todayIndex + 7) % 7
+    const bDiff = (b.dayIndex - todayIndex + 7) % 7
+    return aDiff - bDiff
+  })
+
+  return sorted
+}
+
+
+// get firebase image
+export function getStorageImageUrl(path) {
+  if (!path) return null
+
+  return `https://firebasestorage.googleapis.com/v0/b/${process.env.NEXT_PUBLIC_FIREBASE_BUCKET}/o/${encodeURIComponent(
+    path
+  )}?alt=media`
+}
+
+
+
+// get next event
+export function getNextEvent(events) {
+  const today = dayjs().startOf('day');
+
+  return (
+    events
+      .filter(event =>
+        dayjs(event.start_time).isSame(today, 'day') ||
+        dayjs(event.start_time).isAfter(today)
+      )
+      .sort((a, b) =>
+        dayjs(a.start_time).valueOf() - dayjs(b.start_time).valueOf()
+      )[0] || null
+  );
+}
 
 // format event date
 export const formatEventDate = (dateString) => {
@@ -26,18 +83,22 @@ export const formatEventTime = (startString, endString) => {
     return `${start.format('h:mm A')} - ${end.format('h:mm A')}`;
   };
 
-// Get the opening time for today
-export function getOpeningHoursForToday(openingTimes = []) {
+// Get the opening & closing time for today
+export function getOpeningHoursForToday(openingTimes) {
   const todayIndex = dayjs().day(); // 0 = Sunday, 6 = Saturday
-  const today = openingTimes.find(entry => entry.day === todayIndex);
+  const today = openingTimes[todayIndex];
 
-  if (!today) return { start: null, end: null };
+  if (!today) {
+    return { open: null, close: null };
+  }
 
-  const { start, end } = today;
-  return { start, end };
+  return {
+    open: today.open,
+    close: today.close
+  };
 }
-// grouped opening times for the week
 
+// grouped opening times for the week
 export function groupOpeningTimes(openingTimes) {
   const groups = [];
 
@@ -73,21 +134,6 @@ export function sortEvents(events) {
   )
 };
 
-// Get event Status
-export const getEventStatus = (event) => {
-    const now = dayjs();
-    const eventStart = dayjs(event.start);
-    const eventEnd = dayjs(event.end);
-    
-    if (now.isBefore(eventStart)) {
-      return { status: 'upcoming', color: colors.blue };
-    } else if (now.isBetween(eventStart, eventEnd)) {
-      return { status: 'live', color: colors.pink};
-    } else {
-      return { status: 'past', color: colors.greydark3 };
-    }
-  };
-
 // Slugify names of docs - 'Chicken Burger' => 'chicken_burger'
 export function slugify(str) {
   return str
@@ -104,3 +150,4 @@ export function getUniqueCategories(menuItems) {
   })
   return Array.from(categoriesSet)
 }
+

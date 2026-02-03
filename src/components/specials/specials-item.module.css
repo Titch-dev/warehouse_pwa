@@ -16,7 +16,8 @@
     background-color: var(--color-grey-dark-1);
     font-size: 2.3rem;
     z-index: 1;
-    padding-left: 2rem;
+    text-align: center;
+    text-transform: capitalize;
 }
 
 .image {
@@ -51,6 +52,7 @@
     display: inline-block;
     font-size: 2.8rem;
     padding: 2rem 0 0 0;
+
 }
 
 .title::before {
@@ -70,6 +72,7 @@
     width: 100%;
     font-size: 1.7rem;
     padding: 2rem 0;
+    overflow: scroll;
 }
 
 .sml_text {

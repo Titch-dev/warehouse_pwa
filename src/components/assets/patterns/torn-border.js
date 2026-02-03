@@ -2,7 +2,7 @@ import TornBorderMobSVG from "./torn-border-mobile";
 import TornBorderTabSVG from "./torn-border-tablet";
 import styles from "./torn-border.module.css";
 
-export default function TornBorder({top, color, mobile_view=false }) {
+export default function TornBorder({top=true, color, mobile_view=false }) {
     
   return (
     <>
@@ -10,7 +10,7 @@ export default function TornBorder({top, color, mobile_view=false }) {
             className={
                 `${styles.border} 
                 ${styles.mobile} 
-                ${top===false ? styles.bottom : styles.top}`
+                ${!top ? styles.bottom : styles.top}`
             }
             color={color}
         />
@@ -18,8 +18,8 @@ export default function TornBorder({top, color, mobile_view=false }) {
             className={
                 `${styles.border}
                 ${styles.desktop}
-                ${top===false ? styles.bottom : styles.top}
-                ${mobile_view===true ? styles.mobile_only : undefined}`
+                ${!top ? styles.bottom : styles.top}
+                ${mobile_view ? styles.mobile_only : undefined}`
             }
             color={color}
         />
