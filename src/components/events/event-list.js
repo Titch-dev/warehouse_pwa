@@ -2,16 +2,12 @@ import { useEffect } from 'react';
 import dayjs from 'dayjs';
 import LoadingData from '../loading-data';
 
-import { getEventStatus } from '@/lib/utils';
+// import { getEventStatus } from '@/lib/utils';
 import styles from './event-list.module.css';
 import EventListItem from './event-list-item';
 
 const EventList = ({ events, selectedEvent, onEventSelect, selectedFilter }) => {
   const now = dayjs();
-  
-  // Sort events by date
-  const upcomingEvents = events.filter(e => dayjs(e.start_time).isAfter(now));
-  const nextEvent = upcomingEvents[0] || null;
 
   const thisMonth = events.filter(e =>
     dayjs(e.start_time).isSame(now, 'month')
@@ -51,14 +47,12 @@ const EventList = ({ events, selectedEvent, onEventSelect, selectedFilter }) => 
       <ul className={styles.event_list}>
         {filteredEvents.map((event, index) => {
           const isSelected = selectedEvent && selectedEvent.id === event.id;
-          const eventStatus = getEventStatus(event);
           
           return (
             <EventListItem 
               key={event.id}
               event={event}
               isSelected={isSelected}
-              eventStatus={eventStatus}
               onClick={() => onEventSelect(event)}
             />
           );

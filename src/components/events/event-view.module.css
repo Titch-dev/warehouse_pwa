@@ -7,6 +7,8 @@
     background-color: var(--color-grey-dark-1);
     border-radius: 1rem;
     overflow: hidden;
+    padding: 2rem 0;
+
 }
 
 .event_content {
