@@ -1,14 +1,5 @@
-.backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-}
-
-.modal {
+.wrapper{
+    position: relative;
     background-color: var(--color-grey-dark-1);
     max-width: 60rem;
     width: 100%;
@@ -32,7 +23,7 @@
         rgba(36,36,36,0) 50%
     );;
     border: none;
-    z-index: 1;
+    z-index: 10;
     width: 10rem;
     height: 10rem;
     clip-path: polygon(
@@ -113,4 +104,5 @@
 .description {
     padding: 3rem;
     line-height: 1.6;
+    white-space: pre-line;
 }

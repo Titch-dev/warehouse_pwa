@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react';
 import EventIcons from './event-icons';
 
 import { rubikFont } from '@/lib/fonts';
@@ -11,22 +10,9 @@ import { colors } from '@/lib/colors';
 
 function EventDescriptionModal({ event, onClose }) {
 
-    useEffect(() => {
-    // lock scroll
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = 'hidden';
-
-    return () => {
-      // restore scroll
-      document.body.style.overflow = originalStyle;
-    };
-  }, []);
-
   return (
-    <div className={styles.backdrop} onClick={onClose}>
-        
       <div
-        className={styles.modal}
+        className={styles.wrapper}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.close_container}>
@@ -59,11 +45,21 @@ function EventDescriptionModal({ event, onClose }) {
             </div>
           </div>
         </div>
+        {event.ticketUrl && (
+            <a
+              href={event.ticketUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.ticket_link}
+            >
+              Buy tickets online
+            </a>
+          )}
         <p className={styles.description}>
+          
           {event.description}
         </p>
       </div>
-    </div>
   )
 }
 

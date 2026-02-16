@@ -6,7 +6,7 @@
     overflow: hidden;
     border-radius: 1rem;
     height: auto;
-    width: 35rem;
+    min-width: 35rem;
     color: var(--color-grey-light-3);
 }
 
@@ -79,23 +79,33 @@
     font-size: 1.6rem;
 }
 
-
-
 .offer_line {
     display: flex;
     width: 100%;
     padding: 0 2rem;
     justify-content: space-between;
+    align-items: center;
 }
+
+.centered {
+    justify-content: center;
+    text-align: center;
+}
+
+.offer_price {
+    white-space: nowrap;
+}
+
 
 @media (min-width:768px) {
     
     .container{
-        width: 100%;
+        min-width: 40rem;
     }
 
     .image {
         width: 100%;
+        object-fit: cover;
     }
 }
 

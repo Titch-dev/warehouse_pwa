@@ -1,4 +1,5 @@
 .container {
+  position: relative;
   height: 100%;
   width: 100%;
   display: flex;
@@ -16,6 +17,15 @@
   gap: 2rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+
+.empty_state{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
 }
 
 /* Desktop responsiveness */

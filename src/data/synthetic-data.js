@@ -694,6 +694,82 @@ export const drinks = [
     }
 ]
 
+export const firebase_gallery = 
+{
+    "data": [
+        {
+            id: 1,
+            imagePath: '/assets/gallery/img_001.webp',
+            visible: true,
+        },
+        {
+            id: 2,
+            imagePath: '/assets/gallery/img_002.webp',
+            visible: true,
+        },
+        {
+            id: 3,
+            imagePath: '/assets/gallery/img_003.webp',
+            visible: true,
+        },
+        {
+            id: 4,
+            imagePath: '/assets/gallery/img_004.webp',
+            visible: true,
+        },
+        {
+            id: 5,
+            imagePath: '/assets/gallery/img_005.webp',
+            visible: true,
+        },
+        {
+            id: 6,
+            imagePath: '/assets/gallery/img_006.webp',
+            visible: true,
+        },
+        {
+            id: 7,
+            imagePath: '/assets/gallery/img_007.webp',
+            visible: true,
+        },
+        {
+            id: 8,
+            imagePath: '/assets/gallery/img_008.webp',
+            visible: true,
+        },
+        {
+            id: 9,
+            imagePath: '/assets/gallery/img_009.webp',
+            visible: true,
+        },
+        {
+            id: 10,
+            imagePath: '/assets/gallery/img_010.webp',
+            visible: true,
+        },
+        {
+            id: 11,
+            imagePath: '/assets/gallery/img_011.webp',
+            visible: true,
+        },
+        {
+            id: 12,
+            imagePath: '/assets/gallery/img_012.webp',
+            visible: true,
+        },
+        {
+            id: 13,
+            imagePath: '/assets/gallery/img_013.webp',
+            visible: true,
+        },
+        {
+            id: 14,
+            imagePath: '/assets/gallery/img_014.webp',
+            visible: true,
+        },
+    ]
+}
+
 export const fb_events =
 {
   "data": [

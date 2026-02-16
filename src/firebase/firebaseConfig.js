@@ -1,6 +1,9 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { 
+  initializeFirestore, 
+  persistentLocalCache,
+  persistentMultipleTabManager 
+} from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 // import { getAnalytics } from "firebase/analytics";  // to uncomment on deploy
   
@@ -14,13 +17,14 @@ const firebaseConfig = {
 //   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID  // to uncomment on deploy
 };
 
-// Init Firebase
 const app = initializeApp(firebaseConfig);
 
-// Init Firestore
-const warehouseDB = getFirestore(app);
+const warehouseDB = initializeFirestore(app, {
+  localeCache: persistentLocalCache({
+    tabManager: persistentMultipleTabManager()
+  })
+});
 
-// Init Firebase Storage
 const warehouseStorage = getStorage(app);
 
 

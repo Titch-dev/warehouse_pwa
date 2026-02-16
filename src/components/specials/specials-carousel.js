@@ -10,19 +10,19 @@ import SpecialsItem from "./specials-item";
 import { orderSpecialsByClosestDay } from "@/lib/utils";
 
 import styles from "./specials-carousel.module.css";
-import { rubikFont } from "@/lib/fonts";
 import ChevronLeft from "@/components/assets/icons/chevron-left-svg";
 import ChevronRight from "../assets/icons/chevron-right-svg";
+import LoadingData from "../loading-data";
 
 
-export default function SpecialsCarousel({ title, specials }) {
+export default function SpecialsCarousel({ specials, metaRef }) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
     const [selectedIndex, setSelectedIndex] = useState(0);
     const { 
         data: specialsData, 
         loading, 
         error
-    } = useFirestoreCollection(specials, true)
+    } = useFirestoreCollection(specials, metaRef)
 
     const orderedSpecials = useMemo(
         () => orderSpecialsByClosestDay(specialsData),
@@ -52,14 +52,23 @@ export default function SpecialsCarousel({ title, specials }) {
         emblaApi.on('reInit', onSelect)
     }, [emblaApi, onSelect])
 
-    if (loading) return null
+    if (loading) return (
+        <div className={styles.loading_wrapper}>
+            <LoadingData/>
+        </div>
+    )
     if (error || !specials?.length) return null
+
+    const isFirstSpecial = selectedIndex === 0
+    const isLastSpecial = selectedIndex === orderedSpecials.length - 1
   
     return (
         <div className={styles.wrapper}>
-            <h1 className={`${styles.title} ${rubikFont.className}`}>{title}</h1>
             <div className={styles.embla} >
-                <button className={styles.btn} onClick={() => emblaApi?.scrollPrev()}>
+                <button 
+                    className={styles.btn} 
+                    onClick={() => emblaApi?.scrollPrev()}
+                    disabled={isFirstSpecial}>
                     <ChevronLeft className={styles.btn_icon}>
                         <linearGradient id="Gradient" x2="0" y2="1">
                             <stop className={styles.stop1} offset="0%" />
@@ -71,13 +80,20 @@ export default function SpecialsCarousel({ title, specials }) {
                 <div className={styles.embla__viewport} ref={emblaRef}>
                     <div className={styles.embla__container}>
                         {orderedSpecials.map((special) => (
-                            <div key={special.id} className={styles.embla__slide}>
+                            <div 
+                                key={special.id} 
+                                className={styles.embla__slide}
+                            >
                                 <SpecialsItem item={special}/>
                             </div>
                         ))}
                     </div>
                 </div>
-                <button className={styles.btn} onClick={() => emblaApi?.scrollNext()}>
+                <button 
+                    className={styles.btn} 
+                    onClick={() => emblaApi?.scrollNext()}
+                    disabled={isLastSpecial}
+                >
                     <ChevronRight className={styles.btn_icon}>
                         <linearGradient id="Gradient" x2="0" y2="1">
                             <stop className={styles.stop1} offset="0%" />

@@ -1,15 +1,14 @@
+import { ref, getDownloadURL } from 'firebase/storage'
 import dayjs from "dayjs";
+import { warehouseStorage } from '@/firebase/firebaseConfig';
 
-// Week index for fallback
-const WEEK_DAYS = [
-  'sunday',
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-]
+
+
+// get the menupdf from stroage
+export async function getMenuPdfUrl(menuType) {
+  const fileRef = ref(warehouseStorage, `menu/${menuType}-menu.pdf`)
+  return await getDownloadURL(fileRef)
+}
 
 // Order the specials by closest day
 export function orderSpecialsByClosestDay(specials = []) {
@@ -17,19 +16,28 @@ export function orderSpecialsByClosestDay(specials = []) {
 
   const todayIndex = dayjs().day()
 
-  const withDayIndex = specials.map(s => ({
-    ...s,
-    dayIndex: s.dayIndex ?? WEEK_DAYS.indexOf(s.day),
-  }))
+  return [...specials]
+    .map(special => {
+      const dayIndexes = Object.values(special.days || {})
 
-  const sorted = [...withDayIndex].sort((a, b) => {
-    const aDiff = (a.dayIndex - todayIndex + 7) % 7
-    const bDiff = (b.dayIndex - todayIndex + 7) % 7
-    return aDiff - bDiff
-  })
+      // Find closest upcoming day for this doc
+      const closestDiff = Math.min(
+        ...dayIndexes.map(dayIndex =>
+          (dayIndex - todayIndex + 7) % 7
+        )
+      )
 
-  return sorted
+      return {
+        ...special,
+        dayIndexes,
+        sortValue: closestDiff
+      }
+    })
+    .sort((a, b) => a.sortValue - b.sortValue)
 }
+
+
+
 
 
 // get firebase image

@@ -8,6 +8,35 @@ import styles from './event-icons.module.css'
 
 export default function EventIcons({column=false, date=null, prices, start, end}) {
 
+  function formatPriceDisplay(prices = []) {
+    if (!Array.isArray(prices) || prices.length === 0) {
+      return "Free";
+    }
+
+    // Case: ["TBC"]
+    if (prices.length === 1 && prices[0] === "TBC") {
+      return "TBC";
+    }
+
+    // Filter numeric values only
+    const numericPrices = prices
+      .filter(p => typeof p === "number" && !isNaN(p))
+      .sort((a, b) => a - b);
+
+    if (numericPrices.length === 0) {
+      return "Free";
+    }
+
+    const lowest = numericPrices[0];
+    const highest = numericPrices[numericPrices.length - 1];
+
+    if (lowest === highest) {
+      return `R${lowest} pp`;
+    }
+
+    return `R${lowest} - R${highest} pp`;
+  }
+
   return (
     <div className={`${styles.icons} ${column ? styles.column : ''}
           `}>
@@ -33,7 +62,7 @@ export default function EventIcons({column=false, date=null, prices, start, end}
             ${column ? styles.column : ''}
           `}>
             <DoorSVG className={styles.icon}></DoorSVG>
-            <p>{prices.length === 0 ? "Free entry" : `R ${price} pp`}</p>
+            <p>{formatPriceDisplay(prices)}</p>
         </div>
     </div>
   )

@@ -21,6 +21,13 @@
     display: none;
 }
 
+.bottom.shadow{
+    filter: var(--drop-shadow-dark-bottom);
+}
+.top.shadow{
+    filter: var(--drop-shadow-dark-top);
+}
+
 @media (min-width: 768px){
     .mobile {
         display: none;
