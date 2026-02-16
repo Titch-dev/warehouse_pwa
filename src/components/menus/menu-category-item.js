@@ -3,12 +3,14 @@ import FireSVG from '../assets/icons/fire-svg';
 import styles from './menu-category-item.module.css';
 import { rubikFont } from '@/lib/fonts';
 
+import { getStorageImageUrl } from '@/lib/utils';
+
 export default function MenuCategoryItem({ item }) {
   return (
     <li className={styles.item_container}>
-        {item.imageURL? 
+        {item.imagePath? 
             <img 
-                src={item.imageURL} 
+                src={getStorageImageUrl(item.imagePath)} 
                 className={styles.item_image}
                 loading='lazy'
                 alt={item.imageAlt}/>

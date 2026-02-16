@@ -1,3 +1,8 @@
+.loading_wrapper {
+    width: 40rem;
+    height: 40rem;
+}
+
 .wrapper {
     display: flex;
     flex-direction: column;
@@ -106,6 +111,15 @@
 
     .stop3 {
         stop-color: var(--color-yellow);
+    }
+
+    .btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
+    .btn:disabled .btn_icon {
+        transform: none;
     }
 }
 

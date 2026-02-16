@@ -23,7 +23,7 @@ export default function EventsPage() {
   const isMobile = useMediaQuery('(max-width:768px)');
 
   // Fetch Events data
-  const {data: events, loading: eventsLoading, error: eventsError } = useFirestoreCollection('events', true);
+  const {data: events, loading: eventsLoading, error: eventsError } = useFirestoreCollection('events', 'events');
 
   // Handle client-side mounting (SSR safety only)
   useEffect(() => {

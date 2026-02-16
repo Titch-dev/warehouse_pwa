@@ -1,123 +1,84 @@
 "use client"
 
-import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
+import { useState, useMemo } from "react";
+
+import { useGalleryImages } from "@/hooks/useGalleryCollection";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 
+import ThumbnailStrip from "@/components/gallery/thumbnail-strip";
+import GalleryModal from "@/components/gallery/gallery-modal";
 
-
-import { galleryList } from "@/data/synthetic-data";
-
-import PaintStrokeSVG from '@/components/assets/patterns/paint-stroke-svg';
-import ChevronLeft from "@/components/assets/icons/chevron-left-svg";
-import ChevronRight from "@/components/assets/icons/chevron-right-svg";
-import TornBorder from "@/components/assets/patterns/torn-border";
-
-import styles from "./gallery-page.module.css";
+import styles from './gallery-page.module.css';
 import { rubikFont } from "@/lib/fonts";
+import TornBorder from "@/components/assets/patterns/torn-border";
 import { colors } from "@/lib/colors";
+import ModalPortal from "@/components/modal-portal";
 
-
+const PAGE_SIZE = 8;
 
 export default function GalleryPage() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const thumbnailRefs = useRef([]);
+  const { data: images, loading, error } = useGalleryImages();
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev()
-  }, [emblaApi]);
+  const isMobile = useMediaQuery('(max-width: 767px)');
+  const [activeIndex, setActiveIndex] = useState(null);
+  const [page, setPage] = useState(0);
 
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext()
-  }, [emblaApi]);
+  const totalPages = Math.ceil(images.length / PAGE_SIZE);
 
-  const onThumbnailClick = useCallback((index) =>{
-    if (!emblaApi) return;
-    emblaApi.scrollTo(index);
-  }, [emblaApi]);
+  const pagedImages = useMemo(() => {
+    return images.slice(
+      page * PAGE_SIZE,
+      page * PAGE_SIZE + PAGE_SIZE
+    );
+  }, [images, page]);
 
-  const onSelect = useCallback((emblaApi) => {
-    const index = emblaApi.selectedScrollSnap();
-    setSelectedIndex(index);
-
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-
-    console.log(window.screenY);
-
-  }, []);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    onSelect(emblaApi)
-    emblaApi.on('select', onSelect).on('reInit', onSelect)
-  
-  }, [emblaApi, onSelect]);
+  const openModal = (index) => {
+    setActiveIndex(
+      isMobile ? index : page * PAGE_SIZE + index
+    );
+  };
 
   return (
-    <div className={styles.gallery_wrapper}>
-      <h1 className={`${styles.title} ${rubikFont.className}`}>Gallery</h1>
-      <section className={styles.viewing_section}>
-        <button onClick={scrollPrev} className={styles.btn}>
-          <ChevronLeft className={styles.btn_icon}>
-              <linearGradient id="Gradient" x2="0" y2="1">
-                  <stop className={styles.stop1} offset="0%" />
-                  <stop className={styles.stop2} offset="50%" />
-                  <stop className={styles.stop3} offset="100%" />
-              </linearGradient>
-          </ChevronLeft>
-        </button>
-        <PaintStrokeSVG className={styles.viewing_bg}>
-          <linearGradient id="Gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop className={styles.stop1} offset="0%" />
-              <stop className={styles.stop2} offset="50%" />
-              <stop className={styles.stop3} offset="100%" />
-            </linearGradient>
-        </PaintStrokeSVG>
-        <div className={styles.embla__viewport} ref={emblaRef}>
-          <div className={styles.embla__container}>
-            {galleryList.map((image) => (
-              <div key={image.id} className={styles.embla__slide}>
-                <Image className={styles.image} src={image.src} width={300} height={300} />
-              </div>
-            ))}
-          </div>
-        </div> 
-        <button onClick={scrollNext} className={styles.btn}>
-          <ChevronRight className={styles.btn_icon}>
-              <linearGradient id="Gradient" x2="0" y2="1">
-                  <stop className={styles.stop1} offset="0%" />
-                  <stop className={styles.stop2} offset="50%" />
-                  <stop className={styles.stop3} offset="100%" />
-              </linearGradient>
-          </ChevronRight>
-        </button>
-        <TornBorder top={false} color={colors.greydark1}/>
-      </section>
-      <section className={styles.gallery_section}>
-        <div className={styles.gallery}>
-        { galleryList.map((image, index) => (
-          <figure 
-            key={image.id}
-            ref={el => thumbnailRefs.current[index] = el}
-            onClick={() => onThumbnailClick(index)} 
-            className={
-              `${styles[`thumbnail_${image.id}`]} 
-              ${index === selectedIndex 
-                ? styles.selected 
-                : ""
-              }`}
-          >
-            <img src={image.src} />
-          </figure>
-        ))}
-        </div>
-      </section>
+    <div className={styles.page_wrapper}>
+      <div className={styles.header_wrapper}>
+        <h1 className={`${styles.title} ${rubikFont.className}`}>Gallery</h1>
+        {isMobile && 
+          <TornBorder 
+            top={false} 
+            color={colors.greydark2}
+            mobile_view={true}
+            shadow={true}
+            style={{zIndex: 0}}
+          />
+        }
+      </div>
+      
+      <ThumbnailStrip
+        imagesCollection={
+          isMobile 
+          ? images 
+          : pagedImages}
+        loading={loading}
+        openModal={openModal}
+        page={page}
+        totalPages={totalPages}
+        onPrev={() => setPage(p => Math.max(0, p - 1))}
+        onNext={() => setPage(p => Math.min(totalPages - 1, p + 1))}
+        onSetPage={setPage}
+        isDesktop={!isMobile}
+      />
+      {activeIndex !== null && (
+        <ModalPortal onClose={() => setActiveIndex(null)} fullscreen>
+          <GalleryModal
+            imagesCollection={images}
+            loading={loading}
+            activeIndex={activeIndex}
+            onClose={() => setActiveIndex(null)}
+          />
+        </ModalPortal>
+      )}
+      
     </div>
   )
 }

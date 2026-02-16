@@ -2,6 +2,7 @@
 
 import { useState, useEffect} from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
 
 import MenuCategoryNavigation from "./menu-category-navigation";
 import MenuCategoryContent from "./menu-category-content";
@@ -11,11 +12,13 @@ import { rubikFont } from "@/lib/fonts";
 import { getUniqueCategories } from "@/lib/utils";
 
 
-export default function MenuContainer({menu}) {
+export default function MenuContainer({menu, selected}) {
   const categories = getUniqueCategories(menu);
+  categories.push('specials')
   const [selectedCategory, setSelectedCategory] = useState(categories[0] || "");
-
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const specialsRequest = selected ==='food' ? 'specialsFoodItems' : 'specialsDrinkItems';
+  const specialsMetaRef = selected ==='food' ? 'specialsFood' : 'specialsDrink';
 
   useEffect(() => {
     // reset selectedCategory whenever the menu prop changes
@@ -60,7 +63,12 @@ export default function MenuContainer({menu}) {
           </ul>
           }
         </div>
-        <MenuCategoryContent categoryData={catData}/>
+        <MenuCategoryContent
+          category={selectedCategory}
+          categoryData={catData} 
+          specialsRequest={specialsRequest}
+          specialsMetaref={specialsMetaRef}
+        />
     </div>
   )
 }

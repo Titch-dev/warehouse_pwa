@@ -1,7 +1,6 @@
 'use client'
 
-import dayjs from 'dayjs';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import EventDescriptionModal from './event-description-modal';
 import LoadingData from '../loading-data';
 import useMediaQuery from '@/hooks/useMediaQuery';
@@ -10,6 +9,8 @@ import styles from './event-view.module.css';
 import { rubikFont } from '@/lib/fonts';
 import EventIcons from './event-icons';
 import { getNextEvent } from '@/lib/utils';
+import TicketButton from './ticket-button';
+import ModalPortal from '../modal-portal';
 
 const EventView = ({ selectedEvent, events }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -22,7 +23,9 @@ const EventView = ({ selectedEvent, events }) => {
 
   if (!events || events.length === 0) {
     return (
-      <LoadingData dataName={'next event'}/>
+      <div className={styles.loading_skeleton}>
+        <LoadingData dataName={'next event'}/>
+      </div>
     );
   }
 
@@ -55,8 +58,18 @@ const EventView = ({ selectedEvent, events }) => {
               end={currentEvent.end_time}
             />
           </div>
-            
-          <p className={styles.event_desc}>
+            {currentEvent.ticketUrl && (
+              <div className={styles.ticket_wrapper}>
+                <TicketButton link={currentEvent.ticketUrl}/>
+              </div>
+            )}
+          <p 
+            className={`
+              ${styles.event_desc}
+              ${currentEvent.ticketUrl 
+                ? styles.shortened_desc
+                : ''
+              }`}>
             {currentEvent.description}
           </p>
 
@@ -64,16 +77,18 @@ const EventView = ({ selectedEvent, events }) => {
             className={styles.see_more}
             onClick={() => setIsModalOpen(true)}
           >
-            ...details
+            ... see details
           </button>
         </div>
       </div>
 
       {isModalOpen && (
-        <EventDescriptionModal
-          event={currentEvent}
-          onClose={() => setIsModalOpen(false)}
-        />
+        <ModalPortal onClose={() => setIsModalOpen(false)}>
+          <EventDescriptionModal
+            event={currentEvent}
+            onClose={() => setIsModalOpen(false)}
+          />
+        </ModalPortal>
       )}
     </>
     

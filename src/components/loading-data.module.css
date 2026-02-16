@@ -3,20 +3,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60vh; /* center on screen */
+    height: 60vh;
     gap: 1rem;
-    color: #fff; /* adjust for your theme */
+    color: #fff;
     font-family: 'Rubik', sans-serif;
+    align-self: center;
 }
 
 .loading_content {
- display: flex;
- align-items: end;
+  display: flex;
 }
 
 .loading_content p {
     letter-spacing: .1rem;
-    font-size: 3rem;
+    font-size: 2rem;
     line-height: 1.2;
     padding-right: .3rem;
 }
@@ -37,4 +37,15 @@
     40%{background-position:0% 100%, 50%   0%,100%  50%}
     60%{background-position:0%  50%, 50% 100%,100%   0%}
     80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
+
+@media (min-width: 1024px) {
+
+  .loading_content p {
+    font-size: 3rem;
+  }
+
+  .dots {
+    width: 4.5rem;
+  }
 }

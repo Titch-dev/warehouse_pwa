@@ -12,9 +12,33 @@ function SpecialsSection() {
     <section className={styles.specials}>
         <TornBorder top={true} color={colors.greydark2}/>
         <h1 className={`${styles.specials_title} ${rubikFont.className}`}>Our Specials</h1>
-        <div className={styles.specials_container}>
-        <SpecialsCarousel title='Food' specials={'specialsFoodItems'}></SpecialsCarousel>
-        <SpecialsCarousel title='Drinks' specials={'specialsDrinkItems'}></SpecialsCarousel>
+        <div className={styles.specials_wrapper}>
+          <div className={styles.specials_container}>
+            <h2 
+              className={`
+                ${styles.specials_heading} 
+                ${rubikFont.className}
+              `}>
+                Food:
+            </h2>
+            <SpecialsCarousel 
+              specials={'specialsFoodItems'}
+              metaRef={'specialsFood'}
+            />
+          </div>
+          <div className={styles.specials_container}>
+            <h2 
+              className={`
+                ${styles.specials_heading} 
+                ${rubikFont.className}
+              `}>
+                Drinks:
+            </h2>
+            <SpecialsCarousel 
+              specials={'specialsDrinkItems'}
+              metaRef={'specialsDrink'}
+            />
+          </div>
         </div>
     </section>
   )

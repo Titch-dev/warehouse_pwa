@@ -1,6 +1,13 @@
 import * as React from "react"
-const PaintStrokeSVG = ({className, children}) => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 32" className={className}>
+const PaintStrokeSVG = ({className, styles, children}) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 34 32" 
+    className={className}
+    style={styles}
+    preserveAspectRatio="xMidYMid meet"
+    >
+    
     <defs>
       {children}
     </defs>

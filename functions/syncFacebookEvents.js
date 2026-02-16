@@ -2,9 +2,14 @@ const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
-const fetch = require("node-fetch");
+const fetch = global.fetch;
 
 const FB_PAGE_ACCESS_TOKEN = defineSecret("FB_PAGE_ACCESS_TOKEN");
+
+if (!admin.apps.length) {
+  admin.initializeApp();
+}
+
 const db = admin.firestore();
 
 const BAR_CLOSE_HOUR = 23;
@@ -14,24 +19,40 @@ const VENUE_NAME = "Westville Warehouse bar and events venue";
 /* ---------------- Utilities ---------------- */
 
 function stripEmojis(text = "") {
-  return text.replace(
-    /([\u2700-\u27BF]|[\uE000-\uF8FF]|[\uD83C-\uDBFF\uDC00-\uDFFF])/g,
-    ""
-  );
+  return text
+    .replace(/\p{Extended_Pictographic}/gu, "")
+    .replace(/\r\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .replace(/[ \t]+/g, " ")
+    .trim();
 }
 
 function extractPrices(description = "") {
-  const prices = [];
   const regex = /\[PRICE\]([\s\S]*?)\[\/PRICE\]/gi;
 
   let match;
+  let prices = [];
+  let hasTBC = false;
+
   while ((match = regex.exec(description)) !== null) {
-    const numbers = match[1].match(/\d+(\.\d+)?/g);
-    if (numbers) numbers.forEach(n => prices.push(Number(n)));
+    const content = match[1].trim();
+
+    if (/^tbc$/i.test(content)) {
+      hasTBC = true;
+      continue;
+    }
+
+    const numbers = content.match(/\d+(\.\d+)?/g);
+    if (numbers) {
+      numbers.forEach(n => prices.push(Number(n)));
+    }
   }
 
+  const sortedPrices = prices.sort((a, b) => a - b);
+
   return {
-    prices,
+    prices: sortedPrices,
+    hasTBC,
     cleanedDescription: description.replace(regex, "").trim(),
   };
 }
@@ -54,42 +75,65 @@ async function syncFacebookEventsCore() {
 
   const token = FB_PAGE_ACCESS_TOKEN.value();
   const now = new Date();
+  const nowUnix = Math.floor(now.getTime() / 1000);
 
-  const url =
+  const baseUrl =
     `https://graph.facebook.com/v19.0/2031566960468299/events` +
-    `?fields=id,name,description,start_time,end_time,cover,event_times` +
+    `?fields=id,name,description,start_time,end_time,cover,event_times,ticket_uri` +
+    `&since=${nowUnix}` +
     `&access_token=${token}`;
 
-  const res = await fetch(url);
-  const fb = await res.json();
+/* ---------- FETCH ALL FUTURE EVENTS (with pagination) ---------- */
 
-  if (!fb.data) {
-    console.error("❌ Facebook API error", fb);
-    return;
+  let allEvents = [];
+  let nextUrl = baseUrl;
+
+  while (nextUrl) {
+    const res = await fetch(nextUrl);
+    const fb = await res.json();
+
+    if (!fb.data) {
+      console.error("❌ Facebook API error", fb);
+      throw new Error("Facebook API returned no data")
+    }
+
+    allEvents = allEvents.concat(fb.data);
+    nextUrl = fb.paging?.next || null;
   }
 
-  console.log(`📥 Facebook events fetched: ${fb.data.length}`);
+console.log(`📥 Facebook events fetched (total): ${allEvents.length}`);
 
-  const batch = db.batch();
+ /* ---------- WRITE TO FIRESTORE (chunked batches) ---------- */
+
+  let batch = db.batch();
+  let operationCount = 0;
   const activeFbIds = new Set();
 
-  fb.data.forEach(event => {
+  for (const event of allEvents) {
     const baseDescription = stripEmojis(event.description || "");
-    const { prices, cleanedDescription } = extractPrices(baseDescription);
+
+   const {
+      prices: extractedPrices,
+      hasTBC: priceHasTBC,
+      cleanedDescription: cleanedDescription,
+    } = extractPrices(baseDescription);
+
+  const prices =
+      priceHasTBC ? ["TBC"] : extractedPrices;
 
     const occurrences = event.event_times?.length
       ? event.event_times
       : [{ start_time: event.start_time, end_time: event.end_time }];
 
-    occurrences.forEach((occ, index) => {
-      const start = new Date(occ.start_time);
-      if (start < now) return;
+    for (let index = 0; index < occurrences.length; index++) {
+      const occ = occurrences[index];
 
+      const start = new Date(occ.start_time);
       const end = occ.end_time
         ? new Date(occ.end_time)
         : defaultEndTime(start);
 
-      if (end < now) return;
+      if (end < now) continue;
 
       const docId =
         occurrences.length > 1
@@ -104,33 +148,56 @@ async function syncFacebookEventsCore() {
         name: event.name,
         description: cleanedDescription,
         prices,
+        ticketUrl: event.ticket_uri || null,
         start_time: start.toISOString(),
         end_time: end.toISOString(),
-        imageUrl: event.cover?.source || 
-        event.cover?.photo?.image?.source ||
-        null,
+        imageUrl: 
+          event.cover?.source || 
+          event.cover?.photo?.image?.source ||
+          null,
         alt_image: buildAltText(event.name),
         source: "facebook",
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       });
-    });
-  });
+      
+      operationCount++
+
+      // Commit early if nearing 500 batch limit
+      if (operationCount >= 450) {
+        await batch.commit();
+        console.log("⚡ Partial batch committed");
+        batch = db.batch();
+        operationCount = 0;
+      }
+    }
+  }
+
+/* ---------- CLEAN UP OLD EVENTS ---------- */
 
   const snapshot = await db
     .collection("events")
     .where("source", "==", "facebook")
     .get();
 
-  snapshot.forEach(doc => {
+  snapshot.forEach((doc) => {
     const end = doc.data().end_time
     ? new Date(doc.data().end_time)
     : null;
-    if ((end && end < now) || !activeFbIds.has(doc.id)) {
-      batch.delete(doc.ref);
-    }
+
+    if (
+      (end && end < now) ||
+      !activeFbIds.has(doc.id)
+    ) {
+        batch.delete(doc.ref);
+        operationCount++;
+      }
   });
 
-  await batch.commit();
+  /* ---------- FINAL COMMIT ---------- */
+  if (operationCount > 0) {
+    await batch.commit();
+  }
+
   console.log("✅ Facebook events sync complete");
 }
 
@@ -146,7 +213,6 @@ exports.syncFacebookEvents = onSchedule(
 
 exports.syncFacebookEventsNow = onRequest(
   {
-    region: "africa-south1",
     secrets: [FB_PAGE_ACCESS_TOKEN],
   },
   async (req, res) => {

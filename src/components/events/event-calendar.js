@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+'use client'
+
+import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { createTheme, ThemeProvider} from '@mui/material/styles';
-import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
 import { getOpeningHoursForToday } from '@/lib/utils';
+import { OPENING_TIMES } from '@/config/openingTimes';
 
 import styles from './event-calendar.module.css';
 
@@ -66,13 +68,19 @@ const calendarTheme = createTheme({
 });
 
 const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
+
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(today);
-  // const openingTimes = useFirestoreCollection('openingTimes'); testing
-  // const {start, end} = getOpeningHoursForToday(openingTimes.data);
+  const { open, close } = getOpeningHoursForToday(OPENING_TIMES);
 
+  useEffect(() => {
+    if (!selectedEvent) return;
 
-  // Get events for a specific date
+    const eventDate = dayjs(selectedEvent.start_time);
+    setSelectedDate(eventDate);
+  }, [selectedEvent]);
+
+    // Get events for a specific date
   const getEventsForDate = (date) => {
     return events.filter(event => {
       const eventDate = dayjs(event.start_time);
@@ -83,7 +91,7 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
  // Check if this day matches the currently selected event
   const isSelectedEventDay = (date) => {
     if (!selectedEvent) return false;
-    const eventDate = dayjs(selectedEvent.startTime);
+    const eventDate = dayjs(selectedEvent.start_time);
     return eventDate.isSame(date, 'day');
   };
 
@@ -149,7 +157,7 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
         {/* <OpeningHours date={today}/> */}
         <div className={styles.opening_hours}>
           <p><strong>Open Today</strong></p> 
-          {/* <p>{start} - {end}</p>  testing*/}
+          <p>{open} - {close}</p>
         </div>
       </div>
     </div>

@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import MenuContainer from './menu-container';
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
 
+
+import { getMenuPdfUrl } from '@/lib/utils';
 import styles from './menu-navigation.module.css';
 
 import { rubikFont } from '@/lib/fonts';
@@ -16,14 +18,31 @@ import LoadingData from '../loading-data';
 const menus = ['food', 'drinks'];
 
 export default function MenuNavigation() {
-  
+  const [menuPdfUrls, setMenuPdfUrls] = useState({})
   const [selectedMenu, setSelectedMenu] = useState('food');
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   // Fetch both menus
-  const { data: foodMenu, loading: foodLoading, error: foodError } = useFirestoreCollection('menuFoodItems', true)
-  const { data: drinksMenu, loading: drinksLoading, error: drinksError } = useFirestoreCollection('menuDrinkItems', true)
+  const { data: foodMenu, loading: foodLoading, error: foodError } = useFirestoreCollection('menuFoodItems', 'menuFood')
+  const { data: drinksMenu, loading: drinksLoading, error: drinksError } = useFirestoreCollection('menuDrinkItems', 'menuDrink')
 
+  console.log(foodMenu.length)
+  console.log(drinksMenu.length)
+  useEffect(() => {
+    const fetchPdfUrls = async () => {
+      try {
+        const entries = await Promise.all(
+          menus.map(async menu => [menu, await getMenuPdfUrl(menu)])
+        )
+
+        setMenuPdfUrls(Object.fromEntries(entries))
+      } catch (err) {
+        console.error('Failed to load menu PDFs', err)
+      }
+    }
+
+    fetchPdfUrls()
+  }, [])
 
   // helper to map key → actual menu data
   const getMenuData = (menuKey) => {
@@ -34,6 +53,7 @@ export default function MenuNavigation() {
   if (foodLoading || drinksLoading) return (
     <LoadingData dataName={'menus'}/>
   );
+
   if (foodError || drinksError) return <p>Error loading menu data</p>
 
   return (
@@ -50,9 +70,11 @@ export default function MenuNavigation() {
                 <option value='drinks'>Drinks Menu</option>
               </select>
                 <a
+                  href={menuPdfUrls[menuOption]}
                   className={styles.download_content}
-                  href={`/assets/menus/${selectedMenu}-menu.pdf`}
-                  download={`${selectedMenu}-menu.pdf`}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <span className={styles.label}>Download</span>
                   <DownloadSVG className={styles.menu_download}/>
@@ -75,8 +97,11 @@ export default function MenuNavigation() {
                   {`${menuOption} Menu`}
                 </button>
                 <a
-                  href={`/assets/menus/${menuOption}-menu.pdf`}
-                  download={`${menuOption}-menu.pdf`}
+                  href={menuPdfUrls[menuOption]}
+                  className={styles.download_content}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <DownloadSVG className={styles.menu_download}/>
                 </a>
@@ -85,7 +110,9 @@ export default function MenuNavigation() {
           </ul>
         }
       </div>
-      <MenuContainer menu={getMenuData(selectedMenu)}/>
+      <MenuContainer 
+        menu={getMenuData(selectedMenu)}
+        selected={selectedMenu}/>
     </section>
   )
 }

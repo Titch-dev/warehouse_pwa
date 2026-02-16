@@ -5,9 +5,12 @@ import LoadingData from '../loading-data';
 // import { getEventStatus } from '@/lib/utils';
 import styles from './event-list.module.css';
 import EventListItem from './event-list-item';
+import { rubikFont } from '@/lib/fonts';
 
 const EventList = ({ events, selectedEvent, onEventSelect, selectedFilter }) => {
   const now = dayjs();
+
+  const nextEvent = events[0];
 
   const thisMonth = events.filter(e =>
     dayjs(e.start_time).isSame(now, 'month')
@@ -60,15 +63,16 @@ const EventList = ({ events, selectedEvent, onEventSelect, selectedFilter }) => 
       </ul>
       
       {filteredEvents.length === 0 && (
-        <div className={styles.emptyState}>
-          <h3>
+        <div className={styles.empty_state}>
+          <h3 className={rubikFont.className}>
             No events scheduled
           </h3>
           <h3>
             {
               selectedFilter === 'all' ? '' :
               selectedFilter === 'next' ? '' :
-              selectedFilter === 'this-month' ? 'this month' : 'next month'
+              selectedFilter === 'this-month' ? '' :
+              selectedFilter === 'next month' ? '' : ''
             }
           </h3>
         </div>
