@@ -70,7 +70,7 @@ export default function MenuNavigation() {
                 <option value='drinks'>Drinks Menu</option>
               </select>
                 <a
-                  href={menuPdfUrls[menuOption]}
+                  href={menuPdfUrls[selectedMenu]}
                   className={styles.download_content}
                   download
                   target="_blank"

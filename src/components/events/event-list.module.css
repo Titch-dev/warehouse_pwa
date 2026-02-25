@@ -1,54 +1,100 @@
 .container {
-  position: relative;
-  height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(36, 36, 36, 1);
-  overflow: hidden;
-}
+  height: 100%;
+  overflow-y: auto;
+  padding: 2rem 0 3rem 0;
+  position: relative;
 
-.event_list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  list-style: none;
-  overflow: auto;
-  gap: 2rem;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.empty_state{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-
+.container::-webkit-scrollbar {
+  display: none;
 }
 
-/* Desktop responsiveness */
+.container::after {
+  content: '';
+  display: block;
+  height: 45dvh;
+}
+
+.event_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.group_block {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.group_inner {
+  width: 95dvw;
+}
+
+.group_heading {
+  margin-top: 4rem;
+  margin-bottom: 1.2rem;
+  text-align: center;
+
+  font-size: 2.5rem;
+  letter-spacing: 0.12rem;
+  opacity: 0.70;
+
+  user-select: none;
+}
+
+.group_block:first-child .group_heading {
+  margin-top: 0.6rem;
+}
+
+.group_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.item_wrap {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  scroll-margin-top: 5rem; /* adjust to taste */
+}
+
+/* empty state */
+.empty_state {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.empty_state_desc {
+  font-size: 1.8rem;
+  opacity: 0.8;
+  padding: 2rem;
+  text-align: center;
+}
+
 @media (min-width: 1024px) {
-
-  .container {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: rgba(36, 36, 36, 1);
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(250, 56, 56, 0.1);
+  .group_inner {
+    width: 80rem; /* matches your .event_wrapper desktop width */
   }
 
-  .event_list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    list-style: none;
-    overflow-y: auto;
-    gap: 2rem;
-    margin: 0;
+  .group_heading {
+    text-align: left;
+    font-size: 3rem;
+    margin-left: 3rem;
   }
-
 }

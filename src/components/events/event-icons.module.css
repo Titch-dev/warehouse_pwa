@@ -49,7 +49,6 @@
         flex-wrap: wrap;
         justify-content: center;
         width: 100%;
-        gap: 1rem;
     }
 
     .icon_container {
@@ -60,8 +59,8 @@
     }
 
     .icon {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 3rem;
+        height: 3rem;
         margin-bottom: 1rem;
         fill: var(--color-grey-dark-4);
     }
@@ -77,22 +76,21 @@
         flex-direction: column;
         max-width: fit-content;
         padding: 0;
-        gap: 1.5rem;
+        gap: 2.5rem;
     }
     .icon_container.column {
         position: relative;
         flex-direction: row;
         align-items: center;
-        gap: 3.5rem;
+        gap: 2rem;
         height: 100%;
     }
 
     .icon_container.column p {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
     }
 
     .icon_container.column svg {
         position: relative;
-        top: .4rem;
     }
 }

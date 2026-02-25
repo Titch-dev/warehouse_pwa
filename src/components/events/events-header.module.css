@@ -1,0 +1,136 @@
+.event_list_header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-grey-dark-1);
+  width: 100%;
+  z-index: 5;
+}
+
+/* left side always visible */
+.filters_left {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  min-width: 0;
+  padding-left: 2rem;
+}
+
+.label {
+  font-size: 1.8rem;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.summary {
+  font-size: 1.5rem;
+  opacity: 0.7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 52ch;
+}
+
+/* right side icons */
+.header_controls {
+  display: flex;
+  gap: 1.2rem;
+  padding: 1.5rem 2rem;
+  flex: 0 0 auto;
+  z-index: 10;
+}
+
+.header_icon_btn {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+
+.header_icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  fill: url('#Gradient1');
+}
+
+.stop1 { stop-color: var(--color-pink); }
+.stop2 { stop-color: var(--color-orange); }
+.stop3 { stop-color: var(--color-yellow); }
+
+/* panel */
+.header_panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: min(42rem, 92vw);
+
+  opacity: 0;
+  transform: translateY(-0.6rem) scale(0.98);
+  pointer-events: none;
+
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 20;
+}
+
+.header_panel_open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.header_panel_inner {
+  border-radius: 1.2rem;
+  background: var(--color-grey-dark-2);
+  backdrop-filter: blur(10px);
+  border: 2px solid var(--color-grey-dark-3);
+  padding: 1.2rem;
+  max-height: calc(80dvh - 1.2rem);
+  overflow: auto;
+}
+
+.panel_top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.closeBtn {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.closeBar1,
+.closeBar2 {
+  position: absolute;
+  top: 1.55rem;
+  left: 0;
+  width: 100%;
+  height: 0.4rem;
+  border-radius: 0.4rem;
+  background: var(--color-orange);
+}
+
+.closeBar1 { transform: rotate(45deg); }
+.closeBar2 { transform: rotate(-45deg); }
+
+/* desktop */
+@media (min-width: 1024px) {
+  .event_list_header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
+
+  .header_panel_inner {
+    max-height: min(56rem, 70vh);
+  }
+}

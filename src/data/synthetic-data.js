@@ -844,3 +844,53 @@ export const fb_events =
     },
     ]
 }
+
+export const weekly_events = {
+    data: [
+        {
+            id: "wednesday-quiz-night",
+            days: { wednesday: 3 },
+            desc: "Head to Westville Warehouse for a fun-filled Quiz Night packed with a mix of topics to test everyone’s knowledge. Grab your crew, enjoy the drinks, and see if you’ve got what it takes to take the win!",
+            image: {
+                alt: "Quiz Night Event image",
+                path: "assets/home/quiz-pool-night.webp"
+            },
+            price: {
+                amount: null,
+                denom: null
+            },
+            name: "Quiz Night",
+            start_time: "7:00 PM"
+        },
+        {
+            id: "wednesday-pool-night",
+            days: { wednesday: 3 },
+            desc: "Head to Westville Warehouse for a fun-filled Quiz Night packed with a mix of topics to test everyone’s knowledge. Grab your crew, enjoy the drinks, and see if you’ve got what it takes to take the win!",
+            image: {
+                alt: "Quiz Night Event image",
+                path: "assets/home/quiz-pool-night.webp"
+            },
+            price: {
+                amount: 10,
+                denom: null
+            },
+            name: "Quiz Night",
+            start_time: "7:00 PM"
+        },
+        {
+            id: "wednesday-third-night",
+            days: { wednesday: 3 },
+            desc: "Head to Westville Warehouse for a fun-filled Quiz Night packed with a mix of topics to test everyone’s knowledge. Grab your crew, enjoy the drinks, and see if you’ve got what it takes to take the win!",
+            image: {
+                alt: "Quiz Night Event image",
+                path: "assets/home/quiz-pool-night.webp"
+            },
+            price: {
+                amount: 20,
+                denom: 'per team'
+            },
+            name: "Quiz Night",
+            start_time: "7:00 PM"
+        },
+    ]
+}

@@ -1,0 +1,127 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+    max-width: 100dvw;
+}
+
+.event_image_wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.event_image_wrapper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(36, 36, 36, 1) 0%,
+        rgba(36, 36, 36, 0) 100%
+    );
+    pointer-events: none;
+}
+
+.event_image {
+    position: relative;
+    width: 100%;
+}
+
+.icons_wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.icon_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 10rem;
+    gap: .3rem;
+}
+
+.icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-bottom: 1rem;
+    fill: var(--color-grey-dark-4);
+}
+
+.icon_container p {
+    color: var(--color-grey-dark-4);
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        position: relative;
+        width: 100%;
+    }
+
+    .event_image_wrapper {
+        position: relative;
+        max-width: 50%;
+        aspect-ratio: 5 / 3;
+        overflow: hidden;
+        border-radius: 1rem;
+        order: 1;
+    }
+
+    .event_image_wrapper::after {
+        display: none;
+    }
+
+    .event_image {
+        position: relative;
+        width: 100%;
+    }
+
+    
+    .icons_wrapper {
+        width: 100%;
+        max-width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.5rem;
+        padding-left: 8rem;
+        order: 2;
+    }
+
+    .icon_container {
+        flex-direction: row;
+        align-items: center;
+        min-width: 10rem;
+        gap: 2rem;
+    }
+
+    .icon {
+        width: 3rem;
+        height: 3rem;
+        margin-bottom: 1rem;
+        fill: var(--color-grey-dark-4);
+    }
+
+    .icon_container p {
+        color: var(--color-grey-dark-4);
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    .title {
+        order: 3;
+    }
+
+    .event_desc {
+        order: 4;
+    }
+}

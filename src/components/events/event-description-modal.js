@@ -7,6 +7,7 @@ import styles from './event-description-modal.module.css';
 import CloseSVG from '../assets/icons/close-svg';
 import TornBorder from '../assets/patterns/torn-border';
 import { colors } from '@/lib/colors';
+import TicketButton from './ticket-button';
 
 function EventDescriptionModal({ event, onClose }) {
 
@@ -46,14 +47,9 @@ function EventDescriptionModal({ event, onClose }) {
           </div>
         </div>
         {event.ticketUrl && (
-            <a
-              href={event.ticketUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.ticket_link}
-            >
-              Buy tickets online
-            </a>
+          <div className={styles.button_wrapper}>
+            <TicketButton link={event.ticketUrl}/>
+          </div>
           )}
         <p className={styles.description}>
           

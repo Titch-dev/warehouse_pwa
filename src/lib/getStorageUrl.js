@@ -3,7 +3,7 @@ import { warehouseStorage } from "@/firebase/firebaseConfig";
 
 export async function getStorageUrl(path) {
   if (!path) return "";
-  const cleanPath = path.startsWith("/") ? path.slice(1) : path; // remove leading slash
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
   const fileRef = ref(warehouseStorage, cleanPath);
   return await getDownloadURL(fileRef);
 }

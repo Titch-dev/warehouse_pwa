@@ -1,11 +1,45 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import { collection, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore'
 import { warehouseDB } from '@/firebase/firebaseConfig'
 
-/* ---------- Local Cache Helpers ---------- */
+/* ---------- Recursive Firestore Timestamp → JS Date ---------- */
+function convertFirestoreTimestamps(obj) {
+  if (obj == null) return obj;
 
+  // 🔹 If already a Firestore Timestamp instance
+  if (obj instanceof Timestamp) {
+    return obj.toDate();
+  }
+  // 🔹 If plain object that looks like serialized timestamp
+  if (
+    typeof obj === 'object' &&
+    'seconds' in obj &&
+    'nanoseconds' in obj &&
+    typeof obj.seconds === 'number'
+  ) {
+    return new Date(obj.seconds * 1000);
+  }
+
+  // 🔹 If array → recurse each item
+  if (Array.isArray(obj)) {
+    return obj.map(item => convertFirestoreTimestamps(item));
+  }
+
+  // 🔹 If plain object → recurse properties
+  if (typeof obj === 'object') {
+    const newObj = {};
+    for (const key in obj) {
+      newObj[key] = convertFirestoreTimestamps(obj[key]);
+    }
+    return newObj;
+  }
+
+  return obj;
+}
+
+/* ---------- Local Cache Helpers ---------- */
 
 function getLocalCache(key) {
   if (typeof window === 'undefined') return null
@@ -57,7 +91,8 @@ export function useFirestoreCollection(collectionOrQuery, versionKey) {
       const cached = getLocalCache(versionKey)
 
       if (cached && cached.version === serverVersion) {
-        setData(cached.data)
+        const normalised = convertFirestoreTimestamps(cached.data)
+        setData(normalised)
         setLoading(false)
         return
       }
@@ -72,7 +107,7 @@ export function useFirestoreCollection(collectionOrQuery, versionKey) {
 
       const allDocs = snapshot.docs.map(doc => ({
         id: doc.id,
-        ...doc.data()
+        ...convertFirestoreTimestamps(doc.data())
       }))
 
       /* Save to local cache */

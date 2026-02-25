@@ -1,26 +1,23 @@
 const { onSchedule } = require("firebase-functions/v2/scheduler");
 const { onRequest } = require("firebase-functions/v2/https");
 const { defineSecret } = require("firebase-functions/params");
-const admin = require("firebase-admin");
-const fetch = global.fetch;
+const admin = require("./firebaseAdmin");
 
+const fetch = global.fetch;
 const FB_PAGE_ACCESS_TOKEN = defineSecret("FB_PAGE_ACCESS_TOKEN");
 
-if (!admin.apps.length) {
-  admin.initializeApp();
-}
-
 const db = admin.firestore();
+const bucket = admin.storage().bucket();
 
-const BAR_CLOSE_HOUR = 23;
-const BAR_CLOSE_MINUTE = 0;
 const VENUE_NAME = "Westville Warehouse bar and events venue";
 
 /* ---------------- Utilities ---------------- */
 
 function stripEmojis(text = "") {
   return text
-    .replace(/\p{Extended_Pictographic}/gu, "")
+    .replace(/[\p{Extended_Pictographic}\p{Emoji_Component}]/gu, "")
+    .replace(/\uFE0F/gu, "")
+    .replace(/\u200D/gu, "")
     .replace(/\r\n/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
     .replace(/[ \t]+/g, " ")
@@ -28,39 +25,87 @@ function stripEmojis(text = "") {
 }
 
 function extractPrices(description = "") {
-  const regex = /\[PRICE\]([\s\S]*?)\[\/PRICE\]/gi;
+  const blockRegex = /\[\s*PRICE\s*\]([\s\S]*?)\[\s*\/\s*PRICE\s*\]/gi;
 
   let match;
-  let prices = [];
+  const prices = [];
   let hasTBC = false;
 
-  while ((match = regex.exec(description)) !== null) {
-    const content = match[1].trim();
+  const parseNumbersFromText = (text) => {
+    const normalized = (text || "")
+      .replace(/\u00A0/g, " ")
+      .replace(/\u2028|\u2029/g, "\n")
+      .replace(/[–—]/g, "-");
+    const tokens = normalized.match(/\d[\d\s.,]*/g);
+    if (!tokens) return [];
 
-    if (/^tbc$/i.test(content)) {
-      hasTBC = true;
+    const out = [];
+
+    for (let raw of tokens) {
+      let s = raw.trim().replace(/\s+/g, "");
+
+      const hasComma = s.includes(",");
+      const hasDot = s.includes(".");
+
+      if (hasComma && hasDot) {
+        if (s.lastIndexOf(".") > s.lastIndexOf(",")) {
+          s = s.replace(/,/g, "");
+        } else {
+          s = s.replace(/\./g, "").replace(/,/g, ".");
+        }
+      } else if (hasComma && !hasDot) {
+        if (/,\d{1,2}$/.test(s)) s = s.replace(/,/g, ".");
+        else s = s.replace(/,/g, "");
+      } else if (hasDot && !hasComma) {
+        if (/\.\d{3}(\.|$)/.test(s) && !/\.\d{1,2}$/.test(s)) {
+          s = s.replace(/\./g, "");
+        }
+      }
+
+      const n = Number(s);
+      if (Number.isFinite(n)) out.push(n);
+    }
+
+    return out;
+  };
+
+  blockRegex.lastIndex = 0;
+
+  while ((match = blockRegex.exec(description)) !== null) {
+    const content = (match[1] || "").trim();
+
+    if (/\bTBC\b/i.test(content)) hasTBC = true;
+
+    if (/\bfree\b|\bno\s*cover\b/i.test(content)) {
+      prices.push(0);
       continue;
     }
 
-    const numbers = content.match(/\d+(\.\d+)?/g);
-    if (numbers) {
-      numbers.forEach(n => prices.push(Number(n)));
+    const nums = parseNumbersFromText(content);
+    for (const n of nums) prices.push(n);
+
+    if (nums.length === 0 && !hasTBC) {
+      console.warn("⚠️ PRICE block found but no numbers parsed");
+      console.warn("RAW PRICE CONTENT:", JSON.stringify(content));
+      console.warn(
+        "CHAR CODES (first 120):",
+        Array.from(content.slice(0, 120)).map(c => c.charCodeAt(0))
+      );
     }
   }
 
-  const sortedPrices = prices.sort((a, b) => a - b);
+  const uniqueSorted = [...new Set(prices)].sort((a, b) => a - b);
+
+  const cleanedDescription = description.replace(
+    /\[\s*PRICE\s*\][\s\S]*?\[\s*\/\s*PRICE\s*\]/gi,
+    ""
+  ).trim();
 
   return {
-    prices: sortedPrices,
+    prices: uniqueSorted,
     hasTBC,
-    cleanedDescription: description.replace(regex, "").trim(),
+    cleanedDescription,
   };
-}
-
-function defaultEndTime(start) {
-  const end = new Date(start);
-  end.setHours(BAR_CLOSE_HOUR, BAR_CLOSE_MINUTE, 0, 0);
-  return end;
 }
 
 function buildAltText(eventName) {
@@ -68,7 +113,64 @@ function buildAltText(eventName) {
   return `${eventName} at ${VENUE_NAME}`;
 }
 
-/* ---------------- CORE SYNC LOGIC ---------------- */
+function slugify(text = "") {
+  return stripEmojis(text)
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "")
+    .replace(/-{2,}/g, "-");
+}
+
+function formatDateSlug(date) {
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+/* ---------------- IMAGE UPLOAD (RAW ONLY) ---------------- */
+
+async function uploadRawFacebookImage(imageUrl, docId) {
+  if (!imageUrl) return null;
+
+  const rawPath = `uploads/raw/events/facebook/${docId}.jpg`;
+  const optimizedPath = `events/facebook/${docId}.webp`;
+
+  const optimizedFile = bucket.file(optimizedPath);
+  const [optimizedExists] = await optimizedFile.exists();
+
+  if (optimizedExists) {
+    return optimizedPath;
+  }
+
+  console.log(`⬇ Downloading Facebook image for ${docId}`);
+
+  const response = await fetch(imageUrl);
+  if (!response.ok) {
+    console.error("Failed to fetch image:", imageUrl);
+    return null;
+  }
+
+  const buffer = Buffer.from(await response.arrayBuffer());
+
+  const rawFile = bucket.file(rawPath);
+
+  await rawFile.save(buffer, {
+    metadata: {
+      contentType:
+        response.headers.get("content-type") || "image/jpeg",
+    },
+  });
+
+  console.log(`☁ Uploaded RAW image: ${rawPath}`);
+
+  return optimizedPath;
+}
+
+/* ---------------- CORE SYNC ---------------- */
 
 async function syncFacebookEventsCore() {
   console.log("🔁 Starting Facebook event sync");
@@ -83,43 +185,34 @@ async function syncFacebookEventsCore() {
     `&since=${nowUnix}` +
     `&access_token=${token}`;
 
-/* ---------- FETCH ALL FUTURE EVENTS (with pagination) ---------- */
-
   let allEvents = [];
   let nextUrl = baseUrl;
 
   while (nextUrl) {
     const res = await fetch(nextUrl);
     const fb = await res.json();
-
-    if (!fb.data) {
-      console.error("❌ Facebook API error", fb);
-      throw new Error("Facebook API returned no data")
-    }
+    if (!fb.data) throw new Error("Facebook API error");
 
     allEvents = allEvents.concat(fb.data);
     nextUrl = fb.paging?.next || null;
   }
 
-console.log(`📥 Facebook events fetched (total): ${allEvents.length}`);
-
- /* ---------- WRITE TO FIRESTORE (chunked batches) ---------- */
+  console.log(`📥 Events fetched: ${allEvents.length}`);
 
   let batch = db.batch();
   let operationCount = 0;
   const activeFbIds = new Set();
 
   for (const event of allEvents) {
-    const baseDescription = stripEmojis(event.description || "");
+    const rawDescription = (event.description || "").replace(/\r\n/g, "\n");
+    const cleanedName = stripEmojis(event.name);
 
-   const {
-      prices: extractedPrices,
-      hasTBC: priceHasTBC,
-      cleanedDescription: cleanedDescription,
-    } = extractPrices(baseDescription);
+    const { prices, hasTBC, cleanedDescription: descWithoutPriceBlock } =
+    extractPrices(rawDescription);
 
-  const prices =
-      priceHasTBC ? ["TBC"] : extractedPrices;
+    const cleanedDescription = stripEmojis(descWithoutPriceBlock);
+
+    const finalPrices = prices.length ? prices : (hasTBC ? ["TBC"] : []);
 
     const occurrences = event.event_times?.length
       ? event.event_times
@@ -127,13 +220,11 @@ console.log(`📥 Facebook events fetched (total): ${allEvents.length}`);
 
     for (let index = 0; index < occurrences.length; index++) {
       const occ = occurrences[index];
-
       const start = new Date(occ.start_time);
-      const end = occ.end_time
-        ? new Date(occ.end_time)
-        : defaultEndTime(start);
+      if (start < now) continue;
 
-      if (end < now) continue;
+      const end = occ.end_time ? new Date(occ.end_time) : null;
+      if (end && end < now) continue;
 
       const docId =
         occurrences.length > 1
@@ -142,70 +233,103 @@ console.log(`📥 Facebook events fetched (total): ${allEvents.length}`);
 
       activeFbIds.add(docId);
 
+      const externalImage =
+        event.cover?.source ||
+        event.cover?.photo?.image?.source ||
+        null;
+
+      let storageImagePath = null;
+
+      if (externalImage) {
+        storageImagePath = await uploadRawFacebookImage(
+          externalImage,
+          docId
+        );
+      }
+
+      const baseSlug = slugify(cleanedName || "event");
+      const slug =
+        occurrences.length > 1
+          ? `${baseSlug}-${formatDateSlug(start)}`
+          : baseSlug;
+
       const ref = db.collection("events").doc(docId);
 
       batch.set(ref, {
-        name: event.name,
+        name: cleanedName,
+        slug,
         description: cleanedDescription,
-        prices,
-        ticketUrl: event.ticket_uri || null,
-        start_time: start.toISOString(),
-        end_time: end.toISOString(),
-        imageUrl: 
-          event.cover?.source || 
-          event.cover?.photo?.image?.source ||
-          null,
-        alt_image: buildAltText(event.name),
+        price: {
+          amount: finalPrices,
+          denom: null,
+        },
+        ticket_url: event.ticket_uri || null,
+        start_time: admin.firestore.Timestamp.fromDate(start),
+        end_time: end
+          ? admin.firestore.Timestamp.fromDate(end)
+          : null,
+        image: storageImagePath
+          ? {
+              alt: buildAltText(cleanedName),
+              type: "storage",
+              value: storageImagePath,
+            }
+          : null,
         source: "facebook",
+        type: "one_off",
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedBy: "system",
       });
-      
-      operationCount++
 
-      // Commit early if nearing 500 batch limit
+      operationCount++;
+
       if (operationCount >= 450) {
         await batch.commit();
-        console.log("⚡ Partial batch committed");
         batch = db.batch();
         operationCount = 0;
       }
     }
   }
 
-/* ---------- CLEAN UP OLD EVENTS ---------- */
+  /* -------- Cleanup -------- */
 
   const snapshot = await db
     .collection("events")
     .where("source", "==", "facebook")
     .get();
 
-  snapshot.forEach((doc) => {
-    const end = doc.data().end_time
-    ? new Date(doc.data().end_time)
-    : null;
+  for (const doc of snapshot.docs) {
+    if (!activeFbIds.has(doc.id)) {
+      const data = doc.data();
 
-    if (
-      (end && end < now) ||
-      !activeFbIds.has(doc.id)
-    ) {
-        batch.delete(doc.ref);
-        operationCount++;
+      if (data.image?.type === "storage") {
+        try {
+          await bucket.file(data.image.value).delete();
+          console.log(`🗑 Deleted optimized image ${data.image.value}`);
+        } catch (err) {
+          console.warn("Image delete failed:", err.message);
+        }
       }
-  });
 
-  /* ---------- FINAL COMMIT ---------- */
+      batch.delete(doc.ref);
+      operationCount++;
+    }
+  }
+
   if (operationCount > 0) {
     await batch.commit();
   }
 
-  console.log("✅ Facebook events sync complete");
+  console.log("✅ Facebook sync complete");
 }
 
 /* ---------------- TRIGGERS ---------------- */
 
 exports.syncFacebookEvents = onSchedule(
   {
-    schedule: "every 24 hours",
+    region: "us-central1",
+    schedule: "0 2 * * *",
+    timeZone: "Africa/Johannesburg",
     secrets: [FB_PAGE_ACCESS_TOKEN],
   },
   syncFacebookEventsCore
@@ -213,6 +337,7 @@ exports.syncFacebookEvents = onSchedule(
 
 exports.syncFacebookEventsNow = onRequest(
   {
+    region: "us-central1",
     secrets: [FB_PAGE_ACCESS_TOKEN],
   },
   async (req, res) => {

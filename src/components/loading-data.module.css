@@ -1,4 +1,3 @@
-
 .loading_wrapper{
     display: flex;
     align-items: center;
@@ -12,6 +11,7 @@
 
 .loading_content {
   display: flex;
+  align-items:baseline;
 }
 
 .loading_content p {
@@ -22,7 +22,7 @@
 }
 
 .dots {
-  width: 4.5rem;
+  width: 3rem;
   aspect-ratio: 2;
   --_g: no-repeat radial-gradient(circle closest-side,#f0eeee 90%,#0000);
   background: 
@@ -32,6 +32,7 @@
   background-size: calc(100%/3) 50%;
   animation: d3 1s infinite linear;
 }
+
 @keyframes d3 {
     20%{background-position:0%   0%, 50%  50%,100%  50%}
     40%{background-position:0% 100%, 50%   0%,100%  50%}
@@ -47,5 +48,13 @@
 
   .dots {
     width: 4.5rem;
+    aspect-ratio: 2.5;
+    --_g: no-repeat radial-gradient(circle closest-side,#f0eeee 90%,#0000);
+    background: 
+      var(--_g) 0%   50%,
+      var(--_g) 50%  50%,
+      var(--_g) 100% 50%;
+    background-size: calc(100%/3) 50%;
+    animation: d3 1s infinite linear;
   }
 }

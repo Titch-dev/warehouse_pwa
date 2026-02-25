@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
@@ -6,7 +6,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { PickersDay } from '@mui/x-date-pickers/PickersDay';
-import { createTheme, ThemeProvider} from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Tooltip from '@mui/material/Tooltip';
 import { getOpeningHoursForToday } from '@/lib/utils';
 import { OPENING_TIMES } from '@/config/openingTimes';
 
@@ -14,7 +15,6 @@ import styles from './event-calendar.module.css';
 
 const calendarTheme = createTheme({
   components: {
-    // Header label
     MuiPickersCalendarHeader: {
       styleOverrides: {
         label: {
@@ -31,19 +31,17 @@ const calendarTheme = createTheme({
         },
       },
     },
-    // Header arrows
     MuiPickersArrowSwitcher: {
       styleOverrides: {
         button: {
           color: 'var(--color-grey-light-3)',
-          fontSize:'3rem',
+          fontSize: '3rem',
           '&.Mui-disabled': {
-            color: 'var(--color-grey-dark-3)'
-          }
-        }
-      }
+            color: 'var(--color-grey-dark-3)',
+          },
+        },
+      },
     },
-    // Days of the week label
     MuiTypography: {
       styleOverrides: {
         root: {
@@ -51,87 +49,98 @@ const calendarTheme = createTheme({
             color: 'var(--color-grey-light-3)',
             fontSize: '1.4rem',
             fontWeight: 'bold',
-          }
-        }
-      }
+          },
+        },
+      },
     },
-    MuiPickersDay:{
+    MuiPickersDay: {
       styleOverrides: {
         root: {
           '&.Mui-selected': {
             backgroundColor: 'transparent',
-          }
-        }
-      }
-    }
+          },
+        },
+      },
+    },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: '1.3rem',
+          backgroundColor: 'var(--color-grey-dark-1)',
+          color: 'var(--color-grey-light-3)',
+        },
+        arrow: {
+          color: 'var(--color-grey-dark-2)',
+        },
+      },
+    },
   },
 });
 
-const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
-
+const EventCalendar = ({ events = [], onEventSelect, selectedEvent }) => {
   const today = dayjs();
   const [selectedDate, setSelectedDate] = useState(today);
   const { open, close } = getOpeningHoursForToday(OPENING_TIMES);
 
   useEffect(() => {
     if (!selectedEvent) return;
-
-    const eventDate = dayjs(selectedEvent.start_time);
-    setSelectedDate(eventDate);
+    setSelectedDate(dayjs(selectedEvent.start_time));
   }, [selectedEvent]);
 
-    // Get events for a specific date
   const getEventsForDate = (date) => {
-    return events.filter(event => {
-      const eventDate = dayjs(event.start_time);
-      return eventDate.isSame(date, 'day');
-    });
+    return events.filter((event) => dayjs(event.start_time).isSame(date, 'day'));
   };
 
- // Check if this day matches the currently selected event
   const isSelectedEventDay = (date) => {
     if (!selectedEvent) return false;
-    const eventDate = dayjs(selectedEvent.start_time);
-    return eventDate.isSame(date, 'day');
+    return dayjs(selectedEvent.start_time).isSame(date, 'day');
   };
 
-  // Check if a date has events
-  const hasEventsOnDate = (date) => {
-    return getEventsForDate(date).length > 0;
-  };
-
-  // Custom day renderer
   const CustomDay = (props) => {
     const { day, ...other } = props;
-    const hasEvent = hasEventsOnDate(day);
+
+    const dayEvents = getEventsForDate(day);
+    const hasEvent = dayEvents.length > 0;
+
     const isToday = day.isSame(today, 'day');
-    const notEventDay = day.isBefore(today, 'day') || !hasEvent && !isToday;
-    const isSelectedEvent = isSelectedEventDay(day)
+    const isSelectedEvent = isSelectedEventDay(day);
+
+    const notEventDay = day.isBefore(today, 'day') || (!hasEvent && !isToday);
+
+    const tooltipTitle = hasEvent ? dayEvents[0]?.name ?? 'Event' : '';
 
     return (
       <div className={styles.dayWrapper}>
-        <PickersDay
-          {...other}
-          day={day}
-          disabled={notEventDay || isToday && !hasEvent}
-          className={`
-            ${styles.customDay} 
-            ${isToday ? styles.todayDay : ''} 
-            ${hasEvent ? styles.eventDay : ''}
-            ${isSelectedEvent ? styles.selectedEventDay : ''}
-            ${notEventDay ? styles.notEventDay : ''}
-          `}
-          onClick={() => {
-            setSelectedDate(day);
-            if (hasEvent) {
-              const dayEvents = getEventsForDate(day);
-              if (dayEvents.length > 0 && onEventSelect) {
-                onEventSelect(dayEvents[0]); // Select first event of the day
-              }
-            }
-          }}
-        />
-        {hasEvent && <div className={styles.eventDot} />}
+        <Tooltip
+        title={tooltipTitle}
+        placement="top"
+        arrow
+        enterDelay={200}
+        disableHoverListener={!hasEvent}
+        disableFocusListener={!hasEvent}
+        disableTouchListener={!hasEvent}
+      >
+        <span>
+          <PickersDay
+            {...other}
+            day={day}
+            disabled={notEventDay || (isToday && !hasEvent)}
+            className={`
+              ${styles.customDay}
+              ${isToday ? styles.todayDay : ''}
+              ${hasEvent ? styles.eventDay : ''}
+              ${isSelectedEvent ? styles.selectedEvent : ''}
+              ${notEventDay ? styles.notEventDay : ''}
+            `}
+            onClick={() => {
+              setSelectedDate(day);
+              if (hasEvent && onEventSelect) onEventSelect(dayEvents[0]);
+            }}
+          />
+        </span>
+      </Tooltip>
+
+      {hasEvent && <div className={styles.eventDot} />}
       </div>
     );
   };
@@ -143,9 +152,7 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
           <DateCalendar
             value={selectedDate}
             onChange={setSelectedDate}
-            slots={{
-              day: CustomDay,
-            }}
+            slots={{ day: CustomDay }}
             showDaysOutsideCurrentMonth
             className={styles.calendar}
             disablePast
@@ -153,10 +160,10 @@ const EventCalendar = ({ events, onEventSelect, selectedEvent }) => {
           />
         </LocalizationProvider>
       </ThemeProvider>
-      <div className={styles.opening_time_container}>
-        {/* <OpeningHours date={today}/> */}
+
+      <div className={styles.info_container}>
         <div className={styles.opening_hours}>
-          <p><strong>Open Today</strong></p> 
+          <p><strong>Open Today</strong></p>
           <p>{open} - {close}</p>
         </div>
       </div>

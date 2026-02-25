@@ -1,0 +1,124 @@
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.btn {
+    display: none;
+}
+
+.embla__viewport{
+    overflow: hidden;
+}
+
+.embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.embla__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+    min-width: 100%;
+
+}
+
+.embla__dot {
+    position: relative;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-grey-light-3);
+    cursor: pointer;
+}
+
+.embla__dot_selected {
+    border-radius: 50%;
+    background: var(--color-grad-bottom);
+}
+
+@media (min-width: 1024px) {
+    .wrapper {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        padding: 0;
+    }
+
+    .btn {
+        display: block;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+    }
+
+    .btn_icon {
+        position: relative;
+        height: 4rem;
+        width: 4rem;
+        fill: url(#Gradient1);
+        transition: transform ease-in-out .2s;
+        transform: scale(1);
+        filter: drop-shadow(0 0 1rem black);
+    }
+
+    .btn:hover .btn_icon{
+        transform: scale(1.1);
+    }
+
+    .btn:active{
+        top: .1rem;
+    }
+
+    .stop1 {
+        stop-color: var(--color-pink);
+    }
+
+    .stop2 {
+        stop-color: var(--color-orange);
+    }
+
+    .stop3 {
+        stop-color: var(--color-yellow);
+    }
+
+    .btn:disabled {
+        opacity: 0;
+        cursor: not-allowed;
+    }
+
+    .btn:disabled .btn_icon {
+        transform: none;
+    }
+
+    .embla__viewport{
+        overflow: hidden;
+        height: fit-content;
+        max-width: 60rem;
+    }
+
+    .embla__container {
+        display: flex;
+        touch-action: pan-y pinch-zoom;
+    }
+
+    .embla__slide {
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
