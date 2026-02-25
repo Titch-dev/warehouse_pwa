@@ -11,7 +11,9 @@ import { rubikFont } from '@/lib/fonts';
 import TornBackgroundSVG from '../assets/patterns/torn-background-svg';
 import styles from './event-section.module.css';
 import { sortEvents } from '@/lib/utils';
-import SpecialsCarousel from '../specials/specials-carousel';
+import WeeklyEvents from '../events/weekly-events';
+import TornBorder from '../assets/patterns/torn-border';
+import { colors } from '@/lib/colors';
 
 
 function EventSection() {
@@ -28,7 +30,9 @@ function EventSection() {
                 width={980}
             />
             <div className={styles.event_view_wrapper}>
+                <TornBorder top mobile_view color={colors.greydark1}/>
                 <EventView events={sortedEvents}/>
+                <TornBorder top={false} mobile_view color={colors.greydark1}/>
             </div>
         </div>
         <h1 className={`${styles.event_title} ${rubikFont.className}`}>Our weekly events ...</h1>
@@ -38,19 +42,20 @@ function EventSection() {
                 height={980}
                 width={980}
             />
-            {/* TODO: Replace with events carousel */}
             <div className={styles.weekly_event_wrapper}>
-                <SpecialsCarousel 
-                specials={'specialsFoodItems'}
-                metaRef={'specialsFood'}
-              />
+                <TornBorder top mobile_view color={colors.greydark1}/>
+                <WeeklyEvents/>
+                <TornBorder top={false} mobile_view color={colors.greydark1}/>
             </div>
-        </div>        
+        </div>
         <Link 
             href='/events' 
             className={styles.event_link}>
-            … more events
+            <button className={styles.event_btn}>
+                more events
+            </button>
         </Link>
+        
     </section>
   )
 }

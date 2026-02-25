@@ -1,25 +1,16 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useCallback } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import styles from './gallery-modal.module.css'
-import { getStorageImageUrl } from '@/lib/utils'
 import CloseSVG from '../assets/icons/close-svg'
+import SmartImage from '../ui/smart-image'
 // import { getStorageImageUrl } from '@/lib/utils'
 
-function GalleryModal({ imagesCollection, loading, activeIndex, onClose }) {
+function GalleryModal({ imagesCollection, activeIndex, onClose }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
 
   const isOpen = activeIndex !== null
-
-  const scrollPrev = useCallback(() => {
-    emblaApi?.scrollPrev()
-  }, [emblaApi])
-
-  const scrollNext = useCallback(() => {
-    emblaApi?.scrollNext()
-  }, [emblaApi])
 
   // Jump to the clicked thumbnail when modal opens
   useEffect(() => {
@@ -42,30 +33,17 @@ function GalleryModal({ imagesCollection, loading, activeIndex, onClose }) {
 
       <div className={styles.embla} ref={emblaRef}>
         <div className={styles.emblaContainer}>
-          {loading && 
-            <Image
-              src={'./icons/ww_logo.png'}
-              width={50}
-              height={50}
-              />
-          }
           {imagesCollection.map(img => (
             <div className={styles.emblaSlide} key={img.id}>
-              <Image
-                // src={getStorageImageUrl(img.imagePath)}
-                src={getStorageImageUrl(img.imagePath)}
-                alt=""
-                fill
-                sizes="100vw"
-                className={styles.modalImage}
+              <SmartImage
+              image={img.image}
+              alt={img.image.alt}
+              fit='contain'
               />
             </div>
           ))}
         </div>
       </div>
-
-      <button onClick={scrollPrev} className={styles.prev}>‹</button>
-      <button onClick={scrollNext} className={styles.next}>›</button>
     </div>
   )
 }

@@ -7,7 +7,7 @@ import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
 
 import SpecialsItem from "./specials-item";
 
-import { orderSpecialsByClosestDay } from "@/lib/utils";
+import { orderByClosestDay } from "@/lib/utils";
 
 import styles from "./specials-carousel.module.css";
 import ChevronLeft from "@/components/assets/icons/chevron-left-svg";
@@ -25,7 +25,7 @@ export default function SpecialsCarousel({ specials, metaRef }) {
     } = useFirestoreCollection(specials, metaRef)
 
     const orderedSpecials = useMemo(
-        () => orderSpecialsByClosestDay(specialsData),
+        () => orderByClosestDay(specialsData),
         [specialsData]
     )
 

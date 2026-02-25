@@ -32,6 +32,7 @@
   /* Box shadow */
   --shadow-dark-lg: 10px 10px 25px black;
   --shadow-dark-sm: 0 6px 16px black;
+  --shadow-grey-sm: 0 6px 16px var(--color-grey-dark-3);
   --shadow-light-sm: 0 0 10px white;
 
   /* Drop shadow */

@@ -32,7 +32,7 @@
 
 .item_desc h3 {
     display: flex;
-    justify-content: space-evenly; /* name left, icons right */
+    justify-content: space-evenly;
     align-items: center;
     letter-spacing: .1rem;
     word-spacing: .8rem;
@@ -47,7 +47,7 @@
 .item_meta {
     display: flex;
     align-items: center;
-    gap: .3rem; /* spacing between (V) and fire icons */
+    gap: .3rem;
 }
 
 .item_diet {

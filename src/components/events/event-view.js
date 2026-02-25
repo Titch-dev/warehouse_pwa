@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import EventDescriptionModal from './event-description-modal';
 import LoadingData from '../loading-data';
 import useMediaQuery from '@/hooks/useMediaQuery';
@@ -8,18 +8,39 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import styles from './event-view.module.css';
 import { rubikFont } from '@/lib/fonts';
 import EventIcons from './event-icons';
-import { getNextEvent } from '@/lib/utils';
+import { getNextEvent, resolveImageUrl } from '@/lib/utils';
 import TicketButton from './ticket-button';
 import ModalPortal from '../modal-portal';
+import SmartImage from '../ui/smart-image';
 
 const EventView = ({ selectedEvent, events }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const currentEvent = selectedEvent || getNextEvent(events);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imageLoading, setImageLoading] = useState(true);
 
   useEffect(() => {
-  }, [selectedEvent, events])
+    if (!currentEvent?.image) return;
 
-  const currentEvent = selectedEvent || getNextEvent(events);
+    let isMounted = true;
+
+    async function loadImage() {
+      setImageLoading(true);
+
+      const url = await resolveImageUrl(currentEvent.image);
+      if (isMounted) {
+        setImageUrl(url);
+        setImageLoading(false);
+      }
+    }
+
+    loadImage();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentEvent]);
 
   if (!events || events.length === 0) {
     return (
@@ -35,38 +56,46 @@ const EventView = ({ selectedEvent, events }) => {
       null
     );
   }
+  console.log(currentEvent.image)
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.event_content}>
           <div className={styles.event_image_wrapper}>
-            <img 
-            className={styles.event_image}
-            src={currentEvent.imageUrl}
-            alt={currentEvent.alt_image || currentEvent.name}/>
+            <SmartImage
+              image={currentEvent.image}
+              alt={currentEvent.image.alt}
+              fit='cover'
+            />
           </div>
-          <h3 className={`${rubikFont.className} ${styles.event_title}`}>
+          <h3 
+            className={`
+              ${rubikFont.className} 
+              ${styles.event_title} 
+              ${currentEvent.ticket_url ?
+                styles.ticket_title : ''}
+            `}>
             {currentEvent.name}
           </h3>
           <div className={styles.icon_wrapper}>
             <EventIcons
               column={!isMobile}
               date={currentEvent.start_time} 
-              prices={currentEvent.prices} 
+              price={currentEvent.price} 
               start={currentEvent.start_time} 
               end={currentEvent.end_time}
             />
           </div>
-            {currentEvent.ticketUrl && (
+            {currentEvent.ticket_url && (
               <div className={styles.ticket_wrapper}>
-                <TicketButton link={currentEvent.ticketUrl}/>
+                <TicketButton link={currentEvent.ticket_url}/>
               </div>
             )}
           <p 
             className={`
               ${styles.event_desc}
-              ${currentEvent.ticketUrl 
+              ${currentEvent.ticket_url 
                 ? styles.shortened_desc
                 : ''
               }`}>

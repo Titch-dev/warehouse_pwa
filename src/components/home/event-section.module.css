@@ -5,59 +5,66 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 4rem 0;
+    padding: 3rem 0;
     background-image: var(--color-grad-bottom);
+    gap: 3rem;
 }
 
 .event_title {
     font-size: 4rem;
     color: var(--color-grey-light-3);
-    margin-bottom: 3rem;
+    text-align: center;
     letter-spacing: .1rem;
 }
 
-.next_event_wrapper {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.event_view_wrapper {
-    position: relative;
-    background-color: var(--color-grey-dark-1);
-    max-width: 80rem;
-    padding: 3.5rem;
-}
-
-.content_background {
-    display: none;
-}
-
+.next_event_wrapper,
 .weekly_events_wrapper {
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 55rem;
+    background-color: var(--color-grey-dark-1);
+    max-width: fit-content;
+}
+
+.event_view_wrapper {
+    position: relative;
+}
+
+.weekly_event_wrapper {
+    position: relative;
+    width: 100dvw;
+}
+
+.content_background,
+.content_weekly_background {
+    display: none;
 }
 
 .event_link {
   position: relative;
-  display: inline-flex;
-  align-items: center;
   text-decoration: none;
-  color: var(--color-grey-dark-1);
-  /* margin-top: 3rem; */
-  font-size: 2.5rem;
+  margin-top: 3rem;
   cursor: pointer;
-  z-index: 0;
 }
 
-/* Tablet */
-@media (min-width: 768px) {
+.event_btn {
+  display: inline-block;
+  padding: 0.60rem 1.5rem;
+  font-size: 2.5rem;
+  text-decoration: none;
+  color: var(--color-grey-light-3);
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
+  border-radius: 1rem;
+  border: var(--color-grey-light-3) 0.2rem solid;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
     .event {
         padding: 6rem 0 6rem;
+        gap: 3rem;
     }
 
     .content_background {
@@ -71,10 +78,21 @@
 
     .event_view_wrapper{
         background-color: transparent;
+        max-width: 65rem;
     }
 
-    .event_link {
-        font-size: 3rem;
+    /* .event_link {
+        font-size: 3.5rem;
+    } */
+
+    .weekly_events_wrapper {
+        background-color: transparent;
+        height: 50rem;
+        max-width: 72rem;
+    }
+
+    .weekly_event_wrapper {
+        width: fit-content;
     }
 
     .content_weekly_background {
@@ -84,16 +102,5 @@
 
         fill: var(--color-grey-dark-1);
         filter: drop-shadow(var(--shadow-dark-lg));
-    }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-    .event {
-        /* padding: 8rem 0 8rem; */
-    }
-
-    .event_link {
-        font-size: 3.5rem;
     }
 }
