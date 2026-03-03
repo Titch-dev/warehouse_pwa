@@ -4,12 +4,10 @@ import { groupOpeningTimes } from '@/lib/utils';
 
 import styles from './opening-hours.module.css';
 
-import { OPENING_TIMES } from "@/config/openingTimes";
-
 export default async function OpeningHours() {
 
   const todayIndex = dayjs().day();
-  const grouped = groupOpeningTimes(OPENING_TIMES);
+  const grouped = groupOpeningTimes();
 
   return (
     <div className={styles.open_times}>

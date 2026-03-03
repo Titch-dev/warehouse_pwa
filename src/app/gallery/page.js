@@ -13,7 +13,7 @@ import styles from './gallery-page.module.css';
 import { rubikFont } from "@/lib/fonts";
 import TornBorder from "@/components/assets/patterns/torn-border";
 import { colors } from "@/lib/colors";
-import ModalPortal from "@/components/modal-portal";
+import ModalPortal from "@/components/ui/modal-portal";
 
 const PAGE_SIZE = 8;
 

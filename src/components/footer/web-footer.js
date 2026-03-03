@@ -5,9 +5,9 @@ import { colors } from '@/lib/colors';
 import { rubikFont } from '@/lib/fonts';
 
 import LogoSVG from '@/components/assets/logo/logo-svg';
-import MapSVG from '@/components/assets/icons/map-svg';
 import TornBorder from '@/components/assets/patterns/torn-border';
 import Socials from '@/components/assets/icons/socials'; 
+import CookieSettingsLink from '../cookies/cookie-settings-link';
 
 export default function WebFooter() {
   const mapUrl = `https://www.google.com/maps/search/?api=1&query=The+Westville+Warehouse`;
@@ -33,6 +33,7 @@ export default function WebFooter() {
               <Link href='/gallery'>Gallery</Link>
               <Link href='/contact'>Contact</Link>
               <Link href='/privacy'>Privacy</Link>
+              <CookieSettingsLink  className={styles.footer_link}/>
             </div>
           </div>
           <Link className={styles.address_container} href={mapUrl} target='_blank'>
@@ -40,7 +41,7 @@ export default function WebFooter() {
           </Link>
         </div>
         <div className={styles.copy_right}>
-          <p>&copy; 2025 The Westville Warehouse</p>
+          <p>&copy; 2026 The Westville Warehouse</p>
         </div>
       </div>
     </footer>

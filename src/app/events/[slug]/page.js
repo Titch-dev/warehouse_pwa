@@ -1,16 +1,35 @@
-// app/events/[slug]/page.js  (your EventSlugPage)
-import { redirect } from 'next/navigation';
+import { redirect, notFound } from 'next/navigation';
+import { getEventBySlug } from '@/lib/server/events';
 
+/**
+ * Generate SEO metadata
+ */
 export async function generateMetadata({ params }) {
-  const title = `Event | Westville Warehouse`;
-  const description = 'See upcoming events at Westville Warehouse.';
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    'https://thewestvillewarehouse.co.za';
 
-  // 🚨 replace localhost with your real domain in production
-  // currently set to localhost!!!!!!!
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://westvillewarehouse.co.za';
+  const event = await getEventBySlug(params.slug);
 
-  // Use a PUBLIC absolute URL (must be accessible to WhatsApp/Twitter bots)
-  const image = `${siteUrl}/icons/og-default.jpg`;
+  // If event doesn't exist, return minimal metadata
+  // (Next will still render 404 from page() below)
+  if (!event) {
+    return {
+      title: 'Event Not Found | Westville Warehouse',
+      description: 'This event could not be found.',
+    };
+  }
+
+  const title = `${event.name} | Westville Warehouse`;
+  const description =
+    event?.description?.slice(0, 160) ||
+    'See upcoming events at Westville Warehouse.';
+
+  const image =
+    event?.image?.value ||
+    `${siteUrl}/icons/og-default.jpg`;
+
+  const url = `${siteUrl}/events/${params.slug}`;
 
   return {
     title,
@@ -18,8 +37,14 @@ export async function generateMetadata({ params }) {
     openGraph: {
       title,
       description,
-      url: `${siteUrl}/events/${params.slug}`,
-      images: [{ url: image, width: 1200, height: 630 }],
+      url,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -30,7 +55,17 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function EventSlugPage({ params }) {
-  // ✅ Humans get redirected to the smooth UX URL
+/**
+ * Slug page
+ * - Valid slug → redirect to main events page with query param
+ * - Invalid slug → proper 404
+ */
+export default async function EventSlugPage({ params }) {
+  const event = await getEventBySlug(params.slug);
+
+  if (!event) {
+    notFound(); // Returns 404 status + renders app/not-found.js if you have one
+  }
+
   redirect(`/events?event=${encodeURIComponent(params.slug)}`);
 }

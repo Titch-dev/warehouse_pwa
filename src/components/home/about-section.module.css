@@ -4,7 +4,7 @@
     justify-content: center;
     position: relative;
     width: 100%;
-    background-color: var(--color-grey-dark-2);
+    background-color: var(--color-grey-dark-1);
 }
 
 .about_content {
@@ -66,7 +66,6 @@
     height: 55.5rem;
 }
 
-/* tablet */
 @media (min-width: 768px) {
     .about {
         padding: 5rem 0;
@@ -81,8 +80,8 @@
         position: absolute;
         display: block;
         transform: scale(-1, 1) scaleY(1.3) scaleX(1.3);
-        fill: var(--color-grey-dark-1);
-        filter: drop-shadow(var(--shadow-dark-lg));
+        fill: var(--color-grey-dark-2);
+        filter: drop-shadow(var(--shadow-dark-sm));
     }
 
     .about_text {
@@ -91,7 +90,6 @@
     }
 }
 
-/* desktop */
 @media (min-width: 1024px) {
 
     .about_text {

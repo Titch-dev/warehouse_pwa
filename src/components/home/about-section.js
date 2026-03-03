@@ -8,7 +8,6 @@ import { rubikFont } from "@/lib/fonts";
 function AboutSection() {
   return (
     <section className={styles.about}>
-        <TornBorder top={true} color={colors.greydark2}/>
         <div className={styles.about_content}>
         <TornBackgroundSVG 
             className={styles.content_background} 
@@ -33,7 +32,7 @@ function AboutSection() {
             </video>
             </div>
         </div>
-        <TornBorder top={false} color={colors.greydark2}/>
+        <TornBorder top={false} color={colors.greydark1}/>
     </section>
   )
 }

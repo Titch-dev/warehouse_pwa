@@ -1,35 +1,25 @@
 import { useEffect, useMemo, useCallback, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
-// import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
 import { orderByClosestDay } from "@/lib/utils";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
-import LoadingData from "../loading-data";
-import WeeklyEventsItem from "./weekly-events-item";
+import LoadingData from "../ui/loading-data";
 
 import styles from './weekly-events.module.css'
 import ChevronLeft from "../assets/icons/chevron-left-svg";
 import ChevronRight from "../assets/icons/chevron-right-svg";
 
-import { weekly_events } from "@/data/synthetic-data";
+import EventView from "./event-view";
 
-function WeeklyEvents() {
+function WeeklyEvents({ events, loading = false }) {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
     const [selectedIndex, setSelectedIndex] = useState(0);
-    const isMobile = useMediaQuery('(max-width: 768px)');
-    // const { 
-    //     data: weeklyEventsData, 
-    //     loading, 
-    //     error
-    // } = useFirestoreCollection('eventsWeekly', 'eventsWeekly')
+    const isMobile = useMediaQuery('(max-width: 768px)')
 
-    const weeklyEventsData = weekly_events.data;
-
-    
     const orderedWeeklyEvents = useMemo(
-        () => orderByClosestDay(weeklyEventsData),
-        [weeklyEventsData]
+        () => orderByClosestDay(events),
+        [events]
     )
 
     useEffect(() => {
@@ -40,9 +30,9 @@ function WeeklyEvents() {
     }, [emblaApi, orderedWeeklyEvents])
 
     useEffect(() => {
-        if (!emblaApi || !weeklyEventsData?.length) return
+        if (!emblaApi || !events?.length) return
         emblaApi.reInit()
-    }, [emblaApi, weeklyEventsData?.length])
+    }, [emblaApi, events?.length])
 
 
     const onSelect = useCallback(api => {
@@ -55,11 +45,11 @@ function WeeklyEvents() {
         emblaApi.on('reInit', onSelect)
     }, [emblaApi, onSelect])
 
-    // if (loading) return (
-    //     <div className={styles.loading_wrapper}>
-    //         <LoadingData dataName={'Weekly events'}/>
-    //     </div>
-    // )
+    if (loading) return (
+        <div className={styles.loading_skeleton}>
+            <LoadingData dataName={'Weekly events'}/>
+        </div>
+    )
 
     const isFirstEvent = selectedIndex === 0
     const isLastEvent = selectedIndex === orderedWeeklyEvents.length - 1
@@ -81,12 +71,12 @@ function WeeklyEvents() {
         </button>
         <div className={styles.embla__viewport} ref={emblaRef}>
             <div className={styles.embla__container}>
-                {orderedWeeklyEvents.map((event) => (
+                {orderedWeeklyEvents.map((e) => (
                     <div 
-                        key={event.id} 
+                        key={e.id} 
                         className={styles.embla__slide}
                     >
-                        <WeeklyEventsItem item={event}/>
+                        <EventView event={e}/>
                     </div>
                 ))}
             </div>

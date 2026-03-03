@@ -80,7 +80,6 @@ function ThumbnailStrip({
                 </button>
             )}
         </div>
-        {/* Dots */}
         <div className={styles.dots}>
             {Array.from({ length: totalPages }).map((_, i) => (
             <button

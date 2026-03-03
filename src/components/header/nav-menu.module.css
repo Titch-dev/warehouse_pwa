@@ -29,7 +29,6 @@
     list-style-type: none;
 }
 
-/* Tablet */
 @media (min-width:768px){
     .nav {
         position: relative;

@@ -2,6 +2,10 @@ import Script from 'next/script';
 
 import WebNavBar from "@/components/header/web-nav-bar";
 import WebFooter from "@/components/footer/web-footer";
+import ToastProvider from '@/components/ui/toast-provider';
+
+import CookieConsentProvider from "@/components/cookies/cookie-consent-provider";
+import CookieBanner from "@/components/cookies/cookie-banner";
 
 import { spartanFont } from "@/lib/fonts";
 import { colors } from "@/lib/colors";
@@ -55,11 +59,16 @@ export default function RootLayout({ children }) {
         />
       </head>
           <body className={spartanFont.className}>
-            <WebNavBar/>
-            <main className={styles.main}>
-              {children}
-            </main>
-            <WebFooter/>
+              <ToastProvider>
+                <CookieConsentProvider>
+                  <WebNavBar />
+                    <main className={styles.main}>
+                        {children}
+                    </main>
+                  <WebFooter />
+                  <CookieBanner />
+                </CookieConsentProvider>
+              </ToastProvider>
           </body>
     </html>
   );

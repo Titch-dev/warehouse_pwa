@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import MenuContainer from './menu-container';
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
@@ -12,7 +12,7 @@ import styles from './menu-navigation.module.css';
 import { rubikFont } from '@/lib/fonts';
 
 import DownloadSVG from '../assets/icons/download-svg';
-import LoadingData from '../loading-data';
+import LoadingData from '../ui/loading-data';
 
 
 const menus = ['food', 'drinks'];
@@ -22,12 +22,36 @@ export default function MenuNavigation() {
   const [selectedMenu, setSelectedMenu] = useState('food');
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  // Fetch both menus
-  const { data: foodMenu, loading: foodLoading, error: foodError } = useFirestoreCollection('menuFoodItems', 'menuFood')
-  const { data: drinksMenu, loading: drinksLoading, error: drinksError } = useFirestoreCollection('menuDrinkItems', 'menuDrink')
+  const { data: menu, loading: menuLoading, error: menuError } = useFirestoreCollection('menu', 'menu')
+  const { data: specials, loading: specialsLoading, error: specialsError} = useFirestoreCollection('specials', 'specials')
 
-  console.log(foodMenu.length)
-  console.log(drinksMenu.length)
+  const { foodMenu, drinksMenu, extras, notices } = useMemo(()=> {
+    const food = (menu || []).filter(e => e.type === "food");
+    const drinks = (menu || []).filter(e => e.type === "drink");
+    const extrasDocs = (menu || []).filter(e => e.type === "extras");
+    const noticeDocs = (menu || []).filter(e => e.type === "notice")
+
+    return {
+      foodMenu: food,
+      drinksMenu: drinks,
+      extras: extrasDocs,
+      notices: noticeDocs
+    }
+  }, [menu])
+
+  const { foodSpecials, drinkSpecials } = useMemo(() => {
+    const food = (specials || []).filter(e => e.type === "food");
+    const drinks = (specials || []).filter(e => e.type === "drink")
+
+    return {
+      foodSpecials: food,
+      drinkSpecials: drinks
+    }
+  }, [specials])
+
+  const getMenuData = (menuKey) => (menuKey === 'drinks' ? drinksMenu : foodMenu);
+  const getSpecialsData = (menuKey) => (menuKey === 'drinks' ? drinkSpecials : foodSpecials);
+  
   useEffect(() => {
     const fetchPdfUrls = async () => {
       try {
@@ -44,17 +68,13 @@ export default function MenuNavigation() {
     fetchPdfUrls()
   }, [])
 
-  // helper to map key → actual menu data
-  const getMenuData = (menuKey) => {
-    if (menuKey === 'drinks') { return drinksMenu };  
-    return foodMenu;
-  };
+  if (menuLoading) return (
+    <div className={styles.loading_skeleton}>
+      <LoadingData dataName={'menus'}/>
+    </div>
+  )
 
-  if (foodLoading || drinksLoading) return (
-    <LoadingData dataName={'menus'}/>
-  );
-
-  if (foodError || drinksError) return <p>Error loading menu data</p>
+  if (menuError) return <p>Error loading menu data</p>
 
   return (
     <section className={styles.menu}>
@@ -66,8 +86,8 @@ export default function MenuNavigation() {
                 className={`${rubikFont.className} ${styles.dropdown}`}
                 value={selectedMenu}
                 onChange={(e) => setSelectedMenu(e.target.value)}>
-                <option value='food'>Food Menu</option>
-                <option value='drinks'>Drinks Menu</option>
+                <option value='food'>Food</option>
+                <option value='drinks'>Drinks</option>
               </select>
                 <a
                   href={menuPdfUrls[selectedMenu]}
@@ -82,7 +102,7 @@ export default function MenuNavigation() {
             </>
              :
             // Desktop navigation
-            <ul>
+            <ul className={styles.header_wrapper}>
             {menus.map((menuOption, idx) => (
               <li 
                 key={idx} 
@@ -94,7 +114,7 @@ export default function MenuNavigation() {
                   onClick={() => {setSelectedMenu(menuOption)}}
                   className={rubikFont.className}
                 >
-                  {`${menuOption} Menu`}
+                  {menuOption}
                 </button>
                 <a
                   href={menuPdfUrls[menuOption]}
@@ -103,7 +123,13 @@ export default function MenuNavigation() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <DownloadSVG className={styles.menu_download}/>
+                  <DownloadSVG className={styles.menu_download}>
+                    <linearGradient id="Gradient1" x2="0" y2="1">
+                        <stop className={styles.stop1} offset="0%" />
+                        <stop className={styles.stop2} offset="50%" />
+                        <stop className={styles.stop3} offset="100%" />
+                    </linearGradient>
+                  </DownloadSVG>
                 </a>
               </li>
             ))}
@@ -112,7 +138,11 @@ export default function MenuNavigation() {
       </div>
       <MenuContainer 
         menu={getMenuData(selectedMenu)}
-        selected={selectedMenu}/>
+        extras={extras}
+        notices={notices}
+        specials={getSpecialsData(selectedMenu)}
+        specialsLoading={specialsLoading}
+        specialsError={specialsError}/>
     </section>
   )
 }

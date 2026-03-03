@@ -1,0 +1,46 @@
+.iconContainer p {
+    font-size: 1.6rem;
+    color: var(--color-grey-dark-4);
+}
+
+.iconContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.iconContainer.share {
+    position: relative;
+    top: -.1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.iconContainer.share  p{
+    font-size: 1.4rem;
+}
+
+.iconContainer.share:hover p {
+    color: var(--color-grey-light-3);
+}
+
+.iconContainer.share:hover .icon{
+    fill: url('#Gradient1');
+}
+
+.stop1 { stop-color: var(--color-pink); }
+.stop2 { stop-color: var(--color-orange); }
+.stop3 { stop-color: var(--color-yellow); }
+
+.icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    fill: var(--color-grey-dark-4);
+}
+
+.icon_container {
+    margin-top: 2rem;
+}

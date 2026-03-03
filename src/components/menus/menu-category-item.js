@@ -1,72 +1,73 @@
-import FireSVG from '../assets/icons/fire-svg';
+import SmartImage from '../ui/smart-image';
+import Badges from './badges';
 
 import styles from './menu-category-item.module.css';
 import { rubikFont } from '@/lib/fonts';
 
-import { getStorageImageUrl } from '@/lib/utils';
-
 export default function MenuCategoryItem({ item }) {
+    const hasPricing = Array.isArray(item?.pricing) && item.pricing.length > 0;
+
+    const hasLabels =
+        hasPricing && item.pricing.some(p => (p?.label ?? '').trim().length > 0);
+
   return (
-    <li className={styles.item_container}>
-        {item.imagePath? 
-            <img 
-                src={getStorageImageUrl(item.imagePath)} 
-                className={styles.item_image}
-                loading='lazy'
-                alt={item.imageAlt}/>
-        : ''}
-        <div className={styles.item_desc}>
-            <h3 className={rubikFont.className}>
-                <span className={styles.item_name}>{item.itemName}</span>
-                {item.itemDiet && item.itemDiet === 'vegetarian' ? (
-                    <span className={styles.item_diet}>(V)</span>
-                ) : null}
-                {item.itemHeat ? (
-                    <span className={styles.item_heat}>
-                        {Array.from({ length: item.itemHeat }, (_, idx) => (
-                            <FireSVG key={idx} />
-                        ))}
-                    </span>
-                ) : null
-                }                  
+    <li className={styles.container}>
+        {item.image && 
+            <SmartImage 
+              image={item?.image}
+              alt={item?.image?.alt}
+              fit='contain'
+              className={styles.item_image}
+            />
+        }
+        <div className={styles.content}>
+            <h3 className={`
+                ${rubikFont.className}
+                ${styles.title}
+            `}>
+                {item.name}        
             </h3>
-            {item.itemBrewery ? 
-            <p className={styles.item_brewery}>Brewery: {item.itemBrewery}</p>:""}
-            <p>{item.itemDesc}</p>
+            {item.brewery 
+                ? <p className={styles.item_brewery}>Brewery: {item.brewery}</p>
+                : ""}
+            <p>{item.description}</p>
             
         </div>
-        <div className={styles.item_price}>
-            <table className={styles.item_table}>
-                {item.itemDenom &&
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                            {item.itemDenom.map((denomination, idx) => (
-                                <th key={`denom-${idx}`} scope="col">{denomination}</th>
-                            ))
-                            }
-                    </tr>
-                </thead>
-                }
-                
-                <tbody>
-                    <tr>
-                        <th scope="row"></th>
-                        {item.itemPrice.map((price, idx) => (
-                            <td key={`price-${idx}`}>R {price}</td>
-                        ))}
-                    </tr>
-                    {item.itemSides? 
-                    <tr>
-                        <th scope="row" style={{color: "yellowgreen"}}>+ side</th>
-                        {item.itemPrice.map((price, idx) => (
-                            <td key={`side-${idx}`}>R {price + item.itemSides}</td>
-                        ))}
-                    </tr>
-                    : ""}
-                </tbody>
-            </table>
+        <div className={styles.info_row}>
+            {item.badges?
+                <Badges badgesList={item.badges}/> : ''    
+            }
+            <div className={styles.item_price}>
+                {hasPricing && (
+                    <table className={styles.item_table}>
+                        {hasLabels && (
+                        <thead>
+                        <tr>
+                            {item.pricing.map((option, idx) => (
+                            <th 
+                                key={`label-${idx}`} 
+                                scope="col"
+                                className={rubikFont.className}>
+                                {option.label}
+                            </th>
+                            ))}
+                        </tr>
+                        </thead>
+                        )}
+                        <tbody>
+                        <tr>
+                            {item.pricing.map((option, idx) => (
+                            <td key={`amount-${idx}`}>
+                                R {option.amount}
+                            </td>
+                            ))}
+                        </tr>
+                        </tbody>
+                    </table>
+                )}
+            </div>
         </div>
+        
     </li>
   )
 }

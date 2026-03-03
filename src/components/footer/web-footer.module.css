@@ -1,4 +1,3 @@
-/* Mobile */
 .wrapper {
     position: relative;
     width: 100%;
@@ -71,7 +70,17 @@
     color: var(--color-grey-light-3);
 }
 
-.nav_menu a:hover{
+.footer_link {
+    width: 50%;
+    background-color: transparent;
+    color: var(--color-grey-light-3);
+    border: none;
+    padding: 1rem 0;
+    font-size: 1.6rem;
+}
+
+.nav_menu a:hover,
+.nav_menu button:hover{
     color: var(--color-grey-dark-4);
 }
 
@@ -108,7 +117,6 @@
     content: '';
 }
 
-/* Tablet */
 @media (min-width:768px) {
     .content{
         flex-direction: row;
@@ -133,8 +141,13 @@
         align-items: center;
     }
 
-    .nav_menu a{
+    .nav_menu a,
+    .footer_link {
         width: 33%;
+    }
+
+    .footer_link {
+        font-size: 1.8rem;
     }
 
     .address_container {

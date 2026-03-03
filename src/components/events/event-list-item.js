@@ -1,11 +1,16 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import styles from './event-list-item.module.css';
+
 import SmartImage from '../ui/smart-image';
 import TicketButton from './ticket-button';
-import CalendarSVG from '../assets/icons/calendar-svg';
-import { formatEventDate, formatEventTime, formatPriceDisplay, shareEvent } from '@/lib/utils';
-import ClockSVG from '../assets/icons/clock-svg';
+import ShareButton from '../ui/share-button';
+
+import { formatEventDate, formatEventTime, formatPriceDisplay } from '@/lib/utils';
+
+import styles from './event-list-item.module.css';
 import { rubikFont } from '@/lib/fonts';
+
+import CalendarSVG from '../assets/icons/calendar-svg';
+import ClockSVG from '../assets/icons/clock-svg';
 import MoneySVG from '../assets/icons/money-svg';
 import ShareSVG from '../assets/icons/share-svg';
 
@@ -45,7 +50,6 @@ export default function ListItem({ event, isSelected, onClick, onExpanded }) {
     if (e.propertyName !== 'height') return;
     if (!isSelected) return;
 
-    // let parent scroll AFTER expansion has settled
     onExpanded?.(event.slug);
   };
 
@@ -127,26 +131,19 @@ export default function ListItem({ event, isSelected, onClick, onExpanded }) {
                         />
                         <p>{formatPriceDisplay(event.price)}</p>
                     </div>
-                    <button 
-                        className={`
-                            ${styles.iconContainer}
-                            ${styles.share}
-                        `}
-                        onClick={(e)=> {
-                          e.stopPropagation();
-                          shareEvent(event);
-                        }}
-                    >
-                        <ShareSVG className={styles.icon}>
+                        <ShareButton
+                          event={event}
+                          className={`${styles.iconContainer} ${styles.share}`}
+                        >
+                          <ShareSVG className={styles.icon}>
                             <linearGradient id="Gradient1" x2="0" y2="1">
-                            <stop className={styles.stop1} offset="0%" />
-                            <stop className={styles.stop2} offset="50%" />
-                            <stop className={styles.stop3} offset="100%" />
+                              <stop className={styles.stop1} offset="0%" />
+                              <stop className={styles.stop2} offset="50%" />
+                              <stop className={styles.stop3} offset="100%" />
                             </linearGradient>
-                        </ShareSVG>
-                        <p>Share event</p>
-                    </button>
-
+                          </ShareSVG>
+                          <p>Share</p>
+                        </ShareButton>
                 </div>
                 
             </div>

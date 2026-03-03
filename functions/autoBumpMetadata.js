@@ -5,8 +5,7 @@ const db = admin.firestore();
 
 const COLLECTION_VERSION_MAP = {
   gallery: "gallery",
-  menuFoodItems: "menuFood",
-  menuDrinkItems: "menuDrink",
+  menu: "menu",
   specials: "specials",
   events: "events",
 };

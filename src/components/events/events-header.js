@@ -26,7 +26,6 @@ export default function EventsHeader({
   const headerRef = useRef(null);
   const panelId = useId();
 
-  // close on outside click + Escape
   useEffect(() => {
     const onDocDown = (e) => {
       if (!headerRef.current) return;
@@ -52,10 +51,8 @@ export default function EventsHeader({
 
   return (
     <div className={styles.event_list_header} ref={headerRef}>
-      {/* LEFT: always-visible label + summary */}
       <div className={styles.filters_left}>
         <span className={`${styles.label} ${rubikFont.className}`}>Filter :</span>
-
         <span className={styles.summary}>
           {filters.time !== 'all' ? humanTime(filters.time) : 'All dates'}
           {filters.type !== 'all' ? ` · ${humanType(filters.type)}` : ''}
@@ -63,7 +60,6 @@ export default function EventsHeader({
         </span>
       </div>
 
-      {/* RIGHT: icons */}
       <div className={styles.header_controls}>
         <button
           type="button"
@@ -100,7 +96,6 @@ export default function EventsHeader({
         </button>
       </div>
 
-      {/* ONE shared panel, opens TOP RIGHT of header and covers icons */}
       <div
         id={panelId}
         className={`${styles.header_panel} ${activePanel ? styles.header_panel_open : ''}`}

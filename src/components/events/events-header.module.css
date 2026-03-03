@@ -8,7 +8,6 @@
   z-index: 5;
 }
 
-/* left side always visible */
 .filters_left {
   display: flex;
   align-items: baseline;
@@ -32,7 +31,6 @@
   max-width: 52ch;
 }
 
-/* right side icons */
 .header_controls {
   display: flex;
   gap: 1.2rem;
@@ -62,7 +60,6 @@
 .stop2 { stop-color: var(--color-orange); }
 .stop3 { stop-color: var(--color-yellow); }
 
-/* panel */
 .header_panel {
   position: absolute;
   right: 0;
@@ -123,7 +120,6 @@
 .closeBar1 { transform: rotate(45deg); }
 .closeBar2 { transform: rotate(-45deg); }
 
-/* desktop */
 @media (min-width: 1024px) {
   .event_list_header {
     border-top-left-radius: 1rem;

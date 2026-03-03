@@ -5,8 +5,8 @@
     align-items: center;
     background-color: var(--color-grey-dark-4);
     background-image: url('/assets/contact/tiles_dark.png');
-    padding: 8rem 0;
-    height: 100vh;
+    padding: 6rem 2rem;
+    height: 100dvh;
 }
 
 .content_background {
@@ -21,6 +21,8 @@
     box-shadow: var(--shadow-dark-sm);
     padding: 3rem 0;
     z-index: 1;
+    border-radius: 1rem;
+
 }
 
 .title {
@@ -96,10 +98,6 @@
         align-items: center;
         grid-row: 1 / span 2;
         grid-column: 1;
-    }
-
-    .title::before {
-        bottom: 1rem;
     }
     
     .content_desc {

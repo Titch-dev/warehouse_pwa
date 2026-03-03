@@ -3,7 +3,10 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    padding: 2rem 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 4rem 0;
 }
 
 .btn {
@@ -11,6 +14,8 @@
 }
 
 .embla__viewport{
+    width: 100%;
+    max-width: 100%;
     overflow: hidden;
 }
 
@@ -21,6 +26,8 @@
 
 .embla__slide {
     flex: 0 0 100%;
+    min-width: 0;
+    max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -48,6 +55,13 @@
     border-radius: 50%;
     background: var(--color-grad-bottom);
 }
+
+.loading_skeleton {
+    position: relative;
+    width: 100dvw;
+    height: 40rem;
+}
+
 
 @media (min-width: 1024px) {
     .wrapper {
@@ -121,4 +135,8 @@
         align-items: center;
     }
 
+    .loading_skeleton {
+        height: 48rem;
+        width: 65rem;
+    }
 }
