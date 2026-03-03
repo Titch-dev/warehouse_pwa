@@ -3,7 +3,7 @@ import Socials from '@/components/assets/icons/socials';
 import styles from './contact-page.module.css';
 
 import { rubikFont } from '@/lib/fonts';
-import OpeningHours from '@/components/opening-hours';
+import OpeningHours from '@/components/ui/opening-hours';
 import TornBackgroundSVG from '@/components/assets/patterns/torn-background-svg';
 
 export default function ContactPage() {
@@ -21,7 +21,7 @@ export default function ContactPage() {
           width={980}/>
         <div className={styles.content}>
             <h1 className={`${styles.title} ${rubikFont.className}`}>Contact Us</h1>
-            <p className={styles.content_desc}>Got questions or want to book a spot? 
+            <p className={styles.content_desc}>Got questions? 
               Choose one of the icons and we’ll get back to you ASAP. Check out our
               Facebook or Instagram for more behind the scenes vibes!</p>
             <div className={styles.socials_container}>

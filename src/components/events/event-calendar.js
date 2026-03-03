@@ -9,7 +9,7 @@ import { PickersDay } from '@mui/x-date-pickers/PickersDay';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Tooltip from '@mui/material/Tooltip';
 import { getOpeningHoursForToday } from '@/lib/utils';
-import { OPENING_TIMES } from '@/config/openingTimes';
+import { OPENING_TIMES } from '@/lib/utils';
 
 import styles from './event-calendar.module.css';
 

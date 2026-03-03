@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import dayjs from 'dayjs';
 
-import LoadingData from '../loading-data';
+import LoadingData from '../ui/loading-data';
 import EventListItem from './event-list-item';
 import { rubikFont } from '@/lib/fonts';
 import { applyEventFilters } from '@/lib/utils';
@@ -19,7 +19,6 @@ const EventList = ({
   const listRef = useRef(null);
   const itemRefs = useRef(new Map());
 
-  // Filter + group
   const filteredEvents = useMemo(() => {
     return applyEventFilters(events, filters);
   }, [events, filters]);
@@ -28,10 +27,8 @@ const EventList = ({
     return groupEventsByRange(filteredEvents);
   }, [filteredEvents]);
 
-  // Selected slug comes from parent-selected event (single source of truth)
   const selectedSlug = selectedEvent?.slug || null;
 
-  // Lookup by slug (filtered set)
   const eventBySlug = useMemo(() => {
     const map = new Map();
     for (const e of filteredEvents) {
@@ -40,9 +37,7 @@ const EventList = ({
     return map;
   }, [filteredEvents]);
 
-  // Click -> toggle selection via parent
   const handleSelectSlug = (slug) => {
-    // toggle off
     if (selectedSlug === slug) {
       onEventSelect?.(null);
       return;
@@ -54,7 +49,6 @@ const EventList = ({
     onEventSelect?.(ev);
   };
 
-  // ---- SCROLL FIX: scroll ONLY after the ListItem finishes expanding ----
   const [pendingScrollSlug, setPendingScrollSlug] = useState(null);
 
   const handleItemExpanded = (slug) => {
@@ -143,7 +137,7 @@ const EventList = ({
 
 export default EventList;
 
-/* --- grouping + empty message unchanged --- */
+/* --- grouping + empty message --- */
 
 function groupEventsByRange(events) {
   const now = dayjs();

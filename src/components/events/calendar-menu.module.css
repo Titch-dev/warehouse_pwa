@@ -7,7 +7,6 @@
   padding: 1.5rem 2rem 1.5rem 0;
 }
 
-/* button sits above the panel like FilterMenu */
 .iconBtn {
   position: relative;
   width: 3.5rem;
@@ -20,7 +19,6 @@
   z-index: 10;
 }
 
-/* Calendar icon: visible by default, shrinks to center when open */
 .icon {
   position: absolute;
   inset: 0;
@@ -38,7 +36,6 @@
 .stop2 { stop-color: var(--color-orange); }
 .stop3 { stop-color: var(--color-yellow); }
 
-/* X bars – start hidden (width 0 from center) */
 .x1,
 .x2 {
   position: absolute;
@@ -53,7 +50,6 @@
   transform-origin: center;
 }
 
-/* OPEN STATE: icon collapses, X expands */
 .open .icon {
   transform: scale(0);
   opacity: 0;
@@ -74,7 +70,6 @@
   transform: rotate(-45deg);
 }
 
-/* Panel animation – match FilterMenu exactly */
 .panel {
   position: absolute;
   right: 0;

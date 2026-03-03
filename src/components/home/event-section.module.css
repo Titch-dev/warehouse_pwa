@@ -5,20 +5,20 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 3rem 0;
+    padding: 5rem 0;
     background-image: var(--color-grad-bottom);
-    gap: 3rem;
+    gap: 5rem;
 }
 
-.event_title {
+.title {
     font-size: 4rem;
     color: var(--color-grey-light-3);
     text-align: center;
     letter-spacing: .1rem;
 }
 
-.next_event_wrapper,
-.weekly_events_wrapper {
+.next_wrapper,
+.weekly_wrapper {
     position: relative;
     display: flex;
     justify-content: center;
@@ -27,80 +27,90 @@
     max-width: fit-content;
 }
 
-.event_view_wrapper {
+.next_event_wrapper {
     position: relative;
+    padding: 4rem 0 0;
 }
+
+.weekly_wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+}
+
+.next_background,
+.weekly_background {
+    display: none;
+}
+
 
 .weekly_event_wrapper {
-    position: relative;
-    width: 100dvw;
-}
-
-.content_background,
-.content_weekly_background {
-    display: none;
+  width: 100%;
+  max-width: 100%;
 }
 
 .event_link {
   position: relative;
   text-decoration: none;
-  margin-top: 3rem;
   cursor: pointer;
 }
 
 .event_btn {
   display: inline-block;
   padding: 0.60rem 1.5rem;
-  font-size: 2.5rem;
-  text-decoration: none;
+  background: transparent;
   color: var(--color-grey-light-3);
-  font-size: 1.8rem;
-  letter-spacing: 0.5px;
-  border-radius: 1rem;
-  border: var(--color-grey-light-3) 0.2rem solid;
+  border: none;
+  cursor: pointer;
 }
 
-/* Desktop */
+.event_btn p {
+  letter-spacing: 0.8px;
+  font-size: 3.5rem;
+  
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.4rem;
+  text-decoration-color: var(--color-grey-light-3);
+  text-underline-offset: 0.5rem;
+}
+
 @media (min-width: 1024px) {
     .event {
         padding: 6rem 0 6rem;
         gap: 3rem;
     }
 
-    .content_background {
+    .next_background,
+    .weekly_background {
         display: block;
         position: absolute;
-        transform: scaleY(1.3) scaleX(0.9);
-
+        height: 50rem;
+        width: 85rem;
         fill: var(--color-grey-dark-1);
         filter: drop-shadow(var(--shadow-dark-lg));
     }
 
-    .event_view_wrapper{
+     .next_wrapper {
         background-color: transparent;
         max-width: 65rem;
     }
 
-    /* .event_link {
-        font-size: 3.5rem;
-    } */
+    .next_background {
+        transform: scale(-1, 1);
+    }
 
-    .weekly_events_wrapper {
+    .next_event_wrapper {
+        padding: 0;
+    }
+
+    .weekly_wrapper {
         background-color: transparent;
         height: 50rem;
         max-width: 72rem;
     }
 
-    .weekly_event_wrapper {
+    .weekly_wrapper {
         width: fit-content;
     }
 
-    .content_weekly_background {
-        display: block;
-        position: absolute;
-        transform: scale(-1, 1) scaleY(1.3) scaleX(0.9);
-
-        fill: var(--color-grey-dark-1);
-        filter: drop-shadow(var(--shadow-dark-lg));
-    }
 }

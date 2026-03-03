@@ -1,9 +1,8 @@
-.item_container {
+.container {
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    gap: 1rem;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
     align-items: center;
     border-bottom: solid .2rem var(--color-grey-dark-3);
     justify-content: center;
@@ -14,62 +13,61 @@
     border-bottom: none;
 }
 
-/* item image */
 .item_image {
-    width: 25%;
-    height: auto;
+    min-width: 10rem;
+    min-height: 10rem;
+    filter: drop-shadow(var(--shadow-light-sm));
 }
 
-/* item description */
-.item_desc {
+.content {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    align-items: center;
+    justify-content: center;
     max-width: 100%;
     flex-grow: 2;
     text-align: center;
 }
 
-.item_desc h3 {
+.title {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    letter-spacing: .1rem;
-    word-spacing: .8rem;
+    word-spacing: .7rem;
+    letter-spacing: .15rem;
     padding-bottom: .5rem;
     line-height: 3rem;
-}
-
-.item_name {
+    font-size: 2.8rem;
     flex: 1;
+    opacity: 0.95;
+    text-transform: capitalize;
 }
 
-.item_meta {
-    display: flex;
-    align-items: center;
-    gap: .3rem;
-}
-
-.item_diet {
-    color: yellowgreen;
-}
-
-.item_heat svg{
-    width: 2rem;
-    fill: var(--color-orange);
-}
 
 .item_brewery{
     color: burlywood;
 }
 
-/* item pricing */
+.content p {
+    font-size: 2rem;
+    opacity: .8;
+}
+
+.info_row {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
 .item_price {
     width: auto;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
-    padding-top: 1rem;
+    min-width: 15rem;
 }
 
 .item_table {
@@ -79,15 +77,28 @@
 
 .item_table th,
 .item_table td {
-    border-right: .1rem solid var(--color-grey-dark-3);
+    border-right: .2rem solid var(--color-grey-dark-3);
     text-align: center;
-    font-size: 1.6rem;
 }
+
+.item_table th {
+    font-size: 1.5rem;
+}
+
+.item_table td {
+    font-size: 1.6rem;
+    font-weight: 900;
+    padding: 1rem 1rem 0;
+}
+
 
 .item_table th{
     padding: 0 1rem .5rem;
-    font-weight: 900;
     color: var(--color-grey-dark-4);
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
 }
 
 
@@ -103,73 +114,37 @@
 
 @media(min-width:1024px) {
 
-    .item_container {
-        display: flex;
-        flex-wrap: nowrap;
-        margin-bottom: 2rem;
-        padding-bottom: 2rem;
+    .container {
+        flex-direction: row;
         border-bottom: solid .2rem var(--color-grey-dark-3);
-        justify-content: unset;
-    }
-    .item_container {
-        padding-bottom: 3rem;
-        gap: 3rem;
+        padding: 3rem 0;
+        gap: 2.5rem;
         align-items: center;
-        
+        justify-content: flex-start;
     }
 
-    /* item image */
     .item_image {
         width: 10rem;
-        height: auto;
+        height: 10rem;
+        flex: 0 0 10rem;
     }
 
-    /* item description */
-    .item_desc {
-        display: flex;
-        flex-direction: column;
-        max-width: 35rem;
-        flex-grow: 2;
+    .content {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: none;
+        text-align: left;
+        align-items: flex-start;
     }
 
-    /* item pricing */
+    .info_row {
+        flex: 0 0 auto;
+        gap: 2rem;
+        width: auto;
+    }
+    
     .item_price {
-        display: flex;
         justify-content: start;
         width: auto;
-        flex-shrink: 0;
-    }
-
-    .item_table {
-        letter-spacing: .15rem;
-        border-collapse: collapse;
-    }
-
-    .item_table th,
-    .item_table td {
-        border-right: .1rem solid var(--color-grey-dark-3);
-        text-align: center;
-    }
-
-    .item_table th{
-        padding: 0 1rem;
-        font-weight: 900;
-        color: var(--color-grey-dark-4);
-    }
-
-    .item_table td {
-        padding: 1rem 1rem 0;
-    }
-
-
-    .item_table th:first-child,
-    .item_table th:last-child,
-    .item_table td:last-child {
-        border-right: none;
-    }
-
-    .item_table th:first-child{
-        border-bottom: none;
-        padding-top: 1rem;
     }
 }

@@ -24,7 +24,7 @@
 }
 
 .todayDay {
-  color: white !important;
+  color: var(--color-grey-light-3) !important;
   border: 0.2rem solid var(--color-orange) !important;
 }
 
@@ -44,7 +44,6 @@
   background-color: rgba(250, 128, 87, 0.8) !important;
 }
 
-/* Event dot styling */
 .eventDot {
   position: absolute;
   top: 2px;

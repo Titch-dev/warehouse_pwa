@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import NavLink from './nav-link';
 import styles from './nav-menu.module.css';
 

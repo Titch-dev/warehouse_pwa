@@ -15,6 +15,8 @@ function SmartImage({
 }) {
   const [loaded, setLoaded] = useState(false);
 
+  console.log(image)
+
   const src = resolveImageUrl(image);
 
   if (!src) return null;

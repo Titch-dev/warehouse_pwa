@@ -69,9 +69,7 @@
         color: var(--color-grey-dark-4);
         text-align: center;
     }
-
-    /* column icons */
-
+    
     .icons.column {
         flex-direction: column;
         max-width: fit-content;

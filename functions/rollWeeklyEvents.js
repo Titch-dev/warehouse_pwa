@@ -6,7 +6,7 @@ const db = admin.firestore();
 exports.rollWeeklyEvents = onSchedule(
   {
     schedule: "0 2 * * *", // 02:00 AM daily
-    timeZone: "Africa/Johannesburg", // change if needed
+    timeZone: "Africa/Johannesburg",
   },
   async () => {
     const now = admin.firestore.Timestamp.now();
@@ -32,10 +32,8 @@ exports.rollWeeklyEvents = onSchedule(
 
         let startMillis = data.start_time.toMillis();
 
-        // Skip if still in the future
         if (startMillis > now.toMillis()) return;
 
-        // Catch-up logic: keep adding weeks until future
         while (startMillis <= now.toMillis()) {
           startMillis += WEEK_MS;
         }

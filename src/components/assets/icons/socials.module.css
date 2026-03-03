@@ -8,13 +8,12 @@
 }
 
 .icon_button {
-  position: relative;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
 }
 
 .icon_button:hover {
@@ -29,14 +28,8 @@
     fill: url(#Gradient1);
 }
 
-.stop1 {
-    stop-color: var(--color-pink);
-}
+.stop1 {stop-color: var(--color-pink);}
 
-.stop2 {
-    stop-color: var(--color-orange);
-}
+.stop2 {stop-color: var(--color-orange);}
 
-.stop3 {
-    stop-color: var(--color-yellow);
-}
+.stop3 {stop-color: var(--color-yellow);}

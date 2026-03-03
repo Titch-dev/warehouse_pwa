@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './calendar-menu.module.css';
 
 import CalendarDaysSVG from '@/components/assets/icons/calendar-days-svg';
@@ -21,9 +21,6 @@ export default function CalendarMenu({
 
   const panelId = useId();
   const wrapRef = useRef(null);
-
-  // unique gradient id so it never collides
-  const gradId = useId();
 
   useEffect(() => {
     const onDocDown = (e) => {
@@ -60,7 +57,6 @@ export default function CalendarMenu({
         aria-controls={panelId}
         aria-label={open ? 'Close calendar' : 'Open calendar'}
       >
-        {/* calendar icon (shrinks to center when open) */}
         <CalendarDaysSVG className={styles.icon}>
           <linearGradient id="gradId" x2="0" y2="1">
             <stop className={styles.stop1} offset="0%" />

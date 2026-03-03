@@ -3,12 +3,17 @@
 import { useEffect, useState } from 'react';
 import { getOpeningHoursForToday } from '@/lib/utils';
 
-import { OPENING_TIMES } from '@/config/openingTimes';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import LogoSVG from '@/components/assets/logo/logo-svg';
 
 import styles from './hero-section.module.css';
+import TornBorderMobSVG from '../assets/patterns/torn-border-mobile';
+import { colors } from '@/lib/colors';
+import TornBorderTabSVG from '../assets/patterns/torn-border-tablet';
 
 function HeroSection () {
+
+    const isMobile = useMediaQuery('max-width: 768px')
     const [playAnimation, setPlayAnimation] = useState(true);
 
     useEffect(() => {
@@ -20,7 +25,7 @@ function HeroSection () {
     }
   }, []);
 
-  const { open, close } = getOpeningHoursForToday(OPENING_TIMES);
+  const { open, close } = getOpeningHoursForToday();
 
   return (
     <section className={styles.section_hero}>
@@ -38,6 +43,17 @@ function HeroSection () {
             >
                 Open today {open} - {close}
             </h3>
+            {isMobile ?
+                <TornBorderMobSVG 
+                    color={colors.greydark1} 
+                    className={styles.border}
+                />
+                :
+                <TornBorderTabSVG 
+                    color={colors.greydark1} 
+                    className={styles.border}
+                />   
+        }
         </div>
     </section>
 )

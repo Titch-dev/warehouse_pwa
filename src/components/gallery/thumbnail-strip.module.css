@@ -4,13 +4,12 @@
   flex-direction: column;
 }
 
-/* --- CHEVRONS --- */
 .chevron {
   display: none;
   background: transparent;
   border: none;
   cursor: pointer;
-  z-index: 10; /* CRITICAL */
+  z-index: 10; 
 }
 
 .chevron:disabled {
@@ -18,7 +17,6 @@
   cursor: default;
 }
 
-/* --- STRIP WRAPPER --- */
 .thumbnail_strip_wrapper {
   position: relative;
   display: flex;
@@ -39,7 +37,6 @@
   display: none;
 }
 
-/* --- GRID --- */
 .galleryStrip {
   display: grid;
   grid-template-columns: repeat(2, auto);
@@ -61,8 +58,6 @@
 }
 
 
-
-/* --- DESKTOP --- */
 @media (min-width: 1024px) {
 
   .strip_outer {
@@ -72,8 +67,7 @@
     justify-content: center;
   }
 
-    /* --- BACKGROUND --- */
-    .thumbnail_background {
+  .thumbnail_background {
     position: absolute;
     
     width: 60%;
@@ -87,19 +81,19 @@
     fill: url(#Gradient2);
 
     display: block;
-    }
+  }
 
-    .stop1 {
-        stop-color: var(--color-pink);
-    }
+  .stop1 {
+      stop-color: var(--color-pink);
+  }
 
-    .stop2 {
-        stop-color: var(--color-orange);
-    }
+  .stop2 {
+      stop-color: var(--color-orange);
+  }
 
-    .stop3 {
-        stop-color: var(--color-yellow);
-    }
+  .stop3 {
+      stop-color: var(--color-yellow);
+  }
 
   .chevron {
     display: flex;

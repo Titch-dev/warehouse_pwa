@@ -2,31 +2,17 @@ import { ref, getDownloadURL } from 'firebase/storage'
 import dayjs from "dayjs";
 import { warehouseStorage } from '@/firebase/firebaseConfig';
 
+export const OPENING_TIMES = {
+    0 : { open: "12:00", close: "21:00"},
+    1 : { open: "12:00", close: "00:00"},
+    2 : { open: "12:00", close: "00:00"},
+    3 : { open: "12:00", close: "02:00"},
+    4 : { open: "12:00", close: "02:00"},
+    5 : { open: "12:00", close: "02:00"},
+    6 : { open: "12:00", close: "02:00"}
+}
 
 /* -------------- Image Resolver ---------------- */
-
-const storageUrlCache = new Map();
-
-// get firebase image
-  export const getStorageImageUrl = async (path) => {
-  if (!path) return null;
-
-  // return cached if exists
-  if (storageUrlCache.has(path)) {
-    return storageUrlCache.get(path);
-  }
-
-  try {
-    const storageRef = ref(warehouseStorage, path);
-    const url = await getDownloadURL(storageRef);
-
-    storageUrlCache.set(path, url); // cache it
-    return url;
-  } catch (err) {
-    console.error('Error fetching storage image:', err);
-    return null;
-  }
-};
 
 export const resolveImageUrl = (image) => {
   if (!image) return null;
@@ -181,34 +167,57 @@ export function applyEventFilters(events, filters) {
 
 // Share event and share builder
 export function buildShareUrl(event) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
-  return `${siteUrl}/events/${encodeURIComponent(event.slug)}`;
+  if (!event?.slug) return null;
+
+  // Prefer runtime origin (correct for preview domains, staging etc.)
+  const origin =
+    typeof window !== 'undefined'
+      ? window.location.origin
+      : process.env.NEXT_PUBLIC_SITE_URL || '';
+
+  return `${origin}/events/${encodeURIComponent(event.slug)}`;
 }
 
+
 export async function shareEvent(event) {
+  if (!event?.slug) return;
+
   const url = buildShareUrl(event);
+  if (!url) return;
 
   const shareData = {
-    title: event.name,
-    text: (event.description || '').slice(0, 140),
+    title: event?.name || 'Event',
+    text: event?.description
+      ? event.description.slice(0, 140)
+      : undefined,
     url,
   };
 
-  if (navigator.share) {
-    try {
+  try {
+    if (navigator.share) {
       await navigator.share(shareData);
-      return;
-    } catch {
-      // user cancelled
+      return { success: true, method: 'native' };
+    }
+  } catch (err) {
+    // AbortError = user cancelled — not a failure
+    if (err?.name !== 'AbortError') {
+      console.error('Share failed:', err);
     }
   }
 
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(url);
-    alert('Link copied to clipboard');
-  } else {
-    prompt('Copy this link:', url);
+  // Fallback: copy to clipboard
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(url);
+      return { success: true, method: 'clipboard' };
+    }
+  } catch (err) {
+    console.error('Clipboard failed:', err);
   }
+
+  // Last fallback
+  window.prompt('Copy this link:', url);
+  return { success: true, method: 'prompt' };
 }
 
 /* -------------- Menu specific functions ---------------- */
@@ -217,36 +226,36 @@ export async function shareEvent(event) {
 export function getUniqueCategories(menuItems) {
   const categoriesSet = new Set()
   menuItems.forEach(item => {
-    if (item.itemCategory) categoriesSet.add(item.itemCategory)
+    if (item.category) categoriesSet.add(item.category)
   })
   return Array.from(categoriesSet)
 }
 
+// get the lowest price of menu object
+export const getLowestPrice = (item) => {
+  if (!Array.isArray(item?.pricing)) return Infinity;
+
+  const validPrices = item.pricing
+    .map(p => p?.amount)
+    .filter(a => typeof a === "number");
+
+  return validPrices.length ? Math.min(...validPrices) : Infinity;
+};
 
 // Order the specials or weekly by closest day
 export function orderByClosestDay(specials = []) {
-  if (!specials.length) return []
+  const today = dayjs().day();
 
-  const todayIndex = dayjs().day()
+  return specials
+    .slice()
+    .sort((a, b) => {
+      const getClosest = (s) =>
+        Math.min(
+          ...(s.weekDays || []).map((d) => (d - today + 7) % 7)
+        );
 
-  return [...specials]
-    .map(special => {
-      const dayIndexes = Object.values(special.days || {})
-
-      // Find closest upcoming day for this doc
-      const closestDiff = Math.min(
-        ...dayIndexes.map(dayIndex =>
-          (dayIndex - todayIndex + 7) % 7
-        )
-      )
-
-      return {
-        ...special,
-        dayIndexes,
-        sortValue: closestDiff
-      }
-    })
-    .sort((a, b) => a.sortValue - b.sortValue)
+      return getClosest(a) - getClosest(b);
+    });
 }
 
 
@@ -269,9 +278,9 @@ export function slugify(str) {
 /* ----------- Venue opening and closing functions -------------- */
 
 // Get the opening & closing time for today
-export function getOpeningHoursForToday(openingTimes) {
+export function getOpeningHoursForToday(){
   const todayIndex = dayjs().day(); // 0 = Sunday, 6 = Saturday
-  const today = openingTimes[todayIndex];
+  const today = OPENING_TIMES[todayIndex];
 
   if (!today) {
     return { open: null, close: null };
@@ -284,11 +293,11 @@ export function getOpeningHoursForToday(openingTimes) {
 }
 
 // grouped opening times for the week
-export function groupOpeningTimes(openingTimes) {
+export function groupOpeningTimes() {
   const groups = [];
 
   for (let i = 0; i < 7; i++) {
-    const entryDay =  openingTimes[i];
+    const entryDay =  OPENING_TIMES[i];
     let foundGroup = false;
 
     // check if there is already a group with same start & end

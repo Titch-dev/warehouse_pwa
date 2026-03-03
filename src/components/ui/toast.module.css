@@ -1,0 +1,22 @@
+.toast {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-grey-dark-1);
+  color: var(--color-grey-light-3);
+  padding: 1rem 2rem;
+  border-radius: 0.8rem;
+  box-shadow: var(--shadow-dark-sm);
+  font-size: 1.4rem;
+  z-index: 9999;
+
+  animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translate(-50%, 10px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translate(-50%, 10px); }
+}

@@ -1,0 +1,149 @@
+.wrapper {
+    position: relative;
+    margin-top: 1.3rem;
+}
+
+.container {
+  min-width: 12rem;
+  padding: 1.5rem 1rem 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.5rem;
+}
+
+.title {
+  position: absolute;
+  top: -1.3rem;
+  left: auto;
+  right: auto;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  text-align: center;
+  width: fit-content;
+  padding: 0 .5rem;
+  color: var(--color-grey-dark-4);
+}
+
+.icons {
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 18px;
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  display: block;
+}
+
+.cow {
+    height: 4rem;
+    width: 4rem;
+    margin: -1rem 0;
+    fill: #7c3f00;
+}
+
+.chick {
+    fill: #fbc951;
+}
+
+.veg {
+    fill: #879c69;
+}
+
+.one {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+}
+
+.three {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+}
+
+.three > :nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+@media(min-width:1024px) {
+.container {
+  min-width: 12rem;
+  padding: 1.5rem 1rem 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.5rem;
+}
+
+.title {
+  position: absolute;
+  top: -1.3rem;
+  left: auto;
+  right: auto;
+  font-size: 1.5rem;
+  line-height: 2.2rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  text-align: center;
+  width: fit-content;
+  padding: 0 .5rem;
+  color: var(--color-grey-dark-4);
+}
+
+.icons {
+  width: 100%;
+  justify-items: center;
+  align-items: center;
+  row-gap: 1rem;
+  column-gap: 18px;
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.one {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+}
+
+.three {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  justify-content: center;
+}
+
+.three > :nth-child(3) {
+  grid-column: 1 / -1;
+}
+}

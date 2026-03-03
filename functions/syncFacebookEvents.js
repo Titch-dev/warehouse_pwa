@@ -9,15 +9,17 @@ const FB_PAGE_ACCESS_TOKEN = defineSecret("FB_PAGE_ACCESS_TOKEN");
 const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
+const emojiRegex = require("emoji-regex");
+const emojiRe = emojiRegex();
+
 const VENUE_NAME = "Westville Warehouse bar and events venue";
 
 /* ---------------- Utilities ---------------- */
 
 function stripEmojis(text = "") {
-  return text
-    .replace(/[\p{Extended_Pictographic}\p{Emoji_Component}]/gu, "")
-    .replace(/\uFE0F/gu, "")
-    .replace(/\u200D/gu, "")
+  return (text || "")
+    .replace(emojiRe, "")
+    .replace(/[\u200D\uFE0E\uFE0F]/g, "")
     .replace(/\r\n/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
     .replace(/[ \t]+/g, " ")

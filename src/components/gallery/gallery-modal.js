@@ -1,18 +1,16 @@
 'use client'
 
-import { useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import styles from './gallery-modal.module.css'
 import CloseSVG from '../assets/icons/close-svg'
 import SmartImage from '../ui/smart-image'
-// import { getStorageImageUrl } from '@/lib/utils'
 
 function GalleryModal({ imagesCollection, activeIndex, onClose }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
 
   const isOpen = activeIndex !== null
 
-  // Jump to the clicked thumbnail when modal opens
   useEffect(() => {
     if (!emblaApi || activeIndex === null) return
     emblaApi.scrollTo(activeIndex, true)

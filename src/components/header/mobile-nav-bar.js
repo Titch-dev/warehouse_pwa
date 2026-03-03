@@ -23,13 +23,11 @@ export default function MobileNavBar() {
 
   useEffect(() => {
     if (open) {
-      // delay rendering NavMenu for mobile
       const timeout = setTimeout(() => {
         setShowNavMenu(true);
-      }, 300); // matches .menu_background transition
+      }, 300);
       return () => clearTimeout(timeout);
     } else {
-      // hide immediately on close
       setShowNavMenu(false);
     }
   }, [open]);

@@ -1,67 +1,75 @@
 .specials {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background: var(--color-grey-dark-2);
-    padding: 4rem 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background: var(--color-grey-dark-2);
+  padding: 4rem 0;
 }
 
 .specials_title {
-    position: relative;
-    font-size: 4rem;
-    color: var(--color-grey-light-3);
-    letter-spacing: .1rem;
+  position: relative;
+  font-size: 4rem;
+  color: var(--color-grey-light-3);
+  letter-spacing: 0.1rem;
 }
 
 .specials_title::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 0.3rem;
-    background-image: var(--color-grad-right);
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 0.3rem;
+  background-image: var(--color-grad-right);
 }
 
 .specials_wrapper {
-    padding: 4rem 0 0 0;
+  padding: 4rem 0 0 0;
+  width: 100%;
+  display: grid;
+  gap: 3rem;
+
+  min-width: 0;
+}
+
+.specials_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+
+  min-width: 0;
 }
 
 .specials_heading {
-    text-align: center;
-    font-size: 3.5rem;
+  text-align: center;
+  font-size: 3.5rem;
+  color: var(--color-grey-light-3);
 }
 
+.loading_skeleton {
+    position: relative;
+    width: 100dvw;
+    height: 40rem;
+}
 
-/* Tablet */
 @media (min-width: 768px) {
-    
-    .specials {
-        padding: 7rem 0;
-    }
-
+  .specials {
+    padding: 7rem 0;
+  }
 }
 
-/* Laptop */
 @media (min-width: 1024px) {
+  .specials_wrapper {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    max-width: 110rem;
+  }
 
-    .specials_wrapper {
-        display: grid;
-        grid-template-columns: 2fr;
-        grid-template-rows: 1fr;
-        gap: 2rem;
-    }
-
-    .specials_container {
-        grid-row: 1;
-        width: fit-content;
-        gap: 2rem;
-    }
-
-    .specials_heading {
-        grid-row: 1;
-    }
-
+  .specials_container {
+    width: 100%;
+  }
 }

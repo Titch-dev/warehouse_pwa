@@ -26,10 +26,8 @@ export default function EventsPageClient() {
 
   useEffect(() => setMounted(true), []);
 
-  // ✅ derive desired slug from URL
   const selectedSlugFromUrl = searchParams.get('event');
 
-  // ✅ when events OR URL changes, sync selectedEvent
   useEffect(() => {
     if (!sortedEvents?.length) return;
 
@@ -42,7 +40,6 @@ export default function EventsPageClient() {
     setSelectedEvent(ev);
   }, [selectedSlugFromUrl, sortedEvents]);
 
-  // ✅ selection updates URL (query param)
   const handleEventSelect = (event) => {
     if (!event?.slug) {
       setSelectedEvent(null);

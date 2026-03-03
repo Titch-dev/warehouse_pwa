@@ -1,82 +1,101 @@
 'use client'
 
-import { useEffect, useRef } from 'react';
-
+import { useEffect, useMemo, useRef, useState } from 'react';
 import MenuCategoryItem from './menu-category-item';
-
-import FireSVG from '../assets/icons/fire-svg';
-
+import ExtrasBlock from './extras-block';
 import styles from './menu-category-content.module.css';
-import { rubikFont } from '@/lib/fonts';
+import { getLowestPrice } from '@/lib/utils';
+
 import SpecialsCarousel from '../specials/specials-carousel';
 
-export default function MenuCategoryContent({ 
-    category, 
-    categoryData, 
-    specialsRequest,
-    specialsMetaRef
+function NoticeBanner({ notice, onClose, isClosed }) {
+  if (!notice) return null;
+
+  return (
+    <div
+      className={`${styles.notice} ${isClosed ? styles.noticeClosed : styles.noticeOpen}`}
+      role="status"
+      aria-live="polite"
+    >
+      <div className={styles.noticeInner}>
+        <div 
+            className={styles.notice_grid}
+            style={{'--col': notice.messages.length}}>
+            {notice.messages.map((message, idx) => (
+                <p key={idx} className={styles.noticeMessage}>{message}</p>
+            ))}
+        </div>
+
+        <button className={styles.noticeClose} onClick={onClose} aria-label="Close notice">
+          ×
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default function MenuCategoryContent({
+  category,
+  categoryData,
+  extras = [],
+  notices = [],
+  specials = [],
+  specialsLoading = false,
+  specialsError = null,
 }) {
+  const containerRef = useRef(null);
+  const [noticeClosed, setNoticeClosed] = useState(false);
 
-    if (category === 'specials') {
-        return (
-            <div className={styles.specials_wrapper}>
-                <SpecialsCarousel
-                    specials={specialsRequest}
-                    metaRef={specialsMetaRef}
-                />
-            </div>
-        );
-    }
+  useEffect(() => {
+    if (containerRef.current) containerRef.current.scrollTop = 0;
+    setNoticeClosed(false);
+  }, [category]);
 
-    const sortByLowestPrice = (items = []) =>
-    [...items].sort((a, b) => {
-        const aPrice = a.itemPrice?.[0] ?? Infinity
-        const bPrice = b.itemPrice?.[0] ?? Infinity
-        return aPrice - bPrice
-    })
+  const sortedData = useMemo(() => {
+    return [...(categoryData || [])].sort((a, b) => getLowestPrice(a) - getLowestPrice(b));
+  }, [categoryData]);
 
-    const containerRef = useRef(null);
+  const matchingExtras = useMemo(() => {
+    return (extras || []).filter(doc => (Array.isArray(doc.appliesTo) ? doc.appliesTo : []).includes(category));
+  }, [extras, category]);
 
-    useEffect(() => {
-        if (containerRef.current) {
-        containerRef.current.scrollTop = 0; // reset scroll
-        }
-    }, [categoryData]); // runs whenever categoryData changes
+  const matchingNotice = useMemo(() => {
+    return (notices || []).find(doc =>
+      doc?.isActive !== false &&
+      (Array.isArray(doc.appliesTo) ? doc.appliesTo : []).includes(category)
+    );
+  }, [notices, category]);
 
-    // Separate dips and regular items and price ascending
-    const categoryDips = sortByLowestPrice(
-        categoryData.filter(item => item.id.includes('_dip_'))
-    )
-
-    const categoryItems = sortByLowestPrice(
-        categoryData.filter(item => !item.id.includes('_dip_'))
-    )
+  if (category === 'specials') {
+    return (
+      <main ref={containerRef} className={styles.specials_wrapper}>
+        {specialsError && <p>Error loading specials</p>}
+        <SpecialsCarousel items={specials}/>
+      </main>
+    );
+  }
 
   return (
     <main ref={containerRef} className={styles.items_scroll_wrapper}>
-        <ul className={styles.category_item_list}>
-            {categoryItems.map((item, idx) => (
-                <MenuCategoryItem key={idx} item={item}/>
-            ))}
-        </ul>
-        {categoryDips.length > 0? 
-            <>
-                <h3 className={`${styles.item_dip_header} ${rubikFont.className}`}>Add a dipping sauce:</h3>
-                <div className={styles.item_dip_container}>
-                    {categoryDips.map((dip, idx) => (
-                        <div key={idx} className={styles.item_dip_content}>
-                            <p className={styles.item_dip_name}>{dip.itemName} 
-                                <span>
-                                    {Array.from({ length: dip.itemHeat }, (_, i) => (
-                                        <FireSVG key={i} />))}
-                                </span>
-                            </p>
-                            <p className={styles.item_dip_price}>+ R {dip.itemPrice}</p>
-                        </div>
-                    ))}
-                </div>
-            </>:
-            " "}
+      <NoticeBanner
+        notice={matchingNotice}
+        isClosed={noticeClosed}
+        onClose={() => setNoticeClosed(true)}
+      />
+
+      <ul className={styles.category_item_list}>
+        {sortedData.map(item => (
+          <MenuCategoryItem key={item.id} item={item} />
+        ))}
+      </ul>
+
+      {matchingExtras.length > 0 && (
+        <section className={styles.extras_section}>
+          {matchingExtras.map(extraDoc => (
+            <ExtrasBlock key={extraDoc.id} extra={extraDoc} />
+          ))}
+        </section>
+      )}
     </main>
-  )
+  );
 }

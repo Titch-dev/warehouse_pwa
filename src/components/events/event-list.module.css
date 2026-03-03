@@ -69,10 +69,9 @@
   margin: 0;
   display: flex;
   justify-content: center;
-  scroll-margin-top: 5rem; /* adjust to taste */
+  scroll-margin-top: 5rem;
 }
 
-/* empty state */
 .empty_state {
   width: 100%;
   height: 100%;
@@ -81,15 +80,17 @@
 }
 
 .empty_state_desc {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   opacity: 0.8;
+  letter-spacing: .1rem;
+  word-spacing: .6rem;
   padding: 2rem;
   text-align: center;
 }
 
 @media (min-width: 1024px) {
   .group_inner {
-    width: 80rem; /* matches your .event_wrapper desktop width */
+    width: 80rem;
   }
 
   .group_heading {

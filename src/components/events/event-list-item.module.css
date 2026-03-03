@@ -158,7 +158,6 @@
   z-index: 0;
 }
 
-/* this targets SmartImage wrapper div */
 .backdropImg {
   width: 100%;
   height: 100%;
@@ -167,7 +166,6 @@
   opacity: 0.5;
 }
 
-/* add a vignette so edges fade nicely */
 .imageBackdrop::after {
   content: "";
   position: absolute;
@@ -180,7 +178,6 @@
   );
 }
 
-/* foreground SmartImage wrapper */
 .foregroundImg {
   position: relative;
   z-index: 1;
@@ -284,7 +281,6 @@
     filter: blur(0);
   }
 
-  /* event_shroud */
   .shroud {
     right: -8rem;
     transform: skewX(-155deg) translateX(0);
@@ -335,8 +331,6 @@
   .item:hover .chevron {
     transform: rotate(-90deg);
   }
-
-  /* Exapnaded content */
 
   .imageWrapper {
     min-height: 35rem;

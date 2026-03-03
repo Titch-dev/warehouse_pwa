@@ -8,11 +8,9 @@ import { warehouseDB } from '@/firebase/firebaseConfig'
 function convertFirestoreTimestamps(obj) {
   if (obj == null) return obj;
 
-  // 🔹 If already a Firestore Timestamp instance
   if (obj instanceof Timestamp) {
     return obj.toDate();
   }
-  // 🔹 If plain object that looks like serialized timestamp
   if (
     typeof obj === 'object' &&
     'seconds' in obj &&
@@ -22,12 +20,10 @@ function convertFirestoreTimestamps(obj) {
     return new Date(obj.seconds * 1000);
   }
 
-  // 🔹 If array → recurse each item
   if (Array.isArray(obj)) {
     return obj.map(item => convertFirestoreTimestamps(item));
   }
 
-  // 🔹 If plain object → recurse properties
   if (typeof obj === 'object') {
     const newObj = {};
     for (const key in obj) {
