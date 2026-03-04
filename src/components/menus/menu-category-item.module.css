@@ -56,7 +56,7 @@
 .info_row {
     display: flex;
     flex-direction: row;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     gap: 1.5rem;
     width: 100%;
@@ -144,7 +144,7 @@
     }
     
     .item_price {
-        justify-content: start;
+        justify-content: flex-start;
         width: auto;
     }
 }

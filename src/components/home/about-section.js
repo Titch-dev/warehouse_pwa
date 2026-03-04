@@ -21,9 +21,9 @@ function AboutSection() {
             <p>Chalk up and chill out at The Westville Warehouse — where 
             craft beers flow, cocktails come on tap, and the pool tables 
             are racked up and ready.</p>
-            <p>Whether you're here to shoot your shot, 
+            <p>Whether you&apos;re here to shoot your shot, 
             catch a talented band, or just unwind with your crew, 
-            we’ve got the perfect combo of laid-back vibes and high-energy 
+            we&apos;ve got the perfect combo of laid-back vibes and high-energy 
             fun. Weeknights, weekends — we keep the good times rolling.</p>
         </div>
             <div className={styles.vid_container}>

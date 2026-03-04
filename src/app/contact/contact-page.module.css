@@ -87,7 +87,7 @@
         padding: 2rem;
         background-color: transparent;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
         box-shadow: none;
         align-content: center;
     }
