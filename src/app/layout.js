@@ -14,6 +14,7 @@ import "./globals.css";
 import styles from './layout.module.css';
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://thewestvillewarehouse.co.za'),
   title: "Westville Warehouse",
   description: "The Westville Warehouse: Where Durban nightlife comes alive.",
   icons: {

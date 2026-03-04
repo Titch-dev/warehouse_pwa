@@ -6,7 +6,7 @@ import { useToast } from './toast-provider';
 function buildShareUrl(event) {
   if (!event?.slug) return null;
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
-  return `${origin}/events/${encodeURIComponent(event.slug)}`;
+  return `${origin}/events/share?slug=${encodeURIComponent(event.slug)}`;
 }
 
 export default function ShareButton({

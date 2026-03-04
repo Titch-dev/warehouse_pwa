@@ -47,7 +47,7 @@
 .notice_grid {
     display: grid;
     grid-template-columns: repeat(var(--col), 1fr);
-    align-items: start;
+    align-items: flex-start;
     row-gap: 1rem;
 }
 

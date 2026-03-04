@@ -13,11 +13,11 @@ export default function PrivacyPolicy() {
         <h1 className={`${styles.heading} ${rubikFont.className}`}>Privacy Policy</h1>
 
         <p className={styles.paragraph}>
-          <strong>Effective Date:</strong> March 3, 2026
+          <strong>Effective Date:</strong> March 4, 2026
         </p>
 
         <p className={styles.paragraph}>
-          The Westville Warehouse ("we", "our", or "us") is committed to
+          The Westville Warehouse (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to
           protecting your privacy and handling any personal information in
           accordance with the Protection of Personal Information Act, 2013 (POPIA).
         </p>
@@ -64,7 +64,7 @@ export default function PrivacyPolicy() {
         </p>
         <p className={styles.paragraph}>
           Analytics cookies are only activated if you provide consent. You may
-          withdraw consent at any time by using the “Cookie settings” link in
+          withdraw consent at any time by using the &quot;Cookie settings&quot; link in
           the website footer.
         </p>
 

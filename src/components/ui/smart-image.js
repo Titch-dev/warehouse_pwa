@@ -11,18 +11,21 @@ function SmartImage({
   sizes = '100vw',
   fit = "cover",
   priority = false,
-  className = ''  
+  className = '',
+  applyClassNameAfterLoad = false,  
 }) {
   const [loaded, setLoaded] = useState(false);
 
-  console.log(image)
-
   const src = resolveImageUrl(image);
-
   if (!src) return null;
 
+  const wrapperClass =
+    applyClassNameAfterLoad
+      ? `${styles.wrapper} ${loaded ? className : ''}`
+      : `${styles.wrapper} ${className}`;
+
   return (
-    <div className={`${styles.wrapper} ${className}`}>
+    <div className={wrapperClass} data-loaded={loaded ? 'true' : 'false'}>
       {!loaded && (
         <div className={styles.loading}>
           <img
@@ -40,7 +43,8 @@ function SmartImage({
         sizes={sizes}
         priority={priority}
         style={{ objectFit: fit }}
-        onLoadingComplete={() => setLoaded(true)}
+        className={styles.img}
+        onLoad={() => setLoaded(true)}
       />
     </div>
   );

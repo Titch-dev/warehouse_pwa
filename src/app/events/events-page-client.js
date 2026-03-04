@@ -1,4 +1,3 @@
-// app/events/events-page-client.js
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
@@ -38,7 +37,9 @@ export default function EventsPageClient() {
 
     const ev = sortedEvents.find(e => e?.slug === selectedSlugFromUrl) || null;
     setSelectedEvent(ev);
-  }, [selectedSlugFromUrl, sortedEvents]);
+
+    if (!ev) router.replace('/events', { scroll: false });
+  }, [selectedSlugFromUrl, sortedEvents, router]);
 
   const handleEventSelect = (event) => {
     if (!event?.slug) {

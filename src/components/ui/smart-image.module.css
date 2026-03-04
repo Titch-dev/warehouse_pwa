@@ -27,11 +27,20 @@
   100% { opacity: 0.6; }
 }
 
-.hidden {
+/* the Next <Image> element */
+.img{
   opacity: 0;
+  transition: opacity 250ms ease;
 }
 
-.fadeIn {
+/* when loaded, fade image in */
+.wrapper[data-loaded="true"] .img{
   opacity: 1;
-  transition: opacity 300ms ease;
+}
+
+/* optionally fade loader out too */
+.wrapper[data-loaded="true"] .loading{
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
 }
