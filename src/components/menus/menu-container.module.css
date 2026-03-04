@@ -42,7 +42,7 @@
     width: 100%;
     position: absolute;
     transform: rotate(180deg);
-    top: -1%;
+    top: -1px;
     z-index: 10;
     fill: var(--color-grey-dark-1);
 }

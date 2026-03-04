@@ -132,7 +132,7 @@ export default function EventsHeader({
         </div>
       </div>
 
-      <TornBorder top={false} color={colors.greydark1} shadow={true} />
+      <TornBorder top={false} color={colors.greydark1}/>
     </div>
   );
 }

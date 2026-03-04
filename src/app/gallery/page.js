@@ -48,7 +48,6 @@ export default function GalleryPage() {
             top={false} 
             color={colors.greydark2}
             mobile_view={true}
-            shadow={true}
             style={{zIndex: 0}}
           />
         }
