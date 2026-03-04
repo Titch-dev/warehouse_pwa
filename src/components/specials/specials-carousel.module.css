@@ -27,15 +27,17 @@
   overflow: hidden;
   height: var(--specials-slide-h);
   padding: 1.5rem 0;
+
+  touch-action: pan-y pinch-zoom;
 }
 
 .embla__container {
   display: flex;
   height: 100%;
   align-items: stretch;
-
-  touch-action: pan-x pinch-zoom;
   margin: -1.5rem 0;
+
+  touch-action: auto;
 }
 
 .embla__slide {
@@ -98,7 +100,6 @@
     transition: transform ease-in-out 0.2s;
     transform: scale(1);
     filter: drop-shadow(0 0 1rem black);
-    z-index: 9999;
   }
 
   .btn:hover .btn_icon {

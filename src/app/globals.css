@@ -9,7 +9,6 @@
   --color-grey-dark-2: #333;
   --color-grey-dark-3: #777;
   --color-grey-dark-4: #999;
- 
 
   --color-blue: #6172c5;
   --color-pink: #ED2EA5;
@@ -17,8 +16,8 @@
   --color-yellow: #FAD009;
 
   /* Breakpoints (min-width) */
-  --tablet: 768px;   /* Tablets */
-  --laptop: 1024px;  /* Laptops */
+  --tablet: 768px;
+  --laptop: 1024px;
 
   /* Box shadow */
   --shadow-dark-lg: 10px 10px 25px black;
@@ -32,34 +31,34 @@
 
   /* Gradients */
   --mono-grad-bottom: linear-gradient(
-      180deg, 
-      var(--color-grey-dark-1) 0%,
-      var(--color-grey-dark-2) 100%);
-
+    180deg,
+    var(--color-grey-dark-1) 0%,
+    var(--color-grey-dark-2) 100%
+  );
 
   --color-grad-right: linear-gradient(
-        to right,
-        var(--color-pink),
-        var(--color-orange),
-        var(--color-yellow)
-    );
+    to right,
+    var(--color-pink),
+    var(--color-orange),
+    var(--color-yellow)
+  );
 
   --color-grad-bottom: linear-gradient(
-      to bottom,
-      var(--color-pink),
-      var(--color-orange),
-      var(--color-yellow)
-    );
-  
+    to bottom,
+    var(--color-pink),
+    var(--color-orange),
+    var(--color-yellow)
+  );
+
   --color-grad-top: linear-gradient(
-      to top,
-      var(--color-pink),
-      var(--color-orange),
-      var(--color-yellow)
+    to top,
+    var(--color-pink),
+    var(--color-orange),
+    var(--color-yellow)
   );
 }
 
- 
+/* ---------------- RESET ---------------- */
 
 *,
 *::before,
@@ -72,7 +71,7 @@
 html {
   height: 100%;
   box-sizing: border-box;
-  font-size: 62.5%; /* 1rem = 10px */
+  font-size: 62.5%;
 }
 
 body {
@@ -92,7 +91,41 @@ body.modal-open {
   overflow: hidden;
 }
 
-/* enable sticky-footer layout on desktop only */
+/* ---------------- MOBILE TAP FIXES ---------------- */
+
+/* Remove blue tap highlight on iOS & Android */
+a,
+button,
+[role="button"],
+input,
+label,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent accidental text selection on UI controls */
+button,
+a,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Remove default focus ring for touch/mouse */
+:focus {
+  outline: none;
+}
+
+/* Preserve accessible keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--color-orange);
+  outline-offset: 3px;
+}
+
+/* ---------------- DESKTOP ---------------- */
+
 @media (min-width: 1024px) {
   body {
     height: 100%;

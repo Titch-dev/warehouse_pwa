@@ -40,7 +40,6 @@ export default function MenuCategoryContent({
   extras = [],
   notices = [],
   specials = [],
-  specialsLoading = false,
   specialsError = null,
 }) {
   const containerRef = useRef(null);

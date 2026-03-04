@@ -2,7 +2,6 @@
 
 import { useState, useEffect} from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { useFirestoreCollection } from "@/hooks/useFirestoreCollection";
 
 import MenuCategoryNavigation from "./menu-category-navigation";
 import MenuCategoryContent from "./menu-category-content";
@@ -25,7 +24,7 @@ export default function MenuContainer({
   const categories = getUniqueCategories(menu);
   categories.push('specials')
   const [selectedCategory, setSelectedCategory] = useState(categories[0] || "");
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery('(max-width: 1024px)');
 
   useEffect(() => {
     if (categories.length > 0) {setSelectedCategory(categories[0]);} 
