@@ -6,7 +6,7 @@
     background-color: var(--color-grey-dark-4);
     background-image: url('/assets/contact/tiles_dark.png');
     padding: 6rem 2rem;
-    height: 100dvh;
+    height: 100%;
 }
 
 .content_background {
@@ -22,6 +22,7 @@
     padding: 3rem 0;
     z-index: 1;
     border-radius: 1rem;
+    margin: 4rem 0;
 
 }
 

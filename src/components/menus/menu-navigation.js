@@ -20,7 +20,7 @@ const menus = ['food', 'drinks'];
 export default function MenuNavigation() {
   const [menuPdfUrls, setMenuPdfUrls] = useState({})
   const [selectedMenu, setSelectedMenu] = useState('food');
-  const isMobile = useMediaQuery('(max-width: 768px)');
+  const isMobile = useMediaQuery('(max-width: 1024px)');
 
   const { data: menu, loading: menuLoading, error: menuError } = useFirestoreCollection('menu', 'menu')
   const { data: specials, loading: specialsLoading, error: specialsError} = useFirestoreCollection('specials', 'specials')
