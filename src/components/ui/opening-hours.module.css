@@ -1,0 +1,33 @@
+.open_times {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: var(--color-grey-light-3);
+    font-size: 1.8rem;
+}
+
+.open_times h3 {
+    text-align: center;
+}
+.times_row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.highlight{
+    color: var(--color-orange);
+}
+
+.days span:last-child::after{
+    content: none;
+}
+
+.days span::after {
+    content: ', ';
+    color: var(--color-grey-light-3);
+}
+
+.times {
+    padding: 0;
+    margin: 0;
+}

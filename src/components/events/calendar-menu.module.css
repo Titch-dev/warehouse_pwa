@@ -1,0 +1,99 @@
+.wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  z-index: 6;
+  padding: 1.5rem 2rem 1.5rem 0;
+}
+
+.iconBtn {
+  position: relative;
+  width: 3.5rem;
+  height: 3.5rem;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  flex: 0 0 auto;
+  z-index: 10;
+}
+
+.icon {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 4rem;
+  height: 4rem;
+  fill: url(#gradId);
+  transform: scale(1);
+  opacity: 1;
+  transition: transform ease-in-out 0.28s, opacity ease-in-out 0.28s;
+  transform-origin: center;
+}
+
+.stop1 { stop-color: var(--color-pink); }
+.stop2 { stop-color: var(--color-orange); }
+.stop3 { stop-color: var(--color-yellow); }
+
+.x1,
+.x2 {
+  position: absolute;
+  top: 1.55rem;
+  left: 50%;
+  width: 0%;
+  height: 0.4rem;
+  border-radius: 0.4rem;
+  opacity: 0;
+  background: var(--color-orange);
+  transition: all ease-in-out 0.28s;
+  transform-origin: center;
+}
+
+.open .icon {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.open .x1,
+.open .x2 {
+  width: 100%;
+  left: 0;
+  opacity: 1;
+}
+
+.open .x1 {
+  transform: rotate(45deg);
+}
+
+.open .x2 {
+  transform: rotate(-45deg);
+}
+
+.panel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: min(42rem, 92vw);
+  transform-origin: top right;
+
+  opacity: 0;
+  transform: translateY(-0.6rem) scale(0.98);
+  pointer-events: none;
+
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 9;
+}
+
+.panel_open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.panel_inner {
+  border-radius: 1.2rem;
+  background: var(--color-grey-dark-2);
+  border: 2px solid var(--color-grey-dark-3);
+  padding-top: 4rem;
+}

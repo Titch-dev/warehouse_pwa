@@ -1,0 +1,116 @@
+.event {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 5rem 0;
+    background-image: var(--color-grad-bottom);
+    gap: 5rem;
+}
+
+.title {
+    font-size: 4rem;
+    color: var(--color-grey-light-3);
+    text-align: center;
+    letter-spacing: .1rem;
+}
+
+.next_wrapper,
+.weekly_wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-grey-dark-1);
+    max-width: fit-content;
+}
+
+.next_event_wrapper {
+    position: relative;
+    padding: 4rem 0 0;
+}
+
+.weekly_wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+}
+
+.next_background,
+.weekly_background {
+    display: none;
+}
+
+
+.weekly_event_wrapper {
+  width: 100%;
+  max-width: 100%;
+}
+
+.event_link {
+  position: relative;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.event_btn {
+  display: inline-block;
+  padding: 0.60rem 1.5rem;
+  background: transparent;
+  color: var(--color-grey-light-3);
+  border: none;
+  cursor: pointer;
+}
+
+.event_btn p {
+  letter-spacing: 0.8px;
+  font-size: 3.5rem;
+  
+  text-decoration-line: underline;
+  text-decoration-thickness: 0.4rem;
+  text-decoration-color: var(--color-grey-light-3);
+  text-underline-offset: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+    .event {
+        padding: 6rem 0 6rem;
+        gap: 3rem;
+    }
+
+    .next_background,
+    .weekly_background {
+        display: block;
+        position: absolute;
+        height: 50rem;
+        width: 85rem;
+        fill: var(--color-grey-dark-1);
+        filter: drop-shadow(var(--shadow-dark-lg));
+    }
+
+     .next_wrapper {
+        background-color: transparent;
+        max-width: 65rem;
+    }
+
+    .next_background {
+        transform: scale(-1, 1);
+    }
+
+    .next_event_wrapper {
+        padding: 0;
+    }
+
+    .weekly_wrapper {
+        background-color: transparent;
+        height: 50rem;
+        max-width: 72rem;
+    }
+
+    .weekly_wrapper {
+        width: fit-content;
+    }
+
+}

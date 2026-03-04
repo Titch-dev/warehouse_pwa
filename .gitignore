@@ -40,3 +40,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# public files
+public/assets
+
+# function log
+firebase-debug.log
+
+# firebase
+.firebaserc
+
+
+# package-lock.json
+package-lock.json
+functions/package-lock.json

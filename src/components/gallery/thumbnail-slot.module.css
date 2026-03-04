@@ -1,0 +1,46 @@
+.thumb {
+  position: relative;
+  width: 17rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: var(--color-grey-dark-1);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-dark-sm);
+}
+
+.thumb:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-light-sm);
+}
+
+.loading_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+  animation: pulseOpacity 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseOpacity {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+@media (min-width: 1024px){
+  .thumb {
+    width: 18rem;
+  }
+}
+  
+  

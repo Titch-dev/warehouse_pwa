@@ -1,0 +1,120 @@
+.wrapper {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 3rem;
+
+  --specials-slide-h: 42rem;
+}
+
+.embla {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+
+.embla__viewport {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+  height: var(--specials-slide-h);
+  padding: 1.5rem 0;
+}
+
+.embla__container {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+
+  touch-action: pan-x pinch-zoom;
+  margin: -1.5rem 0;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+
+  min-width: 0;
+}
+
+.btn {
+  display: none;
+}
+
+.embla__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  padding-top: 1.5rem;
+}
+
+.embla__dot {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--color-grey-light-3);
+  cursor: pointer;
+  border: none;
+}
+
+.embla__dot_selected {
+  background: var(--color-grad-bottom);
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    --specials-slide-h: 44rem;
+  }
+
+  .embla__viewport {
+    max-width: 50rem;
+  }
+
+  .btn {
+    display: block;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+  }
+
+  .btn_icon {
+    position: relative;
+    height: 4rem;
+    width: 4rem;
+    fill: url(#GradientSpecials);
+    transition: transform ease-in-out 0.2s;
+    transform: scale(1);
+    filter: drop-shadow(0 0 1rem black);
+    z-index: 9999;
+  }
+
+  .btn:hover .btn_icon {
+    transform: scale(1.1);
+  }
+
+  .btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .btn:disabled .btn_icon {
+    transform: none;
+  }
+
+  .stop1 { stop-color: var(--color-pink); }
+  .stop2 { stop-color: var(--color-orange); }
+  .stop3 { stop-color: var(--color-yellow); }
+}

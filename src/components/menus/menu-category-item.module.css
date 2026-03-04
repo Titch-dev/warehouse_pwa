@@ -1,0 +1,150 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 2rem;
+    align-items: center;
+    border-bottom: solid .2rem var(--color-grey-dark-3);
+    justify-content: center;
+    width: 100%;
+}
+
+.item_container:last-child {
+    border-bottom: none;
+}
+
+.item_image {
+    min-width: 10rem;
+    min-height: 10rem;
+    filter: drop-shadow(var(--shadow-light-sm));
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    flex-grow: 2;
+    text-align: center;
+}
+
+.title {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    word-spacing: .7rem;
+    letter-spacing: .15rem;
+    padding-bottom: .5rem;
+    line-height: 3rem;
+    font-size: 2.8rem;
+    flex: 1;
+    opacity: 0.95;
+    text-transform: capitalize;
+}
+
+
+.item_brewery{
+    color: burlywood;
+}
+
+.content p {
+    font-size: 2rem;
+    opacity: .8;
+}
+
+.info_row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.item_price {
+    width: auto;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    min-width: 15rem;
+}
+
+.item_table {
+    letter-spacing: .15rem;
+    border-collapse: collapse;
+}
+
+.item_table th,
+.item_table td {
+    border-right: .2rem solid var(--color-grey-dark-3);
+    text-align: center;
+}
+
+.item_table th {
+    font-size: 1.5rem;
+}
+
+.item_table td {
+    font-size: 1.6rem;
+    font-weight: 900;
+    padding: 1rem 1rem 0;
+}
+
+
+.item_table th{
+    padding: 0 1rem .5rem;
+    color: var(--color-grey-dark-4);
+    font-size: 1.5rem;
+    line-height: 2.2rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+}
+
+
+.item_table th:first-child,
+.item_table th:last-child,
+.item_table td:last-child {
+    border-right: none;
+}
+
+.item_table th:first-child{
+    border-bottom: none;
+}
+
+@media(min-width:1024px) {
+
+    .container {
+        flex-direction: row;
+        border-bottom: solid .2rem var(--color-grey-dark-3);
+        padding: 3rem 0;
+        gap: 2.5rem;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .item_image {
+        width: 10rem;
+        height: 10rem;
+        flex: 0 0 10rem;
+    }
+
+    .content {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: none;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .info_row {
+        flex: 0 0 auto;
+        gap: 2rem;
+        width: auto;
+    }
+    
+    .item_price {
+        justify-content: flex-start;
+        width: auto;
+    }
+}

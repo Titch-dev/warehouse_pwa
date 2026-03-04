@@ -1,7 +1,10 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-// import { getAnalytics } from "firebase/analytics";  // to uncomment on deploy
+import { initializeApp, getApps, getApp } from "firebase/app";
+import { 
+  initializeFirestore, 
+  persistentLocalCache,
+  persistentMultipleTabManager 
+} from "firebase/firestore";
+import { getStorage } from "firebase/storage";
   
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,16 +13,16 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
-//   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID  // to uncomment on deploy
 };
 
-// Init Firebase
-const app = initializeApp(firebaseConfig);
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-// Init Firestore
-const warehouseDB = getFirestore(app);
+const warehouseDB = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentMultipleTabManager()
+  })
+});
 
+const warehouseStorage = getStorage(app);
 
-export { warehouseDB };
-
-// const analytics = getAnalytics(app);  // to uncomment on deploy
+export { app, warehouseDB, warehouseStorage };

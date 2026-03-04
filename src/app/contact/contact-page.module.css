@@ -1,0 +1,126 @@
+.page_wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-grey-dark-4);
+    background-image: url('/assets/contact/tiles_dark.png');
+    padding: 6rem 2rem;
+    height: 100dvh;
+}
+
+.content_background {
+    display: none;
+    }
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 14fr;
+    background-color: var(--color-grey-dark-1);
+    box-shadow: var(--shadow-dark-sm);
+    padding: 3rem 0;
+    z-index: 1;
+    border-radius: 1rem;
+
+}
+
+.title {
+    position: relative;
+    font-size: 4rem;
+    grid-row: 1 / span 2;
+    width: fit-content;
+    justify-self: center;
+}
+
+.title::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 0.3rem;
+    bottom: 1rem;
+    background: var(--color-grad-right);
+}
+
+.content_desc {
+    padding: 2rem 4rem;
+    font-size: 2rem;
+    grid-row: 3 / span 3;
+}
+
+.socials_container {
+    grid-row: 7 / span 2;
+}
+
+.map_container {
+    width: fit-content;
+    justify-self: center;
+    align-self: center; 
+    grid-row: 9 / span 3;
+    padding: 1rem 0 ;
+}
+
+.opening_container {
+    width: 100%;
+    padding: 2rem 4rem 0;
+    grid-row: 12 / span 3;
+}
+
+
+@media (min-width:1024px) {
+    .page_wrapper {
+        height: 90dvh;
+    }
+    
+    .content_background {
+        display: block;
+        position: absolute;
+        fill: var(--color-grey-dark-1);
+        transform: scaleY(1.1);
+        filter: drop-shadow(var(--shadow-dark-lg));
+    }
+
+    .content {
+        grid-template-columns: 2fr;
+        grid-template-rows: 12fr;
+        max-width: 90rem;
+        padding: 2rem;
+        background-color: transparent;
+        align-items: center;
+        justify-content: flex-end;
+        box-shadow: none;
+        align-content: center;
+    }
+    
+    .title {
+        margin-top: 0;
+        grid-column: 1;
+        align-items: center;
+        grid-row: 1 / span 2;
+        grid-column: 1;
+    }
+    
+    .content_desc {
+        font-size: 2rem;
+        grid-row: 3 / span 6;
+        grid-column: 1;
+    }
+
+    .socials_container {
+        grid-column: 1;
+        grid-row: 9 / span 4;
+    }
+
+    .map_container {
+        grid-column: 2;
+        grid-row: 1 / span 6;
+        padding: 0;
+    }
+
+    .opening_container {
+        width: 40rem;
+        grid-column: 2;
+        grid-row: 7 / span 6;
+    }
+
+}
