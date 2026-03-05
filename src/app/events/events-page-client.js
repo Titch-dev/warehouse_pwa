@@ -38,7 +38,7 @@ export default function EventsPageClient() {
     const ev = sortedEvents.find(e => e?.slug === selectedSlugFromUrl) || null;
     setSelectedEvent(ev);
 
-    if (!ev) router.replace('/events', { scroll: false });
+    if (!ev) router.replace('/events');
   }, [selectedSlugFromUrl, sortedEvents, router]);
 
   const handleEventSelect = (event) => {
