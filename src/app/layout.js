@@ -12,6 +12,7 @@ import { colors } from "@/lib/colors";
 
 import "./globals.css";
 import styles from './layout.module.css';
+import { AuthProvider } from '@/components/auth/auth-provider';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://thewestvillewarehouse.co.za'),
@@ -60,6 +61,7 @@ export default function RootLayout({ children }) {
         />
       </head>
           <body className={spartanFont.className}>
+            <AuthProvider>
               <ToastProvider>
                 <CookieConsentProvider>
                   <WebNavBar />
@@ -70,6 +72,7 @@ export default function RootLayout({ children }) {
                   <CookieBanner />
                 </CookieConsentProvider>
               </ToastProvider>
+            </AuthProvider>
           </body>
     </html>
   );

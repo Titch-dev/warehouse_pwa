@@ -29,6 +29,26 @@
     list-style-type: none;
 }
 
+.nav_link_container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav_link_container p {
+    color: var(--color-grey-light-3);
+}
+
+.icon{
+    width: 3rem;
+    height: 3rem;
+    fill: url('#Gradient2');
+}
+
+.stop1 { stop-color: var(--color-pink); }
+.stop2 { stop-color: var(--color-orange); }
+.stop3 { stop-color: var(--color-yellow); }
+
 @media (min-width:768px){
     .nav {
         position: relative;
