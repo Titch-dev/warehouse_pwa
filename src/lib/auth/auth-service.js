@@ -10,7 +10,7 @@ import { warehouseAuth } from "@/firebase/firebaseConfig";
 import { googleProvider } from "./auth-providers";
 import {
   createUserDoc,
-  getOrCreateUserDoc,
+  ensureUserDoc,
   updateUserLoginMeta,
 } from "@/lib/firestore/users";
 
@@ -21,7 +21,7 @@ export async function signInWithEmail({ email, password }) {
     password
   );
 
-  await getOrCreateUserDoc(result.user);
+  await ensureUserDoc(result.user);
 
   await updateUserLoginMeta(result.user.uid, {
     displayName: result.user.displayName ?? null,
@@ -63,7 +63,7 @@ export async function sendResetPasswordEmail(email) {
 export async function signInWithGooglePopup() {
   const result = await signInWithPopup(warehouseAuth, googleProvider);
 
-  await getOrCreateUserDoc(result.user);
+  await ensureUserDoc(result.user);
 
   await updateUserLoginMeta(result.user.uid, {
     displayName: result.user.displayName ?? null,
