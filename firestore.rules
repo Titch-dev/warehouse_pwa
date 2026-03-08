@@ -1,0 +1,166 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /* ---------------- Helpers ---------------- */
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    function userRole() {
+      return isSignedIn() ? userDoc().data.role : null;
+    }
+
+    function isStaff() {
+      return isSignedIn() && (
+        userRole() == "staff" ||
+        userRole() == "admin" ||
+        userRole() == "owner"
+      );
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        userRole() == "admin" ||
+        userRole() == "owner"
+      );
+    }
+
+    function isOwnerRole() {
+      return isSignedIn() && userRole() == "owner";
+    }
+
+    function isValidUserRole(role) {
+      return role in ["customer", "staff", "admin", "owner"];
+    }
+
+    function isValidUserStatus(status) {
+      return status in ["active", "inactive", "suspended"];
+    }
+
+    /* ---------------- Public content ---------------- */
+
+    match /events/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /menu/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /specials/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /gallery/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    /* ---------------- Users ---------------- */
+
+    match /users/{uid} {
+      // Customer can read own doc.
+      // Staff/admin/owner can read for support / scanning / membership operations.
+      allow read: if isSelf(uid) || isStaff();
+
+      // User doc creation at signup:
+      // - only self
+      // - uid must match
+      // - role cannot be escalated
+      // - status cannot be escalated
+      allow create: if isSelf(uid)
+        && request.resource.data.uid == uid
+        && request.resource.data.role == "customer"
+        && request.resource.data.status == "active"
+        && request.resource.data.keys().hasOnly([
+          "uid",
+          "email",
+          "displayName",
+          "photoURL",
+          "role",
+          "status",
+          "membership",
+          "createdAt",
+          "updatedAt",
+          "lastLoginAt"
+        ]);
+
+      // Self-update:
+      // user may only edit a small safe subset of profile fields
+      // and may not change role/status/membership/uid
+      allow update: if isSelf(uid)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.role == resource.data.role
+        && request.resource.data.status == resource.data.status
+        && request.resource.data.membership == resource.data.membership
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "displayName",
+          "photoURL",
+          "updatedAt",
+          "lastLoginAt"
+        ]);
+
+      // Admin/owner can manage operational fields on users
+      allow update: if isAdmin()
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          "displayName",
+          "photoURL",
+          "status",
+          "membership",
+          "role",
+          "updatedAt",
+          "lastLoginAt",
+          "staffNotes"
+        ])
+        && isValidUserRole(request.resource.data.role)
+        && isValidUserStatus(request.resource.data.status);
+
+      allow delete: if false;
+    }
+
+    /* ---------------- Sessions ---------------- */
+
+    // Recommended option:
+    // only backend/cloud functions write session state
+    match /sessions/{sessionId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    // If you later need user-controlled session writes, use a stricter structure
+    // like /users/{uid}/sessions/{sessionId} and explicitly constrain fields.
+
+    /* ---------------- Admin-only operational collections ---------------- */
+
+    match /auditLogs/{docId} {
+      allow read: if isAdmin();
+      allow write: if false; // function-only preferred
+    }
+
+    match /cms/{docId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
+    }
+
+    /* ---------------- Catch-all deny ---------------- */
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
