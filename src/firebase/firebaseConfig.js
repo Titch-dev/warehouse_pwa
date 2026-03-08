@@ -18,7 +18,7 @@ const firebaseConfig = {
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
-const warehouseDB = initializeFirestore(app, {
+const warehouseDb = initializeFirestore(app, {
   localCache: persistentLocalCache({
     tabManager: persistentMultipleTabManager()
   })
@@ -28,4 +28,4 @@ const warehouseStorage = getStorage(app);
 
 const warehouseAuth = getAuth(app);
 
-export { app, warehouseDB, warehouseStorage, warehouseAuth };
+export { app, warehouseDb, warehouseStorage, warehouseAuth };

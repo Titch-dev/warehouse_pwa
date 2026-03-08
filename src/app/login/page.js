@@ -2,15 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import {
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  updateProfile,
-} from "firebase/auth";
-import { warehouseAuth } from "@/firebase/firebaseConfig";
 
 import styles from "./login-page.module.css";
 import { rubikFont } from "@/lib/fonts";
@@ -18,24 +9,19 @@ import GoogleSVG from "@/components/assets/icons/google-svg";
 import EyeOpenSVG from "@/components/assets/icons/eye-open-svg";
 import EyeClosedSVG from "@/components/assets/icons/eye-closed-svg";
 
-const INITIAL_FORM = {
-  name: "",
-  email: "",
-  password: "",
-  passwordConfirm: "",
-};
-
-const INITIAL_TOUCHED = {
-  name: false,
-  email: false,
-  password: false,
-  passwordConfirm: false,
-};
-
-const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({
-  prompt: "select_account",
-});
+import { getFirebaseErrorMessage } from "@/lib/auth/auth-errors";
+import {
+  INITIAL_FORM,
+  INITIAL_TOUCHED,
+  validateAuthForm,
+  getTouchedAll,
+} from "@/lib/auth/auth-form-validation";
+import {
+  signInWithEmail,
+  signUpWithEmail,
+  sendResetPasswordEmail,
+  signInWithGooglePopup,
+} from "@/lib/auth/auth-service";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -59,62 +45,7 @@ export default function LoginPage() {
   const isForgot = mode === "forgot";
   const isSignin = mode === "signin";
 
-  function validate(values, currentMode) {
-    const errors = {};
-
-    if (currentMode === "signup" && !values.name.trim()) {
-      errors.name = "Please enter your name.";
-    }
-
-    if (!values.email.trim()) {
-      errors.email = "Please enter your email.";
-    } else if (!values.email.includes("@")) {
-      errors.email = "Please enter a valid email address.";
-    }
-
-    if (currentMode !== "forgot") {
-      if (!values.password) {
-        errors.password = "Please enter your password.";
-      } else if (values.password.length < 6) {
-        errors.password = "Password must be at least 6 characters.";
-      } else if (currentMode === "signup" && !/\d/.test(values.password)) {
-        errors.password = "Password must contain at least 1 number.";
-      }
-    }
-
-    if (currentMode === "signup") {
-      if (!values.passwordConfirm) {
-        errors.passwordConfirm = "Please confirm your password.";
-      } else if (values.password !== values.passwordConfirm) {
-        errors.passwordConfirm = "Passwords do not match.";
-      }
-    }
-
-    return errors;
-  }
-
-  function getFirebaseErrorMessage(err) {
-    switch (err?.code) {
-      case "auth/email-already-in-use":
-        return "An account with this email already exists.";
-      case "auth/invalid-email":
-        return "Please enter a valid email address.";
-      case "auth/user-not-found":
-      case "auth/invalid-credential":
-      case "auth/wrong-password":
-        return "Incorrect email or password.";
-      case "auth/weak-password":
-        return "Password should be at least 6 characters.";
-      case "auth/popup-closed-by-user":
-        return "Google sign-in was cancelled.";
-      case "auth/popup-blocked":
-        return "Your browser blocked the Google sign-in popup.";
-      default:
-        return err?.message || "Something went wrong.";
-    }
-  }
-
-  const errors = validate(form, mode);
+  const errors = validateAuthForm(form, mode);
   const showError = (field) => touched[field] && errors[field];
 
   function handleChange(field, value) {
@@ -149,50 +80,37 @@ export default function LoginPage() {
     setError("");
     setMessage("");
 
-    const touchedAll = {
-      name: true,
-      email: true,
-      password: true,
-      passwordConfirm: true,
-    };
+    setTouched(getTouchedAll());
 
-    setTouched(touchedAll);
-
-    const currentErrors = validate(form, mode);
+    const currentErrors = validateAuthForm(form, mode);
     if (Object.keys(currentErrors).length > 0) return;
 
     setLoading(true);
 
     try {
       if (isSignin) {
-        await signInWithEmailAndPassword(
-          warehouseAuth,
-          form.email,
-          form.password
-        );
+        await signInWithEmail({
+          email: form.email,
+          password: form.password,
+        });
+
         router.replace(nextUrl);
         return;
       }
 
       if (isSignup) {
-        const res = await createUserWithEmailAndPassword(
-          warehouseAuth,
-          form.email,
-          form.password
-        );
-
-        if (form.name.trim()) {
-          await updateProfile(res.user, {
-            displayName: form.name.trim(),
-          });
-        }
+        await signUpWithEmail({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+        });
 
         router.replace(nextUrl);
         return;
       }
 
       if (isForgot) {
-        await sendPasswordResetEmail(warehouseAuth, form.email);
+        await sendResetPasswordEmail(form.email);
         setMessage("Password reset email sent. Check your inbox.");
       }
     } catch (err) {
@@ -208,7 +126,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      await signInWithPopup(warehouseAuth, googleProvider);
+      await signInWithGooglePopup();
       router.replace(nextUrl);
     } catch (err) {
       setError(getFirebaseErrorMessage(err));
@@ -236,6 +154,7 @@ export default function LoginPage() {
                 onChange={(e) => handleChange("name", e.target.value)}
                 onBlur={() => handleBlur("name")}
                 className={showError("name") ? styles.input_error : ""}
+                autoComplete="name"
               />
               {showError("name") && (
                 <p className={styles.error_text}>{errors.name}</p>
