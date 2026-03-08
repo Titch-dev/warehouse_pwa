@@ -2,7 +2,6 @@ import {
   doc,
   getDoc,
   setDoc,
-  updateDoc,
   serverTimestamp,
 } from "firebase/firestore";
 import { warehouseDb } from "@/firebase/firebaseConfig";
@@ -69,6 +68,18 @@ export async function createUserDoc(authUser, overrides = {}) {
     : null;
 }
 
+export async function ensureUserDoc(authUser, overrides = {}) {
+  if (!authUser?.uid) return null;
+
+  const existing = await getUserDoc(authUser.uid);
+
+  if (existing) {
+    return existing;
+  }
+
+  return await createUserDoc(authUser, overrides);
+}
+
 export async function updateUserLoginMeta(uid, extraFields = {}) {
   if (!uid) {
     throw new Error("Cannot update user login metadata without uid.");
@@ -85,21 +96,4 @@ export async function updateUserLoginMeta(uid, extraFields = {}) {
     },
     { merge: true }
   );
-}
-
-export async function getOrCreateUserDoc(authUser, overrides = {}) {
-  if (!authUser?.uid) return null;
-
-  const existing = await getUserDoc(authUser.uid);
-
-  if (existing) {
-    await updateUserLoginMeta(authUser.uid, {
-      displayName: authUser.displayName ?? existing.displayName ?? null,
-      email: authUser.email ?? existing.email ?? null,
-    });
-
-    return await getUserDoc(authUser.uid);
-  }
-
-  return await createUserDoc(authUser, overrides);
 }
