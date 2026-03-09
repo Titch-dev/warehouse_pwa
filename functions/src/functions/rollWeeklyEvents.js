@@ -1,7 +1,5 @@
 const { onSchedule } = require("firebase-functions/v2/scheduler");
-const admin = require("./firebaseAdmin");
-
-const db = admin.firestore();
+const { admin, db } = require("../config/firebaseAdmin");
 
 exports.rollWeeklyEvents = onSchedule(
   {
