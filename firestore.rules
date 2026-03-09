@@ -13,42 +13,64 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == uid;
     }
 
-    function userDoc() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid));
+    // Secure source of truth for authorization:
+    // custom claims set by Admin SDK / Cloud Functions
+    function authRole() {
+      return isSignedIn() && ("role" in request.auth.token)
+        ? request.auth.token.role
+        : null;
     }
 
-    function userRole() {
-      return isSignedIn() ? userDoc().data.role : null;
+    function isSuspended() {
+      return isSignedIn() &&
+        ("suspended" in request.auth.token) &&
+        request.auth.token.suspended == true;
     }
 
     function isStaff() {
-      return isSignedIn() && (
-        userRole() == "staff" ||
-        userRole() == "admin" ||
-        userRole() == "owner"
-      );
+      return isSignedIn() &&
+        !isSuspended() &&
+        (
+          authRole() == "staff" ||
+          authRole() == "admin" ||
+          authRole() == "owner"
+        );
     }
 
     function isAdmin() {
-      return isSignedIn() && (
-        userRole() == "admin" ||
-        userRole() == "owner"
-      );
+      return isSignedIn() &&
+        !isSuspended() &&
+        (
+          authRole() == "admin" ||
+          authRole() == "owner"
+        );
     }
 
-    function isOwnerRole() {
-      return isSignedIn() && userRole() == "owner";
+    function isOwner() {
+      return isSignedIn() &&
+        !isSuspended() &&
+        authRole() == "owner";
     }
 
     function isValidUserRole(role) {
-      return role in ["customer", "staff", "admin", "owner"];
+      return role == "customer" ||
+             role == "staff" ||
+             role == "admin" ||
+             role == "owner";
     }
 
     function isValidUserStatus(status) {
-      return status in ["active", "inactive", "suspended"];
+      return status == "active" ||
+             status == "inactive" ||
+             status == "suspended";
     }
 
-    /* ---------------- Public content ---------------- */
+    /* ---------------- Public website content ---------------- */
+
+    match /metadata/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
 
     match /events/{docId} {
       allow read: if true;
@@ -73,15 +95,12 @@ service cloud.firestore {
     /* ---------------- Users ---------------- */
 
     match /users/{uid} {
-      // Customer can read own doc.
-      // Staff/admin/owner can read for support / scanning / membership operations.
+      // Self can read own doc.
+      // Staff/admin/owner can read user docs for support / scanning / operations.
       allow read: if isSelf(uid) || isStaff();
 
-      // User doc creation at signup:
-      // - only self
-      // - uid must match
-      // - role cannot be escalated
-      // - status cannot be escalated
+      // Signup creation:
+      // only self, cannot escalate role/status
       allow create: if isSelf(uid)
         && request.resource.data.uid == uid
         && request.resource.data.role == "customer"
@@ -100,8 +119,8 @@ service cloud.firestore {
         ]);
 
       // Self-update:
-      // user may only edit a small safe subset of profile fields
-      // and may not change role/status/membership/uid
+      // user may only edit a safe subset of fields
+      // and may not change uid / role / status / membership
       allow update: if isSelf(uid)
         && request.resource.data.uid == resource.data.uid
         && request.resource.data.role == resource.data.role
@@ -114,47 +133,31 @@ service cloud.firestore {
           "lastLoginAt"
         ]);
 
-      // Admin/owner can manage operational fields on users
-      allow update: if isAdmin()
-        && request.resource.data.uid == resource.data.uid
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
-          "displayName",
-          "photoURL",
-          "status",
-          "membership",
-          "role",
-          "updatedAt",
-          "lastLoginAt",
-          "staffNotes"
-        ])
-        && isValidUserRole(request.resource.data.role)
-        && isValidUserStatus(request.resource.data.status);
-
+      // No client-side privileged writes to sensitive user fields.
+      // role / status / suspension mirrors should be updated by Cloud Functions only.
       allow delete: if false;
     }
 
     /* ---------------- Sessions ---------------- */
 
-    // Recommended option:
-    // only backend/cloud functions write session state
     match /sessions/{sessionId} {
+      // Signed-in users can read unless you want suspended users blocked from all app access.
       allow read: if isSignedIn();
+
+      // Backend / Cloud Functions only
       allow write: if false;
     }
-
-    // If you later need user-controlled session writes, use a stricter structure
-    // like /users/{uid}/sessions/{sessionId} and explicitly constrain fields.
 
     /* ---------------- Admin-only operational collections ---------------- */
 
     match /auditLogs/{docId} {
-      allow read: if isAdmin();
-      allow write: if false; // function-only preferred
+      // I recommend owner-only here since these are sensitive
+      allow read: if isOwner();
+      allow write: if false;
     }
 
     match /cms/{docId} {
-      allow read: if isAdmin();
-      allow write: if isAdmin();
+      allow read, write: if isAdmin();
     }
 
     /* ---------------- Catch-all deny ---------------- */
