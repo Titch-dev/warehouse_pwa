@@ -49,8 +49,9 @@ firebase-debug.log
 
 # firebase
 .firebaserc
-
+firebase-service-account.json
 
 # package-lock.json
 package-lock.json
 functions/package-lock.json
+

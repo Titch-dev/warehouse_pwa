@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { collection, getDocs, doc, getDoc, Timestamp } from 'firebase/firestore'
-import { warehouseDB } from '@/firebase/firebaseConfig'
+import { warehouseDb } from '@/firebase/firebaseConfig'
 
 /* ---------- Recursive Firestore Timestamp → JS Date ---------- */
 function convertFirestoreTimestamps(obj) {
@@ -68,7 +68,7 @@ export function useFirestoreCollection(collectionOrQuery, versionKey) {
 
     try {
       /* Read metadata version */
-      const metaRef = doc(warehouseDB, 'metadata', 'collections')
+      const metaRef = doc(warehouseDb, 'metadata', 'collections')
       const metaSnap = await getDoc(metaRef);
       
       if (!metaSnap.exists()) {
@@ -96,7 +96,7 @@ export function useFirestoreCollection(collectionOrQuery, versionKey) {
       /* Fetch collection */
       const ref =
         typeof collectionOrQuery === 'string'
-          ? collection(warehouseDB, collectionOrQuery)
+          ? collection(warehouseDb, collectionOrQuery)
           : collectionOrQuery
 
       const snapshot = await getDocs(ref)
