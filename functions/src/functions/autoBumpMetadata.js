@@ -1,17 +1,19 @@
 const { onDocumentWritten } = require("firebase-functions/v2/firestore");
-const admin = require("./firebaseAdmin");
-
-const db = admin.firestore();
+const { db, admin } = require("../config/firebaseAdmin");
 
 const COLLECTION_VERSION_MAP = {
   gallery: "gallery",
   menu: "menu",
   specials: "specials",
   events: "events",
+  users: "users",
 };
 
 exports.autoBumpMetadata = onDocumentWritten(
-  "{collectionId}/{docId}",
+  {
+    region: "us-central1",
+    document: "{collectionId}/{docId}",
+  },
   async (event) => {
     const { collectionId } = event.params;
 
@@ -23,11 +25,12 @@ exports.autoBumpMetadata = onDocumentWritten(
 
     console.log(`Bumping metadata version for: ${versionField}`);
 
-    await db.collection("metadata")
+    await db
+      .collection("metadata")
       .doc("collections")
       .set(
         {
-          [versionField]: admin.firestore.FieldValue.serverTimestamp()
+          [versionField]: admin.firestore.FieldValue.serverTimestamp(),
         },
         { merge: true }
       );

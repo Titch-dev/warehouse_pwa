@@ -1,13 +1,13 @@
 const { onSchedule } = require("firebase-functions/v2/scheduler");
-const { onRequest } = require("firebase-functions/v2/https");
-const { defineSecret } = require("firebase-functions/params");
-const admin = require("./firebaseAdmin");
+const { onCall, HttpsError } = require("firebase-functions/v2/https");
+
+const { admin, db, storage } = require("../config/firebaseAdmin");
+const { FB_PAGE_ACCESS_TOKEN } = require("../config/env");
+const { requireRole } = require("../helpers/auth");
+const { writeAuditLog } = require("../helpers/audit");
 
 const fetch = global.fetch;
-const FB_PAGE_ACCESS_TOKEN = defineSecret("FB_PAGE_ACCESS_TOKEN");
-
-const db = admin.firestore();
-const bucket = admin.storage().bucket();
+const bucket = storage.bucket();
 
 const emojiRegex = require("emoji-regex");
 const emojiRe = emojiRegex();
@@ -38,6 +38,7 @@ function extractPrices(description = "") {
       .replace(/\u00A0/g, " ")
       .replace(/\u2028|\u2029/g, "\n")
       .replace(/[–—]/g, "-");
+
     const tokens = normalized.match(/\d[\d\s.,]*/g);
     if (!tokens) return [];
 
@@ -91,7 +92,7 @@ function extractPrices(description = "") {
       console.warn("RAW PRICE CONTENT:", JSON.stringify(content));
       console.warn(
         "CHAR CODES (first 120):",
-        Array.from(content.slice(0, 120)).map(c => c.charCodeAt(0))
+        Array.from(content.slice(0, 120)).map((c) => c.charCodeAt(0))
       );
     }
   }
@@ -157,13 +158,11 @@ async function uploadRawFacebookImage(imageUrl, docId) {
   }
 
   const buffer = Buffer.from(await response.arrayBuffer());
-
   const rawFile = bucket.file(rawPath);
 
   await rawFile.save(buffer, {
     metadata: {
-      contentType:
-        response.headers.get("content-type") || "image/jpeg",
+      contentType: response.headers.get("content-type") || "image/jpeg",
     },
   });
 
@@ -174,7 +173,7 @@ async function uploadRawFacebookImage(imageUrl, docId) {
 
 /* ---------------- CORE SYNC ---------------- */
 
-async function syncFacebookEventsCore() {
+async function syncFacebookEventsCore(triggeredBy = "system") {
   console.log("🔁 Starting Facebook event sync");
 
   const token = FB_PAGE_ACCESS_TOKEN.value();
@@ -193,7 +192,11 @@ async function syncFacebookEventsCore() {
   while (nextUrl) {
     const res = await fetch(nextUrl);
     const fb = await res.json();
-    if (!fb.data) throw new Error("Facebook API error");
+
+    if (!fb.data) {
+      console.error("Facebook API error:", fb);
+      throw new Error("Facebook API error");
+    }
 
     allEvents = allEvents.concat(fb.data);
     nextUrl = fb.paging?.next || null;
@@ -203,18 +206,21 @@ async function syncFacebookEventsCore() {
 
   let batch = db.batch();
   let operationCount = 0;
+  let writesCommitted = 0;
   const activeFbIds = new Set();
 
   for (const event of allEvents) {
     const rawDescription = (event.description || "").replace(/\r\n/g, "\n");
     const cleanedName = stripEmojis(event.name);
 
-    const { prices, hasTBC, cleanedDescription: descWithoutPriceBlock } =
-    extractPrices(rawDescription);
+    const {
+      prices,
+      hasTBC,
+      cleanedDescription: descWithoutPriceBlock,
+    } = extractPrices(rawDescription);
 
     const cleanedDescription = stripEmojis(descWithoutPriceBlock);
-
-    const finalPrices = prices.length ? prices : (hasTBC ? ["TBC"] : []);
+    const finalPrices = prices.length ? prices : hasTBC ? ["TBC"] : [];
 
     const occurrences = event.event_times?.length
       ? event.event_times
@@ -243,10 +249,7 @@ async function syncFacebookEventsCore() {
       let storageImagePath = null;
 
       if (externalImage) {
-        storageImagePath = await uploadRawFacebookImage(
-          externalImage,
-          docId
-        );
+        storageImagePath = await uploadRawFacebookImage(externalImage, docId);
       }
 
       const baseSlug = slugify(cleanedName || "event");
@@ -267,9 +270,7 @@ async function syncFacebookEventsCore() {
         },
         ticket_url: event.ticket_uri || null,
         start_time: admin.firestore.Timestamp.fromDate(start),
-        end_time: end
-          ? admin.firestore.Timestamp.fromDate(end)
-          : null,
+        end_time: end ? admin.firestore.Timestamp.fromDate(end) : null,
         image: storageImagePath
           ? {
               alt: buildAltText(cleanedName),
@@ -280,13 +281,14 @@ async function syncFacebookEventsCore() {
         source: "facebook",
         type: "one_off",
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        updatedBy: "system",
+        updatedBy: triggeredBy,
       });
 
       operationCount++;
 
       if (operationCount >= 450) {
         await batch.commit();
+        writesCommitted += operationCount;
         batch = db.batch();
         operationCount = 0;
       }
@@ -304,7 +306,7 @@ async function syncFacebookEventsCore() {
     if (!activeFbIds.has(doc.id)) {
       const data = doc.data();
 
-      if (data.image?.type === "storage") {
+      if (data.image?.type === "storage" && data.image?.value) {
         try {
           await bucket.file(data.image.value).delete();
           console.log(`🗑 Deleted optimized image ${data.image.value}`);
@@ -315,14 +317,28 @@ async function syncFacebookEventsCore() {
 
       batch.delete(doc.ref);
       operationCount++;
+
+      if (operationCount >= 450) {
+        await batch.commit();
+        writesCommitted += operationCount;
+        batch = db.batch();
+        operationCount = 0;
+      }
     }
   }
 
   if (operationCount > 0) {
     await batch.commit();
+    writesCommitted += operationCount;
   }
 
   console.log("✅ Facebook sync complete");
+
+  return {
+    success: true,
+    fetchedEvents: allEvents.length,
+    writesCommitted,
+  };
 }
 
 /* ---------------- TRIGGERS ---------------- */
@@ -334,16 +350,61 @@ exports.syncFacebookEvents = onSchedule(
     timeZone: "Africa/Johannesburg",
     secrets: [FB_PAGE_ACCESS_TOKEN],
   },
-  syncFacebookEventsCore
+  async () => {
+    await syncFacebookEventsCore("system");
+  }
 );
 
-exports.syncFacebookEventsNow = onRequest(
+exports.syncFacebookEventsNow = onCall(
   {
     region: "us-central1",
     secrets: [FB_PAGE_ACCESS_TOKEN],
   },
-  async (req, res) => {
-    await syncFacebookEventsCore();
-    res.send("Facebook events sync triggered");
+  async (request) => {
+    const actor = await requireRole(request, ["admin", "owner"]);
+
+    try {
+      const result = await syncFacebookEventsCore(actor.uid);
+
+      await writeAuditLog(
+        "facebook.sync.manual",
+        {
+          uid: actor.uid,
+          role: actor.role,
+          email: actor.userData?.email || null,
+        },
+        {
+          collection: "events",
+          source: "facebook",
+        },
+        result
+      );
+
+      return {
+        ok: true,
+        message: "Facebook events sync completed.",
+        ...result,
+      };
+    } catch (error) {
+      console.error("Manual Facebook sync failed:", error);
+
+      await writeAuditLog(
+        "facebook.sync.manual.failed",
+        {
+          uid: actor.uid,
+          role: actor.role,
+          email: actor.userData?.email || null,
+        },
+        {
+          collection: "events",
+          source: "facebook",
+        },
+        {
+          error: error?.message || "Unknown error",
+        }
+      );
+
+      throw new HttpsError("internal", "Facebook events sync failed.");
+    }
   }
 );

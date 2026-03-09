@@ -1,10 +1,13 @@
-const syncFacebook = require("./syncFacebookEvents");
-const autoBump = require("./autoBumpMetadata");
-const rollWeekly = require("./rollWeeklyEvents");
-const optimiseUploadedImage = require("./optimiseUploadedImage");
+const syncFacebook = require("./src/functions/syncFacebookEvents");
+const autoBump = require("./src/functions/autoBumpMetadata");
+const rollWeekly = require("./src/functions/rollWeeklyEvents");
+const optimiseUploadedImage = require("./src/functions/optimiseUploadedImage");
 
 exports.syncFacebookEvents = syncFacebook.syncFacebookEvents;
 exports.syncFacebookEventsNow = syncFacebook.syncFacebookEventsNow;
+
 exports.autoBumpMetadata = autoBump.autoBumpMetadata;
+
 exports.rollWeeklyEvents = rollWeekly.rollWeeklyEvents;
+
 exports.optimiseUploadedImage = optimiseUploadedImage.optimiseUploadedImage;

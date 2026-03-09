@@ -1,5 +1,5 @@
 const { onObjectFinalized } = require("firebase-functions/v2/storage");
-const admin = require("./firebaseAdmin");
+const { admin } = require("../config/firebaseAdmin");
 const sharp = require("sharp");
 const path = require("path");
 const os = require("os");
