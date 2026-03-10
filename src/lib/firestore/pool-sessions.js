@@ -40,7 +40,7 @@ export function getMembershipSnapshotFromUserDoc(userData = {}) {
   const status = userData?.status ?? "active";
   const now = Date.now();
 
-  const isValid = !suspended && isActive && !!expiryMs && expiryMs > now;
+  const isValid = !suspended && status === "active" && isActive && !!expiryMs && expiryMs > now;
 
   return {
     isValid,
@@ -204,7 +204,7 @@ export async function endPoolSession(uid) {
   };
 }
 
-export function subscribeToPoolSession(uid, callback) {
+export function subscribeToPoolSession(uid, callback, onError) {
   if (!uid) {
     callback(null);
     return () => {};
@@ -212,20 +212,24 @@ export function subscribeToPoolSession(uid, callback) {
 
   const ref = getPoolSessionRef(uid);
 
-  return onSnapshot(ref, (snap) => {
-    if (!snap.exists()) {
-      callback(null);
-      return;
-    }
+  return onSnapshot(
+    ref,
+    (snap) => {
+      if (!snap.exists()) {
+        callback(null);
+        return;
+      }
 
-    callback({
-      id: snap.id,
-      ...snap.data(),
-    });
-  });
+      callback({
+        id: snap.id,
+        ...snap.data(),
+      });
+    },
+    onError
+  );
 }
 
-export function subscribeToActivePoolSession(uid, callback) {
+export function subscribeToActivePoolSession(uid, callback, onError) {
   if (!uid) {
     callback(null);
     return () => {};
@@ -233,39 +237,47 @@ export function subscribeToActivePoolSession(uid, callback) {
 
   const ref = getPoolSessionRef(uid);
 
-  return onSnapshot(ref, (snap) => {
-    if (!snap.exists()) {
-      callback(null);
-      return;
-    }
+  return onSnapshot(
+    ref,
+    (snap) => {
+      if (!snap.exists()) {
+        callback(null);
+        return;
+      }
 
-    const data = snap.data();
+      const data = snap.data();
 
-    if (data?.status !== "active") {
-      callback(null);
-      return;
-    }
+      if (data?.status !== "active") {
+        callback(null);
+        return;
+      }
 
-    callback({
-      id: snap.id,
-      ...data,
-    });
-  });
+      callback({
+        id: snap.id,
+        ...data,
+      });
+    },
+    onError
+  );
 }
 
-export function subscribeToAllActivePoolSessions(callback) {
+export function subscribeToAllActivePoolSessions(callback, onError) {
   const q = query(
     collection(warehouseDb, "pool_sessions"),
     where("status", "==", "active"),
     orderBy("startedAt", "desc")
   );
 
-  return onSnapshot(q, (snap) => {
-    const sessions = snap.docs.map((docSnap) => ({
-      id: docSnap.id,
-      ...docSnap.data(),
-    }));
+  return onSnapshot(
+    q,
+    (snap) => {
+      const sessions = snap.docs.map((docSnap) => ({
+        id: docSnap.id,
+        ...docSnap.data(),
+      }));
 
-    callback(sessions);
-  });
+      callback(sessions);
+    },
+    onError
+  );
 }
