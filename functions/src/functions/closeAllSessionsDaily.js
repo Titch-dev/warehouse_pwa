@@ -17,8 +17,6 @@ async function closeAllSessionsDailyCore() {
     return;
   }
 
-  // Firestore batch limit is 500 operations.
-  // We only update the session docs here, so 450 is a safe chunk size.
   const docs = snapshot.docs;
   const chunkSize = 450;
   let totalClosed = 0;
@@ -59,5 +57,4 @@ exports.closeAllSessionsDaily = onSchedule(
   }
 );
 
-// Export core as well so you can reuse/test it later if needed
 exports.closeAllSessionsDailyCore = closeAllSessionsDailyCore;
