@@ -9,6 +9,7 @@ import { warehouseAuth } from "@/firebase/firebaseConfig";
 
 import { useActivePoolSession } from "@/hooks/useActivePoolSession";
 import PoolSessionTimer from "@/components/pool/pool-session-timer";
+import { endPoolSession } from "@/lib/firestore/pool-sessions";
 
 function formatDateTime(value) {
   if (!value) return "—";
@@ -30,6 +31,8 @@ function formatDateTime(value) {
 
 function PoolContent() {
   const [user, setUser] = useState(warehouseAuth.currentUser);
+  const [isEndingSession, setIsEndingSession] = useState(false);
+  const [endSessionError, setEndSessionError] = useState("");
 
   useEffect(() => {
     const unsubscribe = warehouseAuth.onAuthStateChanged((u) => {
@@ -40,6 +43,25 @@ function PoolContent() {
   }, []);
 
   const { session, loading } = useActivePoolSession(user?.uid);
+
+  async function handleEndSession() {
+    if (!user?.uid || isEndingSession) return;
+
+    setIsEndingSession(true);
+    setEndSessionError("");
+
+    try {
+      const result = await endPoolSession(user.uid);
+
+      if (!result?.ended) {
+        setEndSessionError(result?.message || "No active session found.");
+      }
+    } catch (error) {
+      setEndSessionError(error?.message || "Unable to end pool session.");
+    } finally {
+      setIsEndingSession(false);
+    }
+  }
 
   if (loading) {
     return (
@@ -96,6 +118,28 @@ function PoolContent() {
           <strong>Membership expiry snapshot:</strong>{" "}
           {formatDateTime(session?.membershipSnapshot?.expiresAt)}
         </p>
+
+        <div style={{ marginTop: "1rem" }}>
+          <button
+            type="button"
+            onClick={handleEndSession}
+            disabled={isEndingSession}
+            style={{
+              padding: "0.75rem 1rem",
+              borderRadius: "8px",
+              border: "1px solid #333",
+              cursor: isEndingSession ? "not-allowed" : "pointer",
+            }}
+          >
+            {isEndingSession ? "Ending session..." : "End session"}
+          </button>
+        </div>
+
+        {endSessionError ? (
+          <p style={{ marginTop: "0.75rem", color: "#ff6b6b" }}>
+            {endSessionError}
+          </p>
+        ) : null}
       </div>
     </section>
   );

@@ -132,64 +132,78 @@ service cloud.firestore {
 
     /* ---------------- Pool sessions ---------------- */
 
-    match /pool_sessions/{sessionId} {
-  function isOwnPoolSessionDoc() {
-    return isSignedIn() && sessionId == (request.auth.uid + "_active");
-  }
+    match /pool_sessions/{uid} {
+      function isOwnPoolSessionDoc() {
+        return isSignedIn() && request.auth.uid == uid;
+      }
 
-  function hasValidPoolSessionShape() {
-    return request.resource.data.keys().hasOnly([
-      "userId",
-      "status",
-      "startedAt",
-      "endedAt",
-      "membershipSnapshot",
-      "checkInSource",
-      "userSnapshot",
-      "createdAt",
-      "updatedAt"
-    ]);
-  }
+      function hasValidPoolSessionShape() {
+        return request.resource.data.keys().hasOnly([
+          "userId",
+          "status",
+          "startedAt",
+          "endedAt",
+          "endReason",
+          "membershipSnapshot",
+          "checkInSource",
+          "userSnapshot",
+          "createdAt",
+          "updatedAt"
+        ]);
+      }
 
-  // Important:
-  // allow user to read their own fixed doc path even if the doc does not exist yet.
-  allow read: if isSignedIn() && !isSuspended() && (
-    isOwnPoolSessionDoc() ||
-    isStaff()
-  );
+      function keepsImmutablePoolSessionFields() {
+        return request.resource.data.userId == resource.data.userId
+          && request.resource.data.startedAt == resource.data.startedAt
+          && request.resource.data.membershipSnapshot == resource.data.membershipSnapshot
+          && request.resource.data.checkInSource == resource.data.checkInSource
+          && request.resource.data.userSnapshot == resource.data.userSnapshot
+          && request.resource.data.createdAt == resource.data.createdAt;
+      }
 
-  allow create: if isSignedIn()
-    && !isSuspended()
-    && isOwnPoolSessionDoc()
-    && request.resource.data.userId == request.auth.uid
-    && request.resource.data.status == "active"
-    && request.resource.data.endedAt == null
-    && hasValidPoolSessionShape();
+      allow read: if isSignedIn() && !isSuspended() && (
+        isOwnPoolSessionDoc() ||
+        isStaff()
+      );
 
-  allow update: if isSignedIn() && !isSuspended() && (
-    (
-      isOwnPoolSessionDoc()
-      && resource.data.userId == request.auth.uid
-      && request.resource.data.userId == request.auth.uid
-      && hasValidPoolSessionShape()
-      && (
-        (
-          request.resource.data.status == "active"
-          && request.resource.data.endedAt == null
-        )
-        ||
-        (
-          resource.data.status == "active"
-          && request.resource.data.status == "ended"
-        )
-      )
-    )
-    ||
-    isStaff()
-  );
+      // Customer creates/replaces only their own current pool session doc as active.
+      allow create: if isSignedIn()
+        && !isSuspended()
+        && isOwnPoolSessionDoc()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.status == "active"
+        && request.resource.data.endedAt == null
+        && request.resource.data.endReason == null
+        && hasValidPoolSessionShape();
 
-  allow delete: if false;
-}
+      // Customer may:
+      // 1) overwrite their own doc into a fresh active session on check-in
+      // 2) end their own currently active session
+      allow update: if isSignedIn()
+        && !isSuspended()
+        && isOwnPoolSessionDoc()
+        && resource.data.userId == request.auth.uid
+        && request.resource.data.userId == request.auth.uid
+        && hasValidPoolSessionShape()
+        && (
+          // Re-check-in / overwrite current session doc as active
+          (
+            request.resource.data.status == "active"
+            && request.resource.data.endedAt == null
+            && request.resource.data.endReason == null
+          )
+          ||
+          // Customer ends own active session, without changing immutable snapshot fields
+          (
+            resource.data.status == "active"
+            && request.resource.data.status == "ended"
+            && request.resource.data.endReason == "customer"
+            && keepsImmutablePoolSessionFields()
+          )
+        );
+
+      allow delete: if false;
+    }
 
     /* ---------------- Admin-only operational collections ---------------- */
 
