@@ -52,19 +52,6 @@ service cloud.firestore {
         authRole() == "owner";
     }
 
-    function isValidUserRole(role) {
-      return role == "customer" ||
-             role == "staff" ||
-             role == "admin" ||
-             role == "owner";
-    }
-
-    function isValidUserStatus(status) {
-      return status == "active" ||
-             status == "inactive" ||
-             status == "suspended";
-    }
-
     /* ---------------- Public website content ---------------- */
 
     match /metadata/{docId} {
@@ -96,15 +83,15 @@ service cloud.firestore {
 
     match /users/{uid} {
       // Self can read own doc.
-      // Staff/admin/owner can read user docs for support / scanning / operations.
+      // Staff/admin/owner can read user docs for support / operations.
       allow read: if isSelf(uid) || isStaff();
 
-      // Signup creation:
-      // only self, cannot escalate role/status
+      // New user doc creation at signup.
       allow create: if isSelf(uid)
         && request.resource.data.uid == uid
         && request.resource.data.role == "customer"
         && request.resource.data.status == "active"
+        && request.resource.data.suspended == false
         && request.resource.data.keys().hasOnly([
           "uid",
           "email",
@@ -112,19 +99,19 @@ service cloud.firestore {
           "photoURL",
           "role",
           "status",
+          "suspended",
           "membership",
           "createdAt",
           "updatedAt",
           "lastLoginAt"
         ]);
 
-      // Self-update:
-      // user may only edit a safe subset of fields
-      // and may not change uid / role / status / membership
+      // Self may only update safe profile/login metadata fields.
       allow update: if isSelf(uid)
         && request.resource.data.uid == resource.data.uid
         && request.resource.data.role == resource.data.role
         && request.resource.data.status == resource.data.status
+        && request.resource.data.suspended == resource.data.suspended
         && request.resource.data.membership == resource.data.membership
         && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
           "displayName",
@@ -133,25 +120,80 @@ service cloud.firestore {
           "lastLoginAt"
         ]);
 
-      // No client-side privileged writes to sensitive user fields.
-      // role / status / suspension mirrors should be updated by Cloud Functions only.
       allow delete: if false;
     }
 
     /* ---------------- Sessions ---------------- */
 
     match /sessions/{sessionId} {
-      // Signed-in users can read unless you want suspended users blocked from all app access.
       allow read: if isSignedIn();
-
-      // Backend / Cloud Functions only
       allow write: if false;
     }
+
+    /* ---------------- Pool sessions ---------------- */
+
+    match /pool_sessions/{sessionId} {
+  function isOwnPoolSessionDoc() {
+    return isSignedIn() && sessionId == (request.auth.uid + "_active");
+  }
+
+  function hasValidPoolSessionShape() {
+    return request.resource.data.keys().hasOnly([
+      "userId",
+      "status",
+      "startedAt",
+      "endedAt",
+      "membershipSnapshot",
+      "checkInSource",
+      "userSnapshot",
+      "createdAt",
+      "updatedAt"
+    ]);
+  }
+
+  // Important:
+  // allow user to read their own fixed doc path even if the doc does not exist yet.
+  allow read: if isSignedIn() && !isSuspended() && (
+    isOwnPoolSessionDoc() ||
+    isStaff()
+  );
+
+  allow create: if isSignedIn()
+    && !isSuspended()
+    && isOwnPoolSessionDoc()
+    && request.resource.data.userId == request.auth.uid
+    && request.resource.data.status == "active"
+    && request.resource.data.endedAt == null
+    && hasValidPoolSessionShape();
+
+  allow update: if isSignedIn() && !isSuspended() && (
+    (
+      isOwnPoolSessionDoc()
+      && resource.data.userId == request.auth.uid
+      && request.resource.data.userId == request.auth.uid
+      && hasValidPoolSessionShape()
+      && (
+        (
+          request.resource.data.status == "active"
+          && request.resource.data.endedAt == null
+        )
+        ||
+        (
+          resource.data.status == "active"
+          && request.resource.data.status == "ended"
+        )
+      )
+    )
+    ||
+    isStaff()
+  );
+
+  allow delete: if false;
+}
 
     /* ---------------- Admin-only operational collections ---------------- */
 
     match /auditLogs/{docId} {
-      // I recommend owner-only here since these are sensitive
       allow read: if isOwner();
       allow write: if false;
     }
