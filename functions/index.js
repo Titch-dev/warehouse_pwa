@@ -4,6 +4,7 @@ const rollWeekly = require("./src/functions/rollWeeklyEvents");
 const optimiseUploadedImage = require("./src/functions/optimiseUploadedImage");
 const { setUserRole, suspendUser } = require("./src/functions/adminUsers");
 const closePoolSessions = require("./src/functions/closeAllSessionsDaily");
+const { extendMembership } = require("./src/functions/extendMembership");
 
 exports.syncFacebookEvents = syncFacebook.syncFacebookEvents;
 exports.syncFacebookEventsNow = syncFacebook.syncFacebookEventsNow;
@@ -18,3 +19,5 @@ exports.setUserRole = setUserRole;
 exports.suspendUser = suspendUser;
 
 exports.closeAllSessionsDaily = closePoolSessions.closeAllSessionsDaily;
+
+exports.extendMembership = extendMembership;
