@@ -20,6 +20,7 @@ export function buildUserDoc(authUser, overrides = {}) {
     lastLoginAt: serverTimestamp(),
     role: "customer",
     status: "active",
+    suspended: false,
     membership: {
       plan: null,
       startDate: null,
