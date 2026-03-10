@@ -21,8 +21,12 @@ function toMillis(value) {
   return null;
 }
 
-function getActivePoolSessionDocId(uid) {
-  return `${uid}_active`;
+function getPoolSessionDocId(uid) {
+  return uid;
+}
+
+function getPoolSessionRef(uid) {
+  return doc(warehouseDb, "pool_sessions", getPoolSessionDocId(uid));
 }
 
 export function getMembershipSnapshotFromUserDoc(userData = {}) {
@@ -63,10 +67,24 @@ export async function getUserProfile(uid) {
   };
 }
 
+export async function getPoolSession(uid) {
+  if (!uid) return null;
+
+  const ref = getPoolSessionRef(uid);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) return null;
+
+  return {
+    id: snap.id,
+    ...snap.data(),
+  };
+}
+
 export async function getActivePoolSession(uid) {
   if (!uid) return null;
 
-  const ref = doc(warehouseDb, "pool_sessions", getActivePoolSessionDocId(uid));
+  const ref = getPoolSessionRef(uid);
   const snap = await getDoc(ref);
 
   if (!snap.exists()) return null;
@@ -81,18 +99,15 @@ export async function getActivePoolSession(uid) {
   };
 }
 
-export async function createPoolSession({ uid, checkInSource = { type: "qr" } }) {
-
+export async function createPoolSession({
+  uid,
+  checkInSource = { type: "qr" },
+}) {
   if (!uid) {
     throw new Error("Authenticated user required.");
   }
 
-  const sessionRef = doc(
-    warehouseDb,
-    "pool_sessions",
-    getActivePoolSessionDocId(uid)
-  );
-
+  const sessionRef = getPoolSessionRef(uid);
   const existingSnap = await getDoc(sessionRef);
 
   if (existingSnap.exists()) {
@@ -107,7 +122,6 @@ export async function createPoolSession({ uid, checkInSource = { type: "qr" } })
   }
 
   const userProfile = await getUserProfile(uid);
-
   const membershipSnapshot = getMembershipSnapshotFromUserDoc(userProfile);
 
   const payload = {
@@ -116,6 +130,7 @@ export async function createPoolSession({ uid, checkInSource = { type: "qr" } })
 
     startedAt: serverTimestamp(),
     endedAt: null,
+    endReason: null,
 
     membershipSnapshot,
 
@@ -148,15 +163,65 @@ export async function createPoolSession({ uid, checkInSource = { type: "qr" } })
   };
 }
 
-export async function endPoolSession(sessionId) {
-  if (!sessionId) throw new Error("sessionId is required.");
+export async function endPoolSession(uid) {
+  if (!uid) {
+    throw new Error("Authenticated user required.");
+  }
 
-  const ref = doc(warehouseDb, "pool_sessions", sessionId);
+  const sessionRef = getPoolSessionRef(uid);
+  const sessionSnap = await getDoc(sessionRef);
 
-  await updateDoc(ref, {
+  if (!sessionSnap.exists()) {
+    return {
+      ended: false,
+      message: "No pool session found.",
+    };
+  }
+
+  const sessionData = sessionSnap.data();
+
+  if (sessionData?.userId !== uid) {
+    throw new Error("You can only end your own session.");
+  }
+
+  if (sessionData?.status !== "active") {
+    return {
+      ended: false,
+      message: "No active session found.",
+    };
+  }
+
+  await updateDoc(sessionRef, {
     status: "ended",
     endedAt: serverTimestamp(),
+    endReason: "customer",
     updatedAt: serverTimestamp(),
+  });
+
+  return {
+    ended: true,
+    message: "Pool session ended.",
+  };
+}
+
+export function subscribeToPoolSession(uid, callback) {
+  if (!uid) {
+    callback(null);
+    return () => {};
+  }
+
+  const ref = getPoolSessionRef(uid);
+
+  return onSnapshot(ref, (snap) => {
+    if (!snap.exists()) {
+      callback(null);
+      return;
+    }
+
+    callback({
+      id: snap.id,
+      ...snap.data(),
+    });
   });
 }
 
@@ -166,7 +231,7 @@ export function subscribeToActivePoolSession(uid, callback) {
     return () => {};
   }
 
-  const ref = doc(warehouseDb, "pool_sessions", getActivePoolSessionDocId(uid));
+  const ref = getPoolSessionRef(uid);
 
   return onSnapshot(ref, (snap) => {
     if (!snap.exists()) {
