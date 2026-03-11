@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
-import { readCookiePrefs, writeCookiePrefs, getDefaultPrefs } from "@/lib/cookie-prefs";
+import { readCookiePrefs, writeCookiePrefs, getDefaultPrefs } from "@/lib/cookies/preferences";
 import { enableAnalyticsIfAllowed } from "@/firebase/analytics";
 
 export const CookieConsentContext = createContext(null);

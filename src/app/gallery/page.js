@@ -10,9 +10,9 @@ import ThumbnailStrip from "@/components/gallery/thumbnail-strip";
 import GalleryModal from "@/components/gallery/gallery-modal";
 
 import styles from './gallery-page.module.css';
-import { rubikFont } from "@/lib/fonts";
+import { rubikFont } from "@/theme/fonts";
 import TornBorder from "@/components/assets/patterns/torn-border";
-import { colors } from "@/lib/colors";
+import { colors } from "@/theme/colors";
 import ModalPortal from "@/components/ui/modal-portal";
 
 const PAGE_SIZE = 8;

@@ -7,8 +7,8 @@ import ToastProvider from '@/components/ui/toast-provider';
 import CookieConsentProvider from "@/components/cookies/cookie-consent-provider";
 import CookieBanner from "@/components/cookies/cookie-banner";
 
-import { spartanFont } from "@/lib/fonts";
-import { colors } from "@/lib/colors";
+import { spartanFont } from "@/theme/fonts";
+import { colors } from "@/theme/colors";
 
 import "./globals.css";
 import styles from './layout.module.css';

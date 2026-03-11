@@ -6,7 +6,7 @@ import LoadingData from '../ui/loading-data';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
 import styles from './event-view.module.css';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 import EventIcons from './event-icons';
 import ModalPortal from '../ui/modal-portal';
 import SmartImage from '../ui/smart-image';

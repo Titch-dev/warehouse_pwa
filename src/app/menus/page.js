@@ -2,8 +2,8 @@ import MenuNavigation from '@/components/menus/menu-navigation';
 
 import styles from './menus-page.module.css';
 import TornBorder from '@/components/assets/patterns/torn-border';
-import { colors } from '@/lib/colors';
-import { rubikFont } from '@/lib/fonts';
+import { colors } from '@/theme/colors';
+import { rubikFont } from '@/theme/fonts';
 
 export default function MenusPage() {
   

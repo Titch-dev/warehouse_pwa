@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 
 import SpecialsItem from './specials-item';
-import { orderByClosestDay } from '@/lib/utils';
+import { orderByClosestDay } from '@/lib/venue/index';
 
 import styles from './specials-carousel.module.css';
 import ChevronLeft from '@/components/assets/icons/chevron-left-svg';

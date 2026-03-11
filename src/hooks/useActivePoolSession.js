@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { subscribeToActivePoolSession } from "@/lib/firestore/pool-sessions";
+import { subscribeToActivePoolSession } from "@/lib/firestore";
 
 export function useActivePoolSession(uid) {
   const [session, setSession] = useState(null);

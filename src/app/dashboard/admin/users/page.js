@@ -9,7 +9,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { warehouseDb } from "@/firebase/firebaseConfig";
-import { setUserRole, suspendUser } from "@/lib/firebase/admin-users";
+import { setUserRole, suspendUser } from "@/lib/firebase";
 
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);

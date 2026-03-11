@@ -6,8 +6,8 @@ import PoolSessionTimer from "@/components/pool/pool-session-timer";
 import PoolLiveStatusBadge from "@/components/pool/pool-live/pool-live-status-badge";
 import ExtendMembershipModal from "@/components/pool/pool-live/extend-membership-modal";
 
-import { getMembershipStatusMeta } from "@/lib/pool/pool-live-status";
-import { formatDateTime } from "@/lib/date/format-date-time";
+import { getMembershipStatusMeta } from "@/lib/membership";
+import { formatDateTime } from "@/lib/datetime";
 
 export default function PoolLiveSessionCard({ session }) {
   const meta = getMembershipStatusMeta(session?.membershipSnapshot);

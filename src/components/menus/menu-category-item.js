@@ -2,7 +2,7 @@ import SmartImage from '../ui/smart-image';
 import Badges from './badges';
 
 import styles from './menu-category-item.module.css';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 export default function MenuCategoryItem({ item }) {
     const hasPricing = Array.isArray(item?.pricing) && item.pricing.length > 0;

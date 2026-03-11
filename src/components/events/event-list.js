@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 
 import LoadingData from '../ui/loading-data';
 import EventListItem from './event-list-item';
-import { rubikFont } from '@/lib/fonts';
-import { applyEventFilters } from '@/lib/utils';
+import { rubikFont } from '@/theme/fonts';
+import { applyEventFilters } from '@/lib/events/index';
 import styles from './event-list.module.css';
 
 const EventList = ({

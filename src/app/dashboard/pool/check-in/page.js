@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { warehouseAuth } from "@/firebase/firebaseConfig";
-import { createPoolSession } from "@/lib/firestore/pool-sessions";
+import { createPoolSession } from "@/lib/firestore";
 
 export default function PoolCheckInPage() {
   const router = useRouter();

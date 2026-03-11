@@ -9,7 +9,10 @@ const { extendMembership } = require("./src/functions/extendMembership");
 exports.syncFacebookEvents = syncFacebook.syncFacebookEvents;
 exports.syncFacebookEventsNow = syncFacebook.syncFacebookEventsNow;
 
-exports.autoBumpMetadata = autoBump.autoBumpMetadata;
+exports.bumpGalleryMetadata = autoBump.bumpGalleryMetadata;
+exports.bumpMenuMetadata = autoBump.bumpMenuMetadata;
+exports.bumpSpecialsMetadata = autoBump.bumpSpecialsMetadata;
+exports.bumpEventsMetadata = autoBump.bumpEventsMetadata;
 
 exports.rollWeeklyEvents = rollWeekly.rollWeeklyEvents;
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/components/auth/auth-provider";
-import { getUserDoc } from "@/lib/firestore/users";
+import { getUserDoc } from "@/lib/firestore";
 
 export function useCurrentUserDoc() {
   const { user, authReady } = useAuth();

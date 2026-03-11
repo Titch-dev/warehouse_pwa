@@ -2,8 +2,8 @@ import TornBorder from "../assets/patterns/torn-border";
 import TornBackgroundSVG from "../assets/patterns/torn-background-svg";
 
 import styles from './about-section.module.css';
-import { colors } from "@/lib/colors";
-import { rubikFont } from "@/lib/fonts";
+import { colors } from "@/theme/colors";
+import { rubikFont } from "@/theme/fonts";
 
 function AboutSection() {
   return (

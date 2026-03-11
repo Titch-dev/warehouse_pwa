@@ -7,8 +7,8 @@ import SpecialsCarousel from '../specials/specials-carousel';
 import TornBorder from '../assets/patterns/torn-border';
 
 import styles from './specials-section.module.css';
-import { colors } from '@/lib/colors';
-import { rubikFont } from '@/lib/fonts';
+import { colors } from '@/theme/colors';
+import { rubikFont } from '@/theme/fonts';
 import LoadingData from '../ui/loading-data';
 
 function SpecialsSection() {

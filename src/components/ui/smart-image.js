@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { resolveImageUrl } from '@/lib/utils';
+import { resolveImageUrl } from '@/lib/media/index';
 import styles from './smart-image.module.css';
 
 function SmartImage({ 

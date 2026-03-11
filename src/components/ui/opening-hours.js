@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { groupOpeningTimes } from '@/lib/utils';
+import { groupOpeningTimes } from '@/lib/venue/index';
 
 import styles from './opening-hours.module.css';
 

@@ -1,5 +1,5 @@
 import styles from './loading-data.module.css';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 function LoadingData({ dataName }) {
 

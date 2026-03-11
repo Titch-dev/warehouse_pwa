@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getOpeningHoursForToday } from '@/lib/utils';
+import { getOpeningHoursForToday } from '@/lib/venue/index';
 
 import useMediaQuery from '@/hooks/useMediaQuery';
 import LogoSVG from '@/components/assets/logo/logo-svg';
 
 import styles from './hero-section.module.css';
 import TornBorderMobSVG from '../assets/patterns/torn-border-mobile';
-import { colors } from '@/lib/colors';
+import { colors } from '@/theme/colors';
 import TornBorderTabSVG from '../assets/patterns/torn-border-tablet';
 
 function HeroSection () {

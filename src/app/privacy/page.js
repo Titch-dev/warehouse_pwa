@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "./privacy-policy.module.css";
-import { rubikFont } from "@/lib/fonts";
+import { rubikFont } from "@/theme/fonts";
 
 export default function PrivacyPolicy() {
   return (

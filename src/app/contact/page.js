@@ -2,7 +2,7 @@ import Socials from '@/components/assets/icons/socials';
 
 import styles from './contact-page.module.css';
 
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 import OpeningHours from '@/components/ui/opening-hours';
 import TornBackgroundSVG from '@/components/assets/patterns/torn-background-svg';
 

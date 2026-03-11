@@ -1,8 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { extendMembership } from "@/lib/firebase/extend-membership";
-import { formatDateTime } from "@/lib/date/format-date-time";
+import { extendMembership } from "@/lib/firebase";
+import { formatDateTime } from "@/lib/datetime";
 
 const MONTH_OPTIONS = [1, 3, 12];
 
@@ -19,6 +19,9 @@ export default function ExtendMembershipModal({
 
   const currentExpiry = session?.membershipSnapshot?.expiresAt ?? null;
 
+  const normalizedReceiptRef = receiptRef.trim();
+  const isReceiptValid = normalizedReceiptRef.length >= 3;
+
   const title = useMemo(() => {
     return session?.userSnapshot?.displayName || "Unnamed member";
   }, [session]);
@@ -28,6 +31,11 @@ export default function ExtendMembershipModal({
   async function handleSubmit(event) {
     event.preventDefault();
 
+    if (!isReceiptValid) {
+      setSubmitError("Please enter a valid POS receipt reference.");
+      return;
+    }
+
     setSubmitting(true);
     setSubmitError("");
 
@@ -35,7 +43,7 @@ export default function ExtendMembershipModal({
       const data = await extendMembership({
         userId: session.userId,
         monthsAdded,
-        receiptRef,
+        receiptRef: normalizedReceiptRef,
       });
 
       setResult(data);
@@ -142,6 +150,9 @@ export default function ExtendMembershipModal({
                 New expiry:{" "}
                 <strong>{formatDateTime(new Date(result.newExpiry))}</strong>
               </p>
+              <p style={{ margin: "0.35rem 0 0 0" }}>
+                Receipt ref: <strong>{result.receiptRef}</strong>
+              </p>
             </div>
 
             <button
@@ -207,8 +218,7 @@ export default function ExtendMembershipModal({
 
             <div style={{ display: "grid", gap: "0.5rem" }}>
               <label htmlFor="receiptRef">
-                <strong>Receipt ref</strong>{" "}
-                <span style={{ opacity: 0.75 }}>(optional)</span>
+                <strong>POS receipt ref</strong>
               </label>
               <input
                 id="receiptRef"
@@ -217,6 +227,7 @@ export default function ExtendMembershipModal({
                 onChange={(event) => setReceiptRef(event.target.value)}
                 disabled={submitting}
                 placeholder="e.g. POS-10482"
+                required
                 style={{
                   padding: "0.75rem 1rem",
                   borderRadius: "10px",
@@ -225,6 +236,9 @@ export default function ExtendMembershipModal({
                   color: "inherit",
                 }}
               />
+              <p style={{ margin: 0, opacity: 0.75, fontSize: "0.9rem" }}>
+                A valid POS receipt reference is required before membership can be extended.
+              </p>
             </div>
 
             {submitError ? (
@@ -264,14 +278,16 @@ export default function ExtendMembershipModal({
 
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={submitting || !isReceiptValid}
                 style={{
                   border: "1px solid #444",
                   background: "rgba(255,255,255,0.08)",
                   color: "inherit",
                   borderRadius: "10px",
                   padding: "0.7rem 1rem",
-                  cursor: "pointer",
+                  cursor:
+                    submitting || !isReceiptValid ? "not-allowed" : "pointer",
+                  opacity: submitting || !isReceiptValid ? 0.6 : 1,
                 }}
               >
                 {submitting ? "Updating..." : "Extend membership"}

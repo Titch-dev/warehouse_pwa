@@ -205,6 +205,16 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    /* ---------------- Membership history  ---------------- */
+
+    match /membership_adjustments/{adjustmentId} {
+      allow read: if isSignedIn() && (
+        resource.data.userId == request.auth.uid ||
+        isStaff()
+      );
+      allow write: if false;
+    }
+
     /* ---------------- Admin-only operational collections ---------------- */
 
     match /auditLogs/{docId} {

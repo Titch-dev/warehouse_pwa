@@ -1,4 +1,5 @@
-import { formatEventTime, formatEventDate, formatPriceDisplay } from '@/lib/utils';
+import { formatPriceDisplay } from '@/lib/events/index';
+import { formatEventTime, formatEventDate } from '@/lib/datetime/index';
 
 import CalendarSVG from '@/components/assets/icons/calendar-svg';
 import DoorSVG from '@/components/assets/icons/money-svg';

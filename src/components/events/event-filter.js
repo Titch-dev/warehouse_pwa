@@ -1,7 +1,7 @@
 'use client';
 
 import styles from './event-filter.module.css';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 export default function EventFilter({ value, onChange }) {
   const set = (patch) => onChange({ ...value, ...patch });

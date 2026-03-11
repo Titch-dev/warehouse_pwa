@@ -4,11 +4,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
-import { sortEvents } from '@/lib/utils';
+import { sortEvents } from '@/lib/events/index'
 
 import EventList from '@/components/events/event-list';
 import EventsHeader from '@/components/events/events-header';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 import styles from './events-page.module.css';
 
 export default function EventsPageClient() {

@@ -6,10 +6,10 @@ import MenuContainer from './menu-container';
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
 
 
-import { getMenuPdfUrl } from '@/lib/utils';
+import { getMenuPdfUrl } from '@/lib/menu/index';
 import styles from './menu-navigation.module.css';
 
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 import DownloadSVG from '../assets/icons/download-svg';
 import LoadingData from '../ui/loading-data';

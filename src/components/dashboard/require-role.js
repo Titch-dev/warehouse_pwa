@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { hasRequiredRole } from "@/lib/auth/roles";
+import { hasRequiredRole } from "@/lib/auth";
 import { useCurrentUserDoc } from "@/hooks/useCurrentUserDoc";
 
 export default function RequireRole({ allowedRoles = [], children }) {
