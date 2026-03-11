@@ -1,0 +1,29 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.6rem;
+  margin-bottom: 2rem;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.title {
+  margin: 0 0 0.6rem;
+  font-size: 2.8rem;
+  line-height: 1.1;
+}
+
+.description {
+  margin: 0;
+  max-width: 70ch;
+  opacity: 0.75;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
