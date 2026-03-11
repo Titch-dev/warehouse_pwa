@@ -4,10 +4,11 @@ import SmartImage from '../ui/smart-image';
 import TicketButton from './ticket-button';
 import ShareButton from '../ui/share-button';
 
-import { formatEventDate, formatEventTime, formatPriceDisplay } from '@/lib/utils';
+import { formatPriceDisplay } from '@/lib/events/index';
+import { formatEventDate, formatEventTime } from '@/lib/datetime/index';
 
 import styles from './event-list-item.module.css';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 import CalendarSVG from '../assets/icons/calendar-svg';
 import ClockSVG from '../assets/icons/clock-svg';

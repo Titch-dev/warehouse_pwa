@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useCallback, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
-import { orderByClosestDay } from "@/lib/utils";
+import { orderByClosestDay } from "@/lib/venue/index";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
 import LoadingData from "../ui/loading-data";

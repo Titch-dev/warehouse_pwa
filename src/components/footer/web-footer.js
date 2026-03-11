@@ -1,8 +1,8 @@
 import Link from 'next/link';
 
 import styles from './web-footer.module.css';
-import { colors } from '@/lib/colors';
-import { rubikFont } from '@/lib/fonts';
+import { colors } from '@/theme/colors';
+import { rubikFont } from '@/theme/fonts';
 
 import LogoSVG from '@/components/assets/logo/logo-svg';
 import TornBorder from '@/components/assets/patterns/torn-border';

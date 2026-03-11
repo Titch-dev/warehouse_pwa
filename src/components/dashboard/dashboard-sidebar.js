@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ROLE_NAV } from "@/lib/auth/roles";
+import { ROLE_NAV } from "@/lib/auth";
 
 export default function DashboardSidebar({ role }) {
   const pathname = usePathname();

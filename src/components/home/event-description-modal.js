@@ -1,12 +1,13 @@
 'use client'
 
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 import styles from './event-description-modal.module.css';
 import CloseSVG from '../assets/icons/close-svg';
 
 import TicketButton from '../events/ticket-button';
 import SmartImage from '../ui/smart-image';
-import { formatEventDate, formatEventTime, formatPriceDisplay } from '@/lib/utils';
+import { formatPriceDisplay } from '@/lib/events/index';
+import { formatEventDate, formatEventTime } from '@/lib/datetime/index';
 
 import CalendarSVG from '../assets/icons/calendar-svg';
 import ClockSVG from '../assets/icons/clock-svg';

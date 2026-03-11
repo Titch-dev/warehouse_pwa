@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import Link from "next/link";
 import { CookieConsentContext } from "./cookie-consent-provider";
 import styles from "./cookie-consent.module.css";
-import { rubikFont } from "@/lib/fonts";
+import { rubikFont } from "@/theme/fonts";
 
 export default function CookieBanner() {
   const ctx = useContext(CookieConsentContext);

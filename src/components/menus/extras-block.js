@@ -1,4 +1,4 @@
-import { rubikFont } from '@/lib/fonts'
+import { rubikFont } from '@/theme/fonts'
 import styles from './extras-block.module.css'
 
 function ExtrasBlock({ extra }) {

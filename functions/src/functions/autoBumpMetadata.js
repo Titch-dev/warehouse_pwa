@@ -1,38 +1,44 @@
 const { onDocumentWritten } = require("firebase-functions/v2/firestore");
 const { db, admin } = require("../config/firebaseAdmin");
 
-const COLLECTION_VERSION_MAP = {
-  gallery: "gallery",
-  menu: "menu",
-  specials: "specials",
-  events: "events",
-  users: "users",
-};
+function createMetadataBumpTrigger(documentPath, versionField) {
+  return onDocumentWritten(
+    {
+      region: "us-central1",
+      document: documentPath,
+    },
+    async () => {
+      console.log(`Bumping metadata version for: ${versionField}`);
 
-exports.autoBumpMetadata = onDocumentWritten(
-  {
-    region: "us-central1",
-    document: "{collectionId}/{docId}",
-  },
-  async (event) => {
-    const { collectionId } = event.params;
-
-    if (!COLLECTION_VERSION_MAP[collectionId]) {
-      return;
+      await db
+        .collection("metadata")
+        .doc("collections")
+        .set(
+          {
+            [versionField]: admin.firestore.FieldValue.serverTimestamp(),
+          },
+          { merge: true }
+        );
     }
+  );
+}
 
-    const versionField = COLLECTION_VERSION_MAP[collectionId];
+exports.bumpGalleryMetadata = createMetadataBumpTrigger(
+  "gallery/{docId}",
+  "gallery"
+);
 
-    console.log(`Bumping metadata version for: ${versionField}`);
+exports.bumpMenuMetadata = createMetadataBumpTrigger(
+  "menu/{docId}",
+  "menu"
+);
 
-    await db
-      .collection("metadata")
-      .doc("collections")
-      .set(
-        {
-          [versionField]: admin.firestore.FieldValue.serverTimestamp(),
-        },
-        { merge: true }
-      );
-  }
+exports.bumpSpecialsMetadata = createMetadataBumpTrigger(
+  "specials/{docId}",
+  "specials"
+);
+
+exports.bumpEventsMetadata = createMetadataBumpTrigger(
+  "events/{docId}",
+  "events"
 );

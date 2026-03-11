@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
 import { warehouseAuth } from "@/firebase/firebaseConfig";
-import { endPoolSession } from "@/lib/firestore/pool-sessions";
+import { endPoolSession } from "@/lib/firestore";
 
 export default function PoolCheckOutPage() {
   const router = useRouter();

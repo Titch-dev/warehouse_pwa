@@ -3,7 +3,7 @@ import styles from './badges.module.css';
 import CowSVG from '../assets/icons/cow-svg';
 import ChickenSVG from '../assets/icons/chicken-svg';
 import VegetarianSVG from '../assets/icons/vegetarian-svg';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 const BADGE_ORDER = ['cow', 'chicken', 'vegetarian'];
 

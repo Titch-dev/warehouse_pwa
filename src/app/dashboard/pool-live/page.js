@@ -2,7 +2,7 @@
 
 import RequireRole from "@/components/dashboard/require-role";
 import PoolLiveView from "@/components/pool/pool-live/pool-live-view";
-import { USER_ROLES } from "@/lib/auth/roles";
+import { USER_ROLES } from "@/lib/auth";
 
 export default function PoolLivePage() {
   return (

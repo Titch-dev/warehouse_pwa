@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCurrentUserDoc } from "@/hooks/useCurrentUserDoc";
-import { ROLE_HOME } from "@/lib/auth/roles";
+import { ROLE_HOME } from "@/lib/auth";
 
 export default function DashboardClient() {
   const router = useRouter();

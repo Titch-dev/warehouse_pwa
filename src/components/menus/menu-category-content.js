@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import MenuCategoryItem from './menu-category-item';
 import ExtrasBlock from './extras-block';
 import styles from './menu-category-content.module.css';
-import { getLowestPrice } from '@/lib/utils';
+import { getLowestPrice } from '@/lib/menu/index';
 
 import SpecialsCarousel from '../specials/specials-carousel';
 

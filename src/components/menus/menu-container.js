@@ -7,8 +7,8 @@ import MenuCategoryNavigation from "./menu-category-navigation";
 import MenuCategoryContent from "./menu-category-content";
 
 import styles from "@/components/menus/menu-container.module.css";
-import { rubikFont } from "@/lib/fonts";
-import { getUniqueCategories } from "@/lib/utils";
+import { rubikFont } from "@/theme/fonts";
+import { getUniqueCategories } from "@/lib/menu/index";
 import TornBorderTabSVG from "../assets/patterns/torn-border-tablet";
 import TornBorderMobSVG from "../assets/patterns/torn-border-mobile";
 

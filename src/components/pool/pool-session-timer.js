@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { formatElapsed } from "@/lib/time/format-elapsed";
+import { formatElapsed } from "@/lib/datetime";
 
 export default function PoolSessionTimer({ startedAt }) {
   const [tick, setTick] = useState(0);

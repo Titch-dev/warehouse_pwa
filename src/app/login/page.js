@@ -4,24 +4,22 @@ import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import styles from "./login-page.module.css";
-import { rubikFont } from "@/lib/fonts";
+import { rubikFont } from "@/theme/fonts";
 import GoogleSVG from "@/components/assets/icons/google-svg";
 import EyeOpenSVG from "@/components/assets/icons/eye-open-svg";
 import EyeClosedSVG from "@/components/assets/icons/eye-closed-svg";
 
-import { getFirebaseErrorMessage } from "@/lib/auth/auth-errors";
-import {
-  INITIAL_FORM,
-  INITIAL_TOUCHED,
-  validateAuthForm,
-  getTouchedAll,
-} from "@/lib/auth/auth-form-validation";
 import {
   signInWithEmail,
   signUpWithEmail,
   sendResetPasswordEmail,
   signInWithGooglePopup,
-} from "@/lib/auth/auth-service";
+  INITIAL_FORM,
+  INITIAL_TOUCHED,
+  validateAuthForm,
+  getTouchedAll,
+  getFirebaseErrorMessage
+} from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();

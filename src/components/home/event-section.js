@@ -8,12 +8,12 @@ import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
 
 import EventView from './event-view';
 
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 
 import styles from './event-section.module.css';
 import WeeklyEvents from './weekly-events';
 import TornBorder from '../assets/patterns/torn-border';
-import { colors } from '@/lib/colors';
+import { colors } from '@/theme/colors';
 import TornBackgroundSmSVG from '../assets/patterns/torn-background-sm-svg';
 
 

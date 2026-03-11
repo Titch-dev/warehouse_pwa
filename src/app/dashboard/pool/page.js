@@ -3,31 +3,14 @@
 import { useEffect, useState } from "react";
 
 import RequireRole from "@/components/dashboard/require-role";
-import { USER_ROLES } from "@/lib/auth/roles";
+import { USER_ROLES } from "@/lib/auth";
 
 import { warehouseAuth } from "@/firebase/firebaseConfig";
 
 import { useActivePoolSession } from "@/hooks/useActivePoolSession";
 import PoolSessionTimer from "@/components/pool/pool-session-timer";
-import { endPoolSession } from "@/lib/firestore/pool-sessions";
-
-function formatDateTime(value) {
-  if (!value) return "—";
-
-  const date =
-    typeof value?.toDate === "function"
-      ? value.toDate()
-      : value instanceof Date
-      ? value
-      : null;
-
-  if (!date) return "—";
-
-  return new Intl.DateTimeFormat("en-GB", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(date);
-}
+import { endPoolSession } from "@/lib/firestore";
+import { formatDateTime } from "@/lib/datetime";
 
 function PoolContent() {
   const [user, setUser] = useState(warehouseAuth.currentUser);

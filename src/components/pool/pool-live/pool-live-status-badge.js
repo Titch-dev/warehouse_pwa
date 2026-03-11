@@ -1,9 +1,9 @@
 "use client";
 
-import { getBadgeStyles } from "@/lib/pool/pool-live-status";
+import { getMembershipBadgeStyles } from "@/lib/membership/membership-status";
 
 export default function PoolLiveStatusBadge({ meta }) {
-  const styles = getBadgeStyles(meta?.tone);
+  const styles = getMembershipBadgeStyles(meta?.tone);
 
   return (
     <span

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { rubikFont } from '@/lib/fonts';
+import { rubikFont } from '@/theme/fonts';
 import SmartImage from '../ui/smart-image';
 
 import styles from './specials-item.module.css';

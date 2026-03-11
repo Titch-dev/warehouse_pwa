@@ -1,14 +1,8 @@
-function toMillis(value) {
-  if (!value) return null;
-  if (typeof value?.toMillis === "function") return value.toMillis();
-  if (value instanceof Date) return value.getTime();
-  if (typeof value === "number") return value;
-  return null;
-}
+import { getDate, getMillis, getDaysRemaining } from "@/lib/datetime";
 
 export function getMembershipStatusMeta(snapshot = {}) {
-  const expiresAt = snapshot?.expiresAt ?? null;
-  const expiresMs = toMillis(expiresAt);
+  const expiresAt = snapshot?.expiresAt ?? snapshot?.expiry ?? null;
+  const expiresMs = getMillis(expiresAt);
 
   const suspended = snapshot?.suspended === true;
   const userStatus = snapshot?.status ?? "active";
@@ -18,6 +12,8 @@ export function getMembershipStatusMeta(snapshot = {}) {
 
   const isExpired = !!expiresMs && expiresMs <= now;
   const hasExpiry = !!expiresMs;
+  const expiryDate = getDate(expiresAt);
+  const daysRemaining = getDaysRemaining(expiresAt);
 
   if (suspended) {
     return {
@@ -25,6 +21,8 @@ export function getMembershipStatusMeta(snapshot = {}) {
       label: "Suspended",
       tone: "danger",
       isValid: false,
+      daysRemaining: 0,
+      expiryDate,
       action: "Do not allow play",
       detail: "User account is suspended.",
     };
@@ -33,9 +31,11 @@ export function getMembershipStatusMeta(snapshot = {}) {
   if (userStatus !== "active") {
     return {
       key: "user_inactive",
-      label: "User Disabled",
+      label: "Account inactive",
       tone: "danger",
       isValid: false,
+      daysRemaining: 0,
+      expiryDate,
       action: "Investigate account",
       detail: `User status is "${userStatus}".`,
     };
@@ -47,6 +47,8 @@ export function getMembershipStatusMeta(snapshot = {}) {
       label: "No Membership",
       tone: "danger",
       isValid: false,
+      daysRemaining: 0,
+      expiryDate: null,
       action: "Ask customer to purchase/renew",
       detail: "No active membership data found.",
     };
@@ -58,6 +60,8 @@ export function getMembershipStatusMeta(snapshot = {}) {
       label: "Membership Inactive",
       tone: "warning",
       isValid: false,
+      daysRemaining,
+      expiryDate,
       action: "Check with manager before allowing",
       detail: "Membership exists but is not marked active.",
     };
@@ -69,6 +73,8 @@ export function getMembershipStatusMeta(snapshot = {}) {
       label: "Missing Expiry",
       tone: "warning",
       isValid: false,
+      daysRemaining: 0,
+      expiryDate: null,
       action: "Check membership record",
       detail: "Membership has no expiry date.",
     };
@@ -80,6 +86,8 @@ export function getMembershipStatusMeta(snapshot = {}) {
       label: "Expired",
       tone: "danger",
       isValid: false,
+      daysRemaining: 0,
+      expiryDate,
       action: "Ask customer to renew",
       detail: "Membership expiry date has passed.",
     };
@@ -90,12 +98,14 @@ export function getMembershipStatusMeta(snapshot = {}) {
     label: "Valid",
     tone: "success",
     isValid: true,
+    daysRemaining,
+    expiryDate,
     action: "OK to play",
     detail: "Membership is active and in date.",
   };
 }
 
-export function getBadgeStyles(tone) {
+export function getMembershipBadgeStyles(tone) {
   if (tone === "success") {
     return {
       borderColor: "#1f7a1f",

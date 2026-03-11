@@ -6,8 +6,8 @@ import EventCalendar from '@/components/events/event-calendar';
 import EventFilter from '@/components/events/event-filter';
 
 import TornBorder from '@/components/assets/patterns/torn-border';
-import { colors } from '@/lib/colors';
-import { rubikFont } from '@/lib/fonts';
+import { colors } from '@/theme/colors';
+import { rubikFont } from '@/theme/fonts';
 
 import FilterIconSVG from '@/components/assets/icons/filter-svg';
 import CalendarDaysSVG from '@/components/assets/icons/calendar-days-svg';

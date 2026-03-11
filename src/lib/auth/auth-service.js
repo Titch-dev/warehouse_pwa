@@ -12,7 +12,7 @@ import {
   createUserDoc,
   ensureUserDoc,
   updateUserLoginMeta,
-} from "@/lib/firestore/users";
+} from "@/lib/firestore";
 
 export async function signInWithEmail({ email, password }) {
   const result = await signInWithEmailAndPassword(

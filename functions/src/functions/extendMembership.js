@@ -10,6 +10,8 @@ const db = admin.firestore();
 
 const ALLOWED_ROLES = new Set(["staff", "admin", "owner"]);
 const ALLOWED_MONTHS = new Set([1, 3, 12]);
+const RECEIPT_REF_MIN_LENGTH = 3;
+const RECEIPT_REF_MAX_LENGTH = 60;
 
 function addMonths(date, months) {
   const result = new Date(date);
@@ -22,6 +24,25 @@ function toDate(value) {
   if (typeof value?.toDate === "function") return value.toDate();
   if (value instanceof Date) return value;
   return null;
+}
+
+function normalizeReceiptRef(value) {
+  if (typeof value !== "string") return null;
+
+  const normalized = value.trim();
+
+  if (!normalized) return null;
+
+  return normalized;
+}
+
+function isValidReceiptRef(value) {
+  if (!value) return false;
+
+  if (value.length < RECEIPT_REF_MIN_LENGTH) return false;
+  if (value.length > RECEIPT_REF_MAX_LENGTH) return false;
+
+  return true;
 }
 
 function buildMembershipSnapshot(userData = {}, membership = {}, expiryTs) {
@@ -69,11 +90,7 @@ const extendMembership = onCall(
 
       const userId = String(request.data?.userId ?? "").trim();
       const monthsAdded = Number(request.data?.monthsAdded);
-      const rawReceiptRef = request.data?.receiptRef;
-      const receiptRef =
-        typeof rawReceiptRef === "string" && rawReceiptRef.trim()
-          ? rawReceiptRef.trim()
-          : null;
+      const receiptRef = normalizeReceiptRef(request.data?.receiptRef);
 
       if (!userId) {
         throw new HttpsError("invalid-argument", "userId is required.");
@@ -83,6 +100,13 @@ const extendMembership = onCall(
         throw new HttpsError(
           "invalid-argument",
           "monthsAdded must be one of: 1, 3, or 12."
+        );
+      }
+
+      if (!isValidReceiptRef(receiptRef)) {
+        throw new HttpsError(
+          "invalid-argument",
+          "A valid POS receipt reference is required."
         );
       }
 
