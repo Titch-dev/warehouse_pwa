@@ -1,0 +1,14 @@
+.input {
+  width: 100%;
+  min-width: 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
