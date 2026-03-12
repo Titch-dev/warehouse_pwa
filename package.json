@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "emulators": "firebase emulators:start --import=.firebase/emulator-data --export-on-exit",
+    "dev:local": "concurrently -k \"npm:dev\" \"npm:emulators\"",
     "build": "next build",
     "preview": "npx serve out",
     "deploy": "next build && firebase deploy --only hosting",
@@ -27,6 +29,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.4.2"
   }

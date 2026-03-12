@@ -7,46 +7,44 @@ service firebase.storage {
       return request.auth != null;
     }
 
-    function userDoc() {
-      return get(/databases/(default)/documents/users/$(request.auth.uid));
+    function authRole() {
+      return isSignedIn() && ("role" in request.auth.token)
+        ? request.auth.token.role
+        : null;
     }
 
-    function userRole() {
-      return isSignedIn() ? userDoc().data.role : null;
+    function isAdminOrOwner() {
+      return isSignedIn() &&
+        (authRole() == "admin" || authRole() == "owner");
     }
 
-    function isAdmin() {
-      return isSignedIn() && (
-        userRole() == "admin" ||
-        userRole() == "owner"
-      );
+    function isImageUpload() {
+      return request.resource != null &&
+        request.resource.contentType.matches('image/.*');
     }
 
-    // Public website assets
-    match /gallery/{allPaths=**} {
+    function isReasonableSize() {
+      return request.resource != null &&
+        request.resource.size < 10 * 1024 * 1024;
+    }
+
+    match /uploads/raw/events/manual/{fileName} {
+      allow write: if isAdminOrOwner() && isImageUpload() && isReasonableSize();
+      allow read: if isAdminOrOwner();
+    }
+
+    match /events/manual/{fileName} {
       allow read: if true;
-      allow write: if isAdmin();
+      allow write: if false;
     }
 
-    match /events/{allPaths=**} {
+    match /uploads/raw/events/facebook/{fileName} {
+      allow read, write: if false;
+    }
+
+    match /events/facebook/{fileName} {
       allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    match /menu/{allPaths=**} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    match /specials/{allPaths=**} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
-    // User profile photos if needed later
-    match /users/{uid}/{allPaths=**} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
     }
 
     match /{allPaths=**} {
