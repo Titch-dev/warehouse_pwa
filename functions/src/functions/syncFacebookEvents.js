@@ -1,10 +1,8 @@
 const { onSchedule } = require("firebase-functions/v2/scheduler");
-const { onCall, HttpsError } = require("firebase-functions/v2/https");
 
 const { admin, db, storage } = require("../config/firebaseAdmin");
 const { FB_PAGE_ACCESS_TOKEN } = require("../config/env");
 const { requireRole } = require("../helpers/auth");
-const { writeAuditLog } = require("../helpers/audit");
 
 const fetch = global.fetch;
 const bucket = storage.bucket();
@@ -120,7 +118,7 @@ function slugify(text = "") {
   return stripEmojis(text)
     .toLowerCase()
     .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\u0300-\u036f/g, "")
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "")
@@ -132,6 +130,10 @@ function formatDateSlug(date) {
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const dd = String(date.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
+}
+
+function actorLabel(actor) {
+  return actor?.userData?.email || actor?.email || actor?.uid || "system";
 }
 
 /* ---------------- IMAGE UPLOAD (RAW ONLY) ---------------- */
@@ -260,29 +262,33 @@ async function syncFacebookEventsCore(triggeredBy = "system") {
 
       const ref = db.collection("events").doc(docId);
 
-      batch.set(ref, {
-        name: cleanedName,
-        slug,
-        description: cleanedDescription,
-        price: {
-          amount: finalPrices,
-          denom: null,
+      batch.set(
+        ref,
+        {
+          name: cleanedName,
+          slug,
+          description: cleanedDescription,
+          price: {
+            amount: finalPrices,
+            denom: null,
+          },
+          ticket_url: event.ticket_uri || null,
+          start_time: admin.firestore.Timestamp.fromDate(start),
+          end_time: end ? admin.firestore.Timestamp.fromDate(end) : null,
+          image: storageImagePath
+            ? {
+                alt: buildAltText(cleanedName),
+                type: "storage",
+                value: storageImagePath,
+              }
+            : null,
+          source: "facebook",
+          type: "one_off",
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedBy: triggeredBy,
         },
-        ticket_url: event.ticket_uri || null,
-        start_time: admin.firestore.Timestamp.fromDate(start),
-        end_time: end ? admin.firestore.Timestamp.fromDate(end) : null,
-        image: storageImagePath
-          ? {
-              alt: buildAltText(cleanedName),
-              type: "storage",
-              value: storageImagePath,
-            }
-          : null,
-        source: "facebook",
-        type: "one_off",
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        updatedBy: triggeredBy,
-      });
+        { merge: true }
+      );
 
       operationCount++;
 
@@ -338,6 +344,7 @@ async function syncFacebookEventsCore(triggeredBy = "system") {
     success: true,
     fetchedEvents: allEvents.length,
     writesCommitted,
+    triggeredBy,
   };
 }
 
@@ -355,56 +362,6 @@ exports.syncFacebookEvents = onSchedule(
   }
 );
 
-exports.syncFacebookEventsNow = onCall(
-  {
-    region: "us-central1",
-    secrets: [FB_PAGE_ACCESS_TOKEN],
-  },
-  async (request) => {
-    const actor = await requireRole(request, ["admin", "owner"]);
+/* ---------------- EXPORTS FOR REUSE ---------------- */
 
-    try {
-      const result = await syncFacebookEventsCore(actor.uid);
-
-      await writeAuditLog(
-        "facebook.sync.manual",
-        {
-          uid: actor.uid,
-          role: actor.role,
-          email: actor.userData?.email || null,
-        },
-        {
-          collection: "events",
-          source: "facebook",
-        },
-        result
-      );
-
-      return {
-        ok: true,
-        message: "Facebook events sync completed.",
-        ...result,
-      };
-    } catch (error) {
-      console.error("Manual Facebook sync failed:", error);
-
-      await writeAuditLog(
-        "facebook.sync.manual.failed",
-        {
-          uid: actor.uid,
-          role: actor.role,
-          email: actor.userData?.email || null,
-        },
-        {
-          collection: "events",
-          source: "facebook",
-        },
-        {
-          error: error?.message || "Unknown error",
-        }
-      );
-
-      throw new HttpsError("internal", "Facebook events sync failed.");
-    }
-  }
-);
+module.exports.syncFacebookEventsCore = syncFacebookEventsCore;

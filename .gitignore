@@ -48,10 +48,21 @@ public/assets
 firebase-debug.log
 
 # firebase
-.firebaserc
 firebase-service-account.json
+firebase-debug.log
+firebase-debug.*.log
 
 # package-lock.json
 package-lock.json
 functions/package-lock.json
 
+# emulator exports
+.firebase/emulator-data/
+firebase-export-1773259166441k2pU5j/
+firebase-export-1773260574964hA97xI/
+
+# debuglogs
+firestore-debug.log
+
+# node
+node_modules
