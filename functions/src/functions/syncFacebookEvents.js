@@ -118,7 +118,7 @@ function slugify(text = "") {
   return stripEmojis(text)
     .toLowerCase()
     .normalize("NFKD")
-    .replace(/\u0300-\u036f/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "")
@@ -352,7 +352,7 @@ async function syncFacebookEventsCore(triggeredBy = "system") {
 
 exports.syncFacebookEvents = onSchedule(
   {
-    region: "us-central1",
+    region: "europe-west1",
     schedule: "0 2 * * *",
     timeZone: "Africa/Johannesburg",
     secrets: [FB_PAGE_ACCESS_TOKEN],

@@ -8,7 +8,7 @@ import CmsSectionHeader from "@/components/dashboard/cms/cms-section-header";
 import CmsTable from "@/components/dashboard/cms/cms-table";
 import CmsRowActions from "@/components/dashboard/cms/cms-row-actions";
 import { warehouseDb } from "@/firebase/firebaseConfig";
-import { callable } from "@/lib/firebase/functions";
+import { callable, callableAfricaSouth1 } from "@/lib/firebase/functions";
 import { formatUpdatedMeta, getEventLifecycleStatus } from "@/lib/events/event-form-utils";
 
 export default function CmsEventsPage() {
@@ -23,7 +23,7 @@ export default function CmsEventsPage() {
 
     try {
       setSyncingFacebook(true);
-      const syncNow = callable("syncFacebookEventsNow");
+      const syncNow = callableAfricaSouth1("syncFacebookEventsNow");
       await syncNow({});
       alert("Facebook sync completed.");
     } catch (error) {
@@ -82,16 +82,6 @@ export default function CmsEventsPage() {
       alert(error?.message || "Failed to delete event.");
     } finally {
       setBusyId(null);
-    }
-  }
-
-  async function handleSyncFacebook() {
-    try {
-      const syncNow = callable("syncFacebookEventsNow");
-      await syncNow({});
-      alert("Facebook sync completed.");
-    } catch (error) {
-      alert(error?.message || "Facebook sync failed.");
     }
   }
 

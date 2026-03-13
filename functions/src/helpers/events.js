@@ -1,4 +1,4 @@
-const { admin, db } = require("../config/firebaseAdmin");
+const { db } = require("../config/firebaseAdmin");
 const { Timestamp } = require("firebase-admin/firestore");
 
 const VENUE_NAME = "Westville Warehouse bar and events venue";

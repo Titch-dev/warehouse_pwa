@@ -120,7 +120,14 @@ exports.deleteEvent = onCall({ region: REGION }, async (request) => {
       throw new Error("Weekly events cannot be permanently deleted.");
     }
 
+    const imagePath =
+      existing.image?.type === "storage" ? existing.image?.value || null : null;
+
     await ref.delete();
+
+    if (imagePath) {
+      await deleteStorageFileIfExists(imagePath);
+    }
 
     return {
       ok: true,
@@ -135,7 +142,7 @@ exports.deleteEvent = onCall({ region: REGION }, async (request) => {
 
 exports.syncFacebookEventsNow = onCall(
   {
-    region: REGION,
+    region: "africa-south1",
     secrets: [require("../config/env").FB_PAGE_ACCESS_TOKEN],
   },
   async (request) => {
