@@ -18,6 +18,10 @@ const NAV_ITEMS = [
     href: "/dashboard/cms/menu-items",
     label: "Menu Items",
   },
+  { 
+    href: "/dashboard/cms/menu-misc", 
+    label: "Menu Misc" 
+  },
   {
     href: "/dashboard/cms/specials",
     label: "Specials",

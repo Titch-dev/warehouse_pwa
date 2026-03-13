@@ -1,0 +1,87 @@
+.form {
+  display: grid;
+  gap: 1.6rem;
+  max-width: 96rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+}
+
+.checkboxRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.checkboxLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.section {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.removeWrap {
+  display: flex;
+  align-items: end;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.actions button,
+.sectionHeader button,
+.removeWrap button {
+  padding: 0.9rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  cursor: pointer;
+}
+
+.error {
+  color: #ff8b8b;
+}
+
+.meta {
+  opacity: 0.75;
+}
+
+@media (max-width: 860px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}

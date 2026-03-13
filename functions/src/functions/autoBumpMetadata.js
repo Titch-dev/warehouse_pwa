@@ -4,7 +4,7 @@ const { db, admin } = require("../config/firebaseAdmin");
 function createMetadataBumpTrigger(documentPath, versionField) {
   return onDocumentWritten(
     {
-      region: "us-central1",
+      region: "africa-south1",
       document: documentPath,
     },
     async () => {
