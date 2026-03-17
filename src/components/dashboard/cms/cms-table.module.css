@@ -22,7 +22,8 @@
   gap: 0.8rem;
 }
 
-.filters button {
+.filters button,
+.filters select {
   padding: 0.8rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 0.8rem;
@@ -33,7 +34,8 @@
 }
 
 .tableOuter {
-  overflow-x: auto;
+  overflow: auto;
+  max-height: 70vh;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.2rem;
   background: rgba(255, 255, 255, 0.03);
@@ -42,7 +44,8 @@
 .table {
   width: 100%;
   min-width: 72rem;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .table th,
@@ -53,9 +56,14 @@
 }
 
 .table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 1.3rem;
-  opacity: 0.8;
+  opacity: 0.95;
+  background: #161616;
+  backdrop-filter: blur(8px);
 }
 
 .table tbody tr + tr td {

@@ -8,7 +8,7 @@ import CmsSectionHeader from "@/components/dashboard/cms/cms-section-header";
 import CmsTable from "@/components/dashboard/cms/cms-table";
 import CmsRowActions from "@/components/dashboard/cms/cms-row-actions";
 import { warehouseDb } from "@/firebase/firebaseConfig";
-import { callable } from "@/lib/firebase/functions";
+import { callableAfricaSouth1 } from "@/lib/firebase/functions";
 import {
   DRINK_CATEGORIES,
   FOOD_CATEGORIES,
@@ -93,7 +93,7 @@ export default function CmsMenuItemsPage() {
 
     try {
       setBusyId(item.id);
-      const deleteMenuItem = callable("deleteMenuItem");
+      const deleteMenuItem = callableAfricaSouth1("deleteMenuItem");
       await deleteMenuItem({ menuId: item.id });
     } catch (error) {
       alert(error?.message || "Failed to delete menu item.");

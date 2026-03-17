@@ -8,7 +8,7 @@ import CmsSectionHeader from "@/components/dashboard/cms/cms-section-header";
 import CmsTable from "@/components/dashboard/cms/cms-table";
 import CmsRowActions from "@/components/dashboard/cms/cms-row-actions";
 import { warehouseDb } from "@/firebase/firebaseConfig";
-import { callable } from "@/lib/firebase/functions";
+import { callableAfricaSouth1 } from "@/lib/firebase/functions";
 import {
   formatOffers,
   formatUpdatedMeta,
@@ -55,7 +55,7 @@ export default function CmsSpecialsPage() {
 
     try {
       setBusyId(item.id);
-      const deleteSpecial = callable("deleteSpecial");
+      const deleteSpecial = callableAfricaSouth1("deleteSpecial");
       await deleteSpecial({ specialId: item.id });
     } catch (error) {
       alert(error?.message || "Failed to delete special.");

@@ -9,6 +9,8 @@ const adminEvents = require("./src/functions/adminEvents");
 const adminMenu = require("./src/functions/adminMenu");
 const adminMenuMisc = require("./src/functions/adminMenuMisc");
 const adminSpecials = require("./src/functions/adminSpecials");
+const adminGallery = require("./src/functions/adminGallery");
+
 
 exports.syncFacebookEvents = syncFacebook.syncFacebookEvents;
 
@@ -44,3 +46,7 @@ exports.deleteMenuMisc = adminMenuMisc.deleteMenuMisc;
 exports.createSpecial = adminSpecials.createSpecial;
 exports.updateSpecial = adminSpecials.updateSpecial;
 exports.deleteSpecial = adminSpecials.deleteSpecial;
+
+exports.createGalleryItem = adminGallery.createGalleryItem;
+exports.updateGalleryItem = adminGallery.updateGalleryItem;
+exports.deleteGalleryItem = adminGallery.deleteGalleryItem;
