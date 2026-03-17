@@ -10,7 +10,7 @@ const {
 } = require("../helpers/specials");
 const { deleteStorageFileIfExists } = require("../helpers/storage");
 
-const REGION = "us-central1";
+const REGION = "africa-south1";
 const ALLOWED_ROLES = ["admin", "owner"];
 
 exports.createSpecial = onCall({ region: REGION }, async (request) => {

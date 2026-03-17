@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { callable } from "@/lib/firebase/functions";
+import { callableAfricaSouth1 } from "@/lib/firebase/functions";
 import { uploadMenuRawImage } from "@/lib/menu/upload-menu-image";
 import {
   BURGER_BADGES,
@@ -107,13 +107,13 @@ export default function MenuItemForm({
       });
 
       if (isEdit) {
-        const updateMenuItem = callable("updateMenuItem");
+        const updateMenuItem = callableAfricaSouth1("updateMenuItem");
         await updateMenuItem({
           menuId,
           updates: payload,
         });
       } else {
-        const createMenuItem = callable("createMenuItem");
+        const createMenuItem = callableAfricaSouth1("createMenuItem");
         await createMenuItem(payload);
       }
 

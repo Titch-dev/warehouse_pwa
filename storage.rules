@@ -67,6 +67,16 @@ service firebase.storage {
       allow write: if false;
     }
 
+    match /uploads/raw/gallery/{fileName} {
+      allow write: if isAdminOrOwner() && isImageUpload() && isReasonableSize();
+      allow read: if isAdminOrOwner();
+    }
+
+    match /gallery/{fileName} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     match /{allPaths=**} {
       allow read, write: if false;
     }

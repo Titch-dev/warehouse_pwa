@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { callable } from "@/lib/firebase/functions";
+import { callableAfricaSouth1 } from "@/lib/firebase/functions";
 import { SPECIAL_TYPES, WEEK_DAYS } from "@/lib/specials/specials-config";
 import {
   buildInitialSpecialForm,
@@ -95,13 +95,13 @@ export default function SpecialsForm({
       });
 
       if (isEdit) {
-        const updateSpecial = callable("updateSpecial");
+        const updateSpecial = callableAfricaSouth1("updateSpecial");
         await updateSpecial({
           specialId,
           updates: payload,
         });
       } else {
-        const createSpecial = callable("createSpecial");
+        const createSpecial = callableAfricaSouth1("createSpecial");
         await createSpecial(payload);
       }
 
