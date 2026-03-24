@@ -6,6 +6,8 @@
     max-width: 100%;
     background-color: var(--color-grey-dark-1);
     overflow-x: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 /* tablet layout */

@@ -30,6 +30,10 @@ const NAV_ITEMS = [
     href: "/dashboard/cms/gallery",
     label: "Gallery",
   },
+  { 
+    href: "/dashboard/cms/users", 
+    label: "Users" 
+  }
 ];
 
 function isActivePath(pathname, href, exact = false) {

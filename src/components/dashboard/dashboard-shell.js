@@ -2,15 +2,16 @@
 
 import DashboardSidebar from "./dashboard-sidebar";
 import DashboardTopbar from "./dashboard-topbar";
+import styles from "./dashboard-shell.module.css"
 
 export default function DashboardShell({ authUser, userDoc, children }) {
   return (
-    <div className="dashboard-shell">
+    <div className={styles.shell}>
       <DashboardSidebar role={userDoc?.role} />
 
-      <div className="dashboard-shell__main">
+      <div>
         <DashboardTopbar authUser={authUser} userDoc={userDoc} />
-        <main className="dashboard-shell__content">{children}</main>
+        <main>{children}</main>
       </div>
     </div>
   );

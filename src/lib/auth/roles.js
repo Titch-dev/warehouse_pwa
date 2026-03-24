@@ -9,7 +9,7 @@ export const ROLE_HOME = {
   [USER_ROLES.CUSTOMER]: "/dashboard/membership",
   [USER_ROLES.STAFF]: "/dashboard/pool-live",
   [USER_ROLES.ADMIN]: "/dashboard/cms",
-  [USER_ROLES.OWNER]: "/dashboard/admin",
+  [USER_ROLES.OWNER]: "/dashboard/cms",
 };
 
 export const ROLE_NAV = {
@@ -24,7 +24,6 @@ export const ROLE_NAV = {
     { label: "CMS", href: "/dashboard/cms" },
   ],
   [USER_ROLES.OWNER]: [
-    { label: "Owner Admin", href: "/dashboard/admin" },
     { label: "CMS", href: "/dashboard/cms" },
     { label: "Pool Live", href: "/dashboard/pool-live" },
   ],

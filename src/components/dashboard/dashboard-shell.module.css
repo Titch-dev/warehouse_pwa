@@ -1,0 +1,7 @@
+.shell {
+    display: flex;
+    justify-content: center;
+    max-width: 102rem;
+    height: 100dvh;
+    background-image: url("/assets/contact/tiles.png");
+}

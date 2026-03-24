@@ -86,29 +86,17 @@ export default function GalleryForm({
         <span>Visible</span>
       </label>
 
-      <div className={styles.row}>
-        <label className={styles.field}>
-          <span>Order</span>
-          <input
-            type="number"
-            step="1"
-            value={values.order}
-            onChange={(e) => updateField("order", e.target.value)}
-            disabled={submitting}
-            placeholder="Optional"
-          />
-        </label>
-
-        <label className={styles.field}>
-          <span>Event</span>
-          <input
-            value={values.eventName}
-            onChange={(e) => updateField("eventName", e.target.value)}
-            disabled={submitting}
-            placeholder="Optional"
-          />
-        </label>
-      </div>
+      <label className={styles.field}>
+        <span>Order</span>
+        <input
+          type="number"
+          step="1"
+          value={values.order}
+          onChange={(e) => updateField("order", e.target.value)}
+          disabled={submitting}
+          placeholder="Optional"
+        />
+      </label>
 
       <label className={styles.field}>
         <span>Tags</span>
