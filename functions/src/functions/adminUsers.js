@@ -16,40 +16,30 @@ function requireOwner(request) {
   const suspended = request.auth.token?.suspended === true;
 
   if (suspended) {
-    throw new HttpsError("permission-denied", "Suspended users cannot perform this action.");
+    throw new HttpsError(
+      "permission-denied",
+      "Suspended users cannot perform this action."
+    );
   }
 
   if (role !== "owner") {
-    throw new HttpsError("permission-denied", "Only owners can perform this action.");
+    throw new HttpsError(
+      "permission-denied",
+      "Only owners can perform this action."
+    );
   }
 }
 
-async function writeAuditLog({
-  actorUid,
-  actorRole,
-  action,
-  targetUid,
-  before = null,
-  after = null,
-  metadata = {},
-}) {
-  await db.collection("auditLogs").add({
-    actorUid,
-    actorRole,
-    action,
-    targetUid,
-    before,
-    after,
-    metadata,
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
-  });
+function actorLabel(request) {
+  return request.auth?.token?.email || request.auth?.uid || "system";
 }
 
-exports.setUserRole = onCall(async (request) => {
+exports.setUserRole = onCall({ region: "us-central1" }, async (request) => {
   requireOwner(request);
 
   const actorUid = request.auth.uid;
   const actorRole = request.auth.token?.role || null;
+  const actorIdentifier = actorLabel(request);
 
   const { userId, role } = request.data || {};
 
@@ -83,13 +73,8 @@ exports.setUserRole = onCall(async (request) => {
   }
 
   const currentClaims = userRecord.customClaims || {};
-  const currentRole = currentClaims.role || userSnap.data()?.role || "customer";
-  const suspended = currentClaims.suspended === true || userSnap.data()?.suspended === true;
-
-  const before = {
-    role: currentRole,
-    suspended,
-  };
+  const suspended =
+    currentClaims.suspended === true || userSnap.data()?.suspended === true;
 
   const newClaims = {
     ...currentClaims,
@@ -101,37 +86,25 @@ exports.setUserRole = onCall(async (request) => {
 
   await userRef.update({
     role,
+    claimsRole: role,
     claimsUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-    updatedBy: actorUid,
-  });
-
-  const after = {
-    role,
-    suspended,
-  };
-
-  await writeAuditLog({
-    actorUid,
-    actorRole,
-    action: "setUserRole",
-    targetUid: userId,
-    before,
-    after,
+    updatedBy: actorIdentifier,
   });
 
   return {
     ok: true,
     userId,
     role,
+    updatedBy: actorIdentifier,
   };
 });
 
-exports.suspendUser = onCall(async (request) => {
+exports.suspendUser = onCall({ region: "us-central1" }, async (request) => {
   requireOwner(request);
 
   const actorUid = request.auth.uid;
-  const actorRole = request.auth.token?.role || null;
+  const actorIdentifier = actorLabel(request);
 
   const { userId, suspended } = request.data || {};
 
@@ -140,7 +113,10 @@ exports.suspendUser = onCall(async (request) => {
   }
 
   if (typeof suspended !== "boolean") {
-    throw new HttpsError("invalid-argument", "suspended must be true or false.");
+    throw new HttpsError(
+      "invalid-argument",
+      "suspended must be true or false."
+    );
   }
 
   if (userId === actorUid && suspended) {
@@ -163,13 +139,6 @@ exports.suspendUser = onCall(async (request) => {
 
   const currentClaims = userRecord.customClaims || {};
   const role = currentClaims.role || userSnap.data()?.role || "customer";
-  const currentSuspended =
-    currentClaims.suspended === true || userSnap.data()?.suspended === true;
-
-  const before = {
-    role,
-    suspended: currentSuspended,
-  };
 
   const newClaims = {
     ...currentClaims,
@@ -183,26 +152,13 @@ exports.suspendUser = onCall(async (request) => {
     suspended,
     claimsUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-    updatedBy: actorUid,
-  });
-
-  const after = {
-    role,
-    suspended,
-  };
-
-  await writeAuditLog({
-    actorUid,
-    actorRole,
-    action: "suspendUser",
-    targetUid: userId,
-    before,
-    after,
+    updatedBy: actorIdentifier,
   });
 
   return {
     ok: true,
     userId,
     suspended,
+    updatedBy: actorIdentifier,
   };
 });

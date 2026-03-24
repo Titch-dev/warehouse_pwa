@@ -1,0 +1,74 @@
+.panel {
+  display: grid;
+  gap: 1.6rem;
+  padding: 1.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.2rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.empty {
+  opacity: 0.8;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.closeButton,
+.actionButton {
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.section {
+  display: grid;
+  gap: 1rem;
+}
+
+.metaList {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.metaList div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.metaList dt {
+  font-size: 1.2rem;
+  opacity: 0.75;
+}
+
+.metaList dd {
+  margin: 0;
+  word-break: break-word;
+}
+
+.field {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.field select {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+}
+
+.error {
+  color: #ff8b8b;
+}

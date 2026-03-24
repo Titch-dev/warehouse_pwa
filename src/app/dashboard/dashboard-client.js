@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useCurrentUserDoc } from "@/hooks/useCurrentUserDoc";
 import { ROLE_HOME } from "@/lib/auth";
 
+import styles from './dashboard-page.module.css';
+
 export default function DashboardClient() {
   const router = useRouter();
   const { authUser, userDoc, loading, error } = useCurrentUserDoc();
@@ -36,7 +38,7 @@ export default function DashboardClient() {
   }
 
   return (
-    <main style={{ padding: 24 }}>
+    <main className={styles.main}>
       <p>Redirecting…</p>
     </main>
   );

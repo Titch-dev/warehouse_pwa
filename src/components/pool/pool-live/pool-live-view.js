@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { useActivePoolSessions } from "@/hooks/useActivePoolSessions";
-import { getMembershipStatusMeta } from "@/lib/pool/pool-live-status";
+import { getMembershipStatusMeta } from "@/lib/membership/membership-status";
 
 import PoolLiveFilters from "@/components/pool/pool-live/pool-live-filters";
 import PoolLiveSessionCard from "@/components/pool/pool-live/pool-live-session-card";
