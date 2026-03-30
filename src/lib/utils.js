@@ -110,11 +110,11 @@ export const formatEventTime = (start_time, end_time = null) => {
     const start = dayjs(start_time);
 
     if (!end_time) {
-      return `${start.format('h:mm a')} - late`;
+      return `${start.format('H:mm')} - late`;
     }
 
     const end = dayjs(end_time);
-    return `${start.format('h:mm a')} - ${end.format('h:mm a')}`;
+    return `${start.format('H:mm')} - ${end.format('H:mm')}`;
   };
 
 
@@ -163,7 +163,66 @@ export function applyEventFilters(events, filters) {
 }
 
   return out;
-} 
+}
+
+function getNextWeeklyOccurrence(baseDate, now = dayjs()) {
+  let next = dayjs(baseDate);
+
+  if (!next.isValid()) return null;
+
+  while (next.isBefore(now)) {
+    next = next.add(1, 'week');
+  }
+
+  return next;
+}
+
+export function expandWeeklyEvents(events = [], weeksAhead = 4) {
+  const now = dayjs();
+
+  return events.flatMap((event) => {
+    if (event?.type !== 'weekly') {
+      return [event];
+    }
+
+    const baseStart = dayjs(event.start_time);
+    if (!baseStart.isValid()) return [];
+
+    const nextStart = getNextWeeklyOccurrence(baseStart, now);
+    if (!nextStart) return [];
+
+    const baseEnd = event?.end_time ? dayjs(event.end_time) : null;
+    const durationMs =
+      baseEnd && baseEnd.isValid()
+        ? baseEnd.diff(baseStart)
+        : null;
+
+    const occurrences = [];
+
+    for (let i = 0; i < weeksAhead; i += 1) {
+      const occurrenceStart = nextStart.add(i, 'week');
+      const occurrenceDateKey = occurrenceStart.format('YYYY-MM-DD');
+
+      occurrences.push({
+        ...event,
+        id: `${event.id || event.slug || 'weekly'}__${occurrenceDateKey}`,
+        occurrenceKey: `${event.slug}__${occurrenceDateKey}`,
+        baseSlug: event.slug,
+        slug: `${event.slug}__${occurrenceDateKey}`,
+        start_time: occurrenceStart.toDate(),
+        end_time:
+          durationMs !== null
+            ? occurrenceStart.add(durationMs, 'millisecond').toDate()
+            : null,
+        originalStartTime: event.start_time,
+        originalEndTime: event.end_time || null,
+        isVirtualOccurrence: true,
+      });
+    }
+
+    return occurrences;
+  });
+}
 
 // Share event and share builder
 export function buildShareUrl(event) {

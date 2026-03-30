@@ -39,17 +39,22 @@ function EventSection() {
   
     return (
     <section className={styles.event}>
-        <h1 className={`${styles.event_title} ${rubikFont.className}`}>Up next...</h1>
-        <div className={styles.next_wrapper}>
-            <TornBackgroundSmSVG 
-                className={styles.next_background}
-            />
-            <div className={styles.next_event_wrapper}>
-                <TornBorder top mobile_view color={colors.greydark1}/>
-                <EventView event={nextEvent} loading={loading}/>
-                <TornBorder top={false} mobile_view color={colors.greydark1}/>
-            </div>
-        </div>
+        {nextEvent && (
+            <>
+                <h1 className={`${styles.event_title} ${rubikFont.className}`}>Up next...</h1>
+                <div className={styles.next_wrapper}>
+                    <TornBackgroundSmSVG 
+                        className={styles.next_background}
+                    />
+                    <div className={styles.next_event_wrapper}>
+                        <TornBorder top mobile_view color={colors.greydark1}/>
+                        <EventView event={nextEvent} loading={loading}/>
+                        <TornBorder top={false} mobile_view color={colors.greydark1}/>
+                    </div>
+                </div>
+            </>
+        )}
+        
         <h1 className={`${styles.event_title} ${rubikFont.className}`}>Weekly events ...</h1>
         <div className={styles.weekly_wrapper}>
             <TornBackgroundSmSVG

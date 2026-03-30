@@ -1,7 +1,12 @@
+'use client'
+
+import { useRef } from 'react';
+import useMediaQuery from '@/hooks/useMediaQuery';
 import ThumbnailSlot from './thumbnail-slot';
 import Chevron from '../assets/icons/chevron-svg';
 import styles from './thumbnail-strip.module.css';
 import PaintStrokeSVG from '../assets/patterns/paint-stroke-svg';
+import ScrollIndicator from '../ui/scroll-indicator';
 
 const MIN_SLOTS = 8;
 
@@ -16,6 +21,9 @@ function ThumbnailStrip({
   onSetPage,
   isDesktop
 }) {
+  const isMobile = useMediaQuery('(max-width: 1024px)');
+  const wrapperRef = useRef(null);
+
   if (!Array.isArray(imagesCollection)) return null;
 
     const slotCount = loading
@@ -28,7 +36,7 @@ function ThumbnailStrip({
 
   return (
     <div className={styles.strip_outer}>
-        <div className={styles.thumbnail_strip_wrapper}>
+        <div className={styles.thumbnail_strip_wrapper} ref={wrapperRef}>
             
             {isDesktop && 
                 <PaintStrokeSVG 
@@ -44,13 +52,13 @@ function ThumbnailStrip({
 
             {isDesktop && (
             <button
-            className={`${styles.chevron} ${styles.left}`}
-            onClick={() => {
-                if (!isFirstPage) onPrev();
-            }}
+                className={styles.btn}
+                onClick={() => {
+                    if (!isFirstPage) onPrev();
+                }}
             disabled={isFirstPage}
             >
-            <Chevron direction="left" />
+            <Chevron className={styles.btn_icon} direction="left" />
             </button>
             )}
             
@@ -70,16 +78,17 @@ function ThumbnailStrip({
             </section>
             {isDesktop && (
             <button
-                className={styles.chevron}
+                className={styles.btn}
                 onClick={() => {
                     if (!isLastPage) onNext();
                 }}
                 disabled={isLastPage}
                 >
-                <Chevron />
+                <Chevron className={styles.btn_icon} direction='right'/>
                 </button>
             )}
         </div>
+        {isMobile && <ScrollIndicator scrollRef={wrapperRef} />}
         <div className={styles.dots}>
             {Array.from({ length: totalPages }).map((_, i) => (
             <button

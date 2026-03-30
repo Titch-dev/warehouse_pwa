@@ -47,6 +47,7 @@
     padding: 2rem 4rem;
     font-size: 2rem;
     grid-row: 3 / span 3;
+    text-align: justify;
 }
 
 .socials_container {

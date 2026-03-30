@@ -20,12 +20,17 @@
   top: 0;
   z-index: 2;
   width: 100%;
-  text-align: center;
+  text-align: left;
   text-transform: capitalize;
   font-size: 2.3rem;
   padding: 0.7rem 1rem;
-  background-color: rgba(36, 36, 36, 0.95);
-  backdrop-filter: blur(2px);
+  background: linear-gradient(
+    to right,
+    rgba(36,36,36,.7) 0%, 
+    rgba(36,36,36,.7) 30%, 
+    rgba(36,36,36,.3) 50%, 
+    rgba(36,36,36,0) 100%
+  );
 }
 
 .imageWrap > * {
@@ -42,7 +47,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 5;
-    max-height: 25rem;
+    max-height: 20rem;
     overflow: hidden;
     justify-self: center;
 }
@@ -100,6 +105,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
 
   padding: .5rem 0 2rem;
   background-image: linear-gradient(
@@ -129,9 +135,10 @@
 }
 
 .offer_wrap {
+  position: relative;
   width: 100%;
   flex: 1 1 auto;
-  min-height: 30rem;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -140,29 +147,16 @@
   flex-direction: column;
   justify-content: flex-start;
 
-  font-size: 1.7rem;
-
-  overscroll-behavior: contain;
-}
-
-.offer_wrap::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
-
-.offer_wrap {
+  font-size: 2rem;
   touch-action: pan-y;
 }
-
-.sml_text { font-size: 1.6rem; }
-.lg_text { font-size: 2rem; }
 
 .offer_line {
   display: flex;
   width: 100%;
   padding: 0 2rem;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   gap: 1.5rem;
 }
 

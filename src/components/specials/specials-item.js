@@ -1,10 +1,16 @@
+'use client'
+
+import { useRef } from 'react';
 import dayjs from 'dayjs';
 import { rubikFont } from '@/lib/fonts';
 import SmartImage from '../ui/smart-image';
 
+import ScrollIndicator from '../ui/scroll-indicator';
 import styles from './specials-item.module.css';
 
 export default function SpecialsItem({ item }) {
+  const offerWrapRef = useRef(null);
+
   const today = dayjs().day();
   const tomorrow = (today + 1) % 7;
 
@@ -23,7 +29,7 @@ export default function SpecialsItem({ item }) {
   if (!dayIndexes.length) {
     label = 'Specials';
   } else if (isSequential) {
-    label = `${DAY_NAMES[dayIndexes[0]]} - ${DAY_NAMES[dayIndexes[dayIndexes.length - 1]]}`;
+    label = `${DAY_NAMES[dayIndexes[0]]}-${DAY_NAMES[dayIndexes[dayIndexes.length - 1]]}`;
   } else {
     const formattedDays = dayIndexes.map((d) => {
       if (d === today) return 'Today';
@@ -60,7 +66,7 @@ export default function SpecialsItem({ item }) {
       <div className={styles.content}>
         {!!title && <h4 className={`${styles.title} ${rubikFont.className}`}>{title}</h4>}
 
-        <div className={`${styles.offer_wrap} ${offers.length > 2 ? styles.sml_text : styles.lg_text}`}>
+        <div className={styles.offer_wrap} ref={offerWrapRef}>
           {offers.map((e, index) => {
             const hasPrice = typeof e?.price === 'number' && Number.isFinite(e.price);
             return (
@@ -74,6 +80,7 @@ export default function SpecialsItem({ item }) {
             );
           })}
         </div>
+        <ScrollIndicator scrollRef={offerWrapRef} />
       </div>
     </div>
   );

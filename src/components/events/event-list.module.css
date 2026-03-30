@@ -54,6 +54,7 @@
 }
 
 .group_list {
+  position: relative;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -61,6 +62,8 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  height:100%;
+  overflow-y: hidden;
 }
 
 .item_wrap {

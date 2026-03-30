@@ -11,7 +11,7 @@ export default function MenusPage() {
     <div className={styles.page_wrapper}>
       <div className={styles.header}>
         <div className={styles.header_content}>
-          <h1 className={rubikFont.className}>The best texan BBQ, craft beers & cocktails in Durban</h1>
+          <h1 className={rubikFont.className}>The best Texan BBQ, Craft Beers & Cocktails in Durban</h1>
         </div>
       </div>
       <div className={styles.border_container}>
