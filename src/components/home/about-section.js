@@ -1,5 +1,6 @@
 import TornBorder from "../assets/patterns/torn-border";
 import TornBackgroundSVG from "../assets/patterns/torn-background-svg";
+import SmartVideo from '@/components/ui/smart-video'; 
 
 import styles from './about-section.module.css';
 import { colors } from "@/theme/colors";
@@ -27,9 +28,7 @@ function AboutSection() {
             fun. Weeknights, weekends — we keep the good times rolling.</p>
         </div>
             <div className={styles.vid_container}>
-            <video autoPlay loop muted playsInline>
-                <source src="/assets/video/ww_about_vid.mp4" />
-            </video>
+                <SmartVideo src="/assets/video/ww_about_vid.mp4" />
             </div>
         </div>
         <TornBorder top={false} color={colors.greydark1}/>

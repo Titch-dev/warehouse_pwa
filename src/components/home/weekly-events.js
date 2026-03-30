@@ -7,8 +7,7 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import LoadingData from "../ui/loading-data";
 
 import styles from './weekly-events.module.css'
-import ChevronLeft from "../assets/icons/chevron-left-svg";
-import ChevronRight from "../assets/icons/chevron-right-svg";
+import Chevron from "../assets/icons/chevron-svg";
 
 import EventView from "./event-view";
 
@@ -61,13 +60,7 @@ function WeeklyEvents({ events, loading = false }) {
           onClick={() => emblaApi?.scrollPrev()}
           disabled={isFirstEvent}
         >
-            <ChevronLeft className={styles.btn_icon}>
-                <linearGradient id="Gradient" x2="0" y2="1">
-                    <stop className={styles.stop1} offset="0%" />
-                    <stop className={styles.stop2} offset="50%" />
-                    <stop className={styles.stop3} offset="100%" />
-                </linearGradient>
-            </ChevronLeft>
+            <Chevron className={styles.btn_icon} direction="left" />
         </button>
         <div className={styles.embla__viewport} ref={emblaRef}>
             <div className={styles.embla__container}>
@@ -86,13 +79,7 @@ function WeeklyEvents({ events, loading = false }) {
           onClick={() => emblaApi?.scrollNext()}
           disabled={isLastEvent}
         >
-            <ChevronRight className={styles.btn_icon}>
-                <linearGradient id="Gradient" x2="0" y2="1">
-                    <stop className={styles.stop1} offset="0%" />
-                    <stop className={styles.stop2} offset="50%" />
-                    <stop className={styles.stop3} offset="100%" />
-                </linearGradient>
-            </ChevronRight>
+            <Chevron className={styles.btn_icon} direction="right" />
         </button>
 
         {isMobile && 

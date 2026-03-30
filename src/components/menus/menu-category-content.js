@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import MenuCategoryItem from './menu-category-item';
 import ExtrasBlock from './extras-block';
 import styles from './menu-category-content.module.css';
 import { getLowestPrice } from '@/lib/menu/index';
-
+import ScrollIndicator from '../ui/scroll-indicator';
 import SpecialsCarousel from '../specials/specials-carousel';
+import TornBorder from '../assets/patterns/torn-border';
+import { colors } from '@/lib/colors';
 
 function NoticeBanner({ notice, onClose, isClosed }) {
   if (!notice) return null;
@@ -18,18 +20,20 @@ function NoticeBanner({ notice, onClose, isClosed }) {
       aria-live="polite"
     >
       <div className={styles.noticeInner}>
-        <div 
-            className={styles.notice_grid}
-            style={{'--col': notice.messages.length}}>
-            {notice.messages.map((message, idx) => (
-                <p key={idx} className={styles.noticeMessage}>{message}</p>
-            ))}
+        <div
+          className={styles.notice_grid}
+          style={{ '--col': notice.messages.length }}
+        >
+          {notice.messages.map((message, idx) => (
+            <p key={idx} className={styles.noticeMessage}>{message}</p>
+          ))}
         </div>
 
         <button className={styles.noticeClose} onClick={onClose} aria-label="Close notice">
           ×
         </button>
       </div>
+      <TornBorder top={false} color={colors.orange}/>
     </div>
   );
 }
@@ -44,10 +48,20 @@ export default function MenuCategoryContent({
 }) {
   const containerRef = useRef(null);
   const [noticeClosed, setNoticeClosed] = useState(false);
+  const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    if (containerRef.current) containerRef.current.scrollTop = 0;
+  useLayoutEffect(() => {
     setNoticeClosed(false);
+
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    containerRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }, [category]);
 
   const sortedData = useMemo(() => {
@@ -55,7 +69,9 @@ export default function MenuCategoryContent({
   }, [categoryData]);
 
   const matchingExtras = useMemo(() => {
-    return (extras || []).filter(doc => (Array.isArray(doc.appliesTo) ? doc.appliesTo : []).includes(category));
+    return (extras || []).filter(doc =>
+      (Array.isArray(doc.appliesTo) ? doc.appliesTo : []).includes(category)
+    );
   }, [extras, category]);
 
   const matchingNotice = useMemo(() => {
@@ -67,15 +83,21 @@ export default function MenuCategoryContent({
 
   if (category === 'specials') {
     return (
-      <main ref={containerRef} className={styles.specials_wrapper}>
+      <main 
+        ref={containerRef} 
+        className={styles.specials_wrapper} 
+        id="menu-content">
         {specialsError && <p>Error loading specials</p>}
-        <SpecialsCarousel items={specials}/>
+        <SpecialsCarousel items={specials} />
       </main>
     );
   }
 
   return (
-    <main ref={containerRef} className={styles.items_scroll_wrapper}>
+    <main 
+      ref={containerRef} 
+      className={styles.items_scroll_wrapper}
+      id="menu-content">
       <NoticeBanner
         notice={matchingNotice}
         isClosed={noticeClosed}
@@ -95,6 +117,8 @@ export default function MenuCategoryContent({
           ))}
         </section>
       )}
+
+      <ScrollIndicator scrollRef={containerRef} className={styles.list_indicator} />
     </main>
   );
 }

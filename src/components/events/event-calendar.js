@@ -81,10 +81,31 @@ const EventCalendar = ({ events = [], onEventSelect, selectedEvent }) => {
   const [selectedDate, setSelectedDate] = useState(today);
   const { open, close } = getOpeningHoursForToday(OPENING_TIMES);
 
+  const futureEventDates = events
+    .map((event) => dayjs(event.start_time))
+    .filter((date) => date.isValid() && (date.isAfter(today, 'day') || date.isSame(today, 'day')));
+
+  const lastEventDate =
+    futureEventDates.length > 0
+      ? futureEventDates.reduce((latest, current) =>
+          current.isAfter(latest) ? current : latest
+        )
+      : today;
+
+  const maxSelectableDate = lastEventDate.endOf('month');
+
   useEffect(() => {
     if (!selectedEvent) return;
     setSelectedDate(dayjs(selectedEvent.start_time));
   }, [selectedEvent]);
+
+  const shouldDisableMonth = (month) => {
+    return month.endOf('month').isBefore(today) || month.startOf('month').isAfter(maxSelectableDate);
+  };
+
+  const shouldDisableYear = (year) => {
+    return year.endOf('year').isBefore(today) || year.startOf('year').isAfter(maxSelectableDate);
+  };
 
   const getEventsForDate = (date) => {
     return events.filter((event) => dayjs(event.start_time).isSame(date, 'day'));
@@ -138,8 +159,6 @@ const EventCalendar = ({ events = [], onEventSelect, selectedEvent }) => {
           />
         </span>
       </Tooltip>
-
-      {hasEvent && <div className={styles.eventDot} />}
       </div>
     );
   };
@@ -156,6 +175,9 @@ const EventCalendar = ({ events = [], onEventSelect, selectedEvent }) => {
             className={styles.calendar}
             disablePast
             minDate={today}
+            maxDate={maxSelectableDate}
+            shouldDisableMonth={shouldDisableMonth}
+            shouldDisableYear={shouldDisableYear}
           />
         </LocalizationProvider>
       </ThemeProvider>

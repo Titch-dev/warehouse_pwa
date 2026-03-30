@@ -30,7 +30,8 @@ export default function MenuCategoryItem({ item }) {
             {item.brewery 
                 ? <p className={styles.item_brewery}>Brewery: {item.brewery}</p>
                 : ""}
-            <p>{item.description}</p>
+            {item.abv ? <p className={styles.item_abv}>ABV: {item.abv}%</p>: ''}
+            <p className={styles.description}>{item.description}</p>
             
         </div>
         <div className={styles.info_row}>
@@ -67,7 +68,6 @@ export default function MenuCategoryItem({ item }) {
                 )}
             </div>
         </div>
-        
     </li>
   )
 }

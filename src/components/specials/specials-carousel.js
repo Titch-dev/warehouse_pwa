@@ -7,8 +7,7 @@ import SpecialsItem from './specials-item';
 import { orderByClosestDay } from '@/lib/venue/index';
 
 import styles from './specials-carousel.module.css';
-import ChevronLeft from '@/components/assets/icons/chevron-left-svg';
-import ChevronRight from '../assets/icons/chevron-right-svg';
+import Chevron from '../assets/icons/chevron-svg';
 
 export default function SpecialsCarousel({ items = [] }) {
   const directionRef = useRef(1);
@@ -117,7 +116,7 @@ export default function SpecialsCarousel({ items = [] }) {
           }}
           disabled={isFirst}
         >
-          <ChevronLeft className={styles.btn_icon} />
+          <Chevron className={styles.btn_icon} direction='left' />
         </button>
 
         <div
@@ -143,13 +142,7 @@ export default function SpecialsCarousel({ items = [] }) {
           }}
           disabled={isLast}
         >
-          <ChevronRight className={styles.btn_icon}>
-            <linearGradient id="GradientSpecials" x2="0" y2="1">
-              <stop className={styles.stop1} offset="0%" />
-              <stop className={styles.stop2} offset="50%" />
-              <stop className={styles.stop3} offset="100%" />
-            </linearGradient>
-          </ChevronRight>
+          <Chevron className={styles.btn_icon} direction='right' />
         </button>
       </div>
 

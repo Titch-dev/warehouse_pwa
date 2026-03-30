@@ -21,9 +21,6 @@ export default async function OpeningHours() {
                 return (
                 <span 
                   key={day}
-                  className={
-                    `${todayIndex === day? styles.highlight : ''}`
-                  }
                 >
                   {dayjs().day(day).format('ddd')}
                 </span>
@@ -31,10 +28,8 @@ export default async function OpeningHours() {
               })}
             </div>
             <p 
-              className={
-                `${styles.times} ${group.days.includes(todayIndex) ? styles.highlight : ''}`
-              }>
-                {group.open} - {group.close}
+              className={styles.times}>
+                {group.open}-{group.close}
             </p>
         </div>
         )

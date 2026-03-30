@@ -8,6 +8,7 @@ import EventListItem from './event-list-item';
 import { rubikFont } from '@/theme/fonts';
 import { applyEventFilters } from '@/lib/events/index';
 import styles from './event-list.module.css';
+import ScrollIndicator from '../ui/scroll-indicator';
 
 const EventList = ({
   events = [],
@@ -17,6 +18,7 @@ const EventList = ({
   headerRef,
 }) => {
   const listRef = useRef(null);
+  const scrollIndicatorRef = useRef(null);
   const itemRefs = useRef(new Map());
 
   const filteredEvents = useMemo(() => {
@@ -101,10 +103,10 @@ const EventList = ({
                   {block.label}
                 </div>
 
-                <ul className={styles.group_list}>
+                <ul ref={scrollIndicatorRef} className={styles.group_list}>
                   {block.items.map((event) => (
                     <li
-                      key={event.id || event.slug}
+                      key={event.occurrenceKey || event.id || event.slug}
                       ref={(node) => {
                         if (!node) return;
                         itemRefs.current.set(event.slug, node);
@@ -119,6 +121,7 @@ const EventList = ({
                       />
                     </li>
                   ))}
+                  <ScrollIndicator scrollRef={scrollIndicatorRef}/>
                 </ul>
               </div>
             </li>

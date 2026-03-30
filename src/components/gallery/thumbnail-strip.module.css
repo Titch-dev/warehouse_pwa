@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-.chevron {
+.btn {
   display: none;
   background: transparent;
   border: none;
@@ -12,8 +12,8 @@
   z-index: 10; 
 }
 
-.chevron:disabled {
-  opacity: 0.3;
+.btn:disabled {
+  opacity: 0;
   cursor: default;
 }
 
@@ -57,7 +57,6 @@
     display: none;
 }
 
-
 @media (min-width: 1024px) {
 
   .strip_outer {
@@ -76,31 +75,30 @@
     z-index: 0;
     pointer-events: none;
     opacity: 0.35;
+    fill: url(#Gradient2);
 
     will-change: transform;
-    fill: url(#Gradient2);
 
     display: block;
   }
+  
+  .stop1 {stop-color: var(--color-pink);}
+  .stop2 {stop-color: var(--color-orange);}
+  .stop3 {stop-color: var(--color-yellow);}
 
-  .stop1 {
-      stop-color: var(--color-pink);
-  }
-
-  .stop2 {
-      stop-color: var(--color-orange);
-  }
-
-  .stop3 {
-      stop-color: var(--color-yellow);
-  }
-
-  .chevron {
+  .btn {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  .btn_icon{
+    height: 4rem;
+    width: 4rem;
+  }
+
+
 
   .thumbnail_strip_wrapper {
     max-height: 50dvh;

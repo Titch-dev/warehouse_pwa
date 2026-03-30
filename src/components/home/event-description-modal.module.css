@@ -211,6 +211,7 @@
     padding: 0 3rem 3rem;
     line-height: 1.6;
     white-space: pre-line;
+    text-align: justify;
 }
 .button_wrapper{
     padding-bottom: 2rem;

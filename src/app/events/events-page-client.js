@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { useFirestoreCollection } from '@/hooks/useFirestoreCollection';
-import { sortEvents } from '@/lib/events/index'
+import { sortEvents, expandWeeklyEvents } from '@/lib/events/index'
 
 import EventList from '@/components/events/event-list';
 import EventsHeader from '@/components/events/events-header';
@@ -21,7 +21,12 @@ export default function EventsPageClient() {
   const [activePanel, setActivePanel] = useState(null);
 
   const { data: events } = useFirestoreCollection('events', 'events');
-  const sortedEvents = useMemo(() => sortEvents(events || []), [events]);
+  
+  const renderedEvents = useMemo(() => {
+    return expandWeeklyEvents(events || [], 4);
+  }, [events]);
+
+  const sortedEvents = useMemo(() => sortEvents(renderedEvents), [renderedEvents]);
 
   useEffect(() => setMounted(true), []);
 
@@ -62,7 +67,11 @@ export default function EventsPageClient() {
         <section className={styles.event_list_wrapper}>
           <EventsHeader
             filters={filters}
-            onChangeFilters={setFilters}
+            onChangeFilters={(nextFilters) => {
+              setSelectedEvent(null);
+              setFilters(nextFilters);
+              router.replace('/events', { scroll: false });
+            }}
             activePanel={activePanel}
             setActivePanel={setActivePanel}
             events={sortedEvents}

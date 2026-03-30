@@ -1,6 +1,7 @@
 .specials_wrapper {
     display: flex;
     justify-content: center;
+    scroll-margin-top: var(--nav-height);
     align-items: center;
     padding: 3rem 0;
     
@@ -8,10 +9,12 @@
 
 .items_scroll_wrapper {
     position: relative;
+    overflow-anchor: none;
     height: auto;
     overflow: visible;
     min-width: 100%;
     scrollbar-width: none;
+    scroll-margin-top: var(--nav-height);
     -ms-overflow-style: none;
     background: linear-gradient(
         -100deg,
@@ -28,13 +31,11 @@
 }
 
 .notice {
-  position: sticky;
   top: 0;
   z-index: 5;
   width: 100%;
-  overflow: hidden;
   background: var(--color-orange);
-  opacity: .8;
+  opacity: 1;
 }
 
 .noticeInner {
@@ -42,7 +43,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.2rem;
-  padding: 3rem 1.6rem 2rem;
+  padding: 3rem 1.6rem 0;
 }
 
 .notice_grid {
@@ -73,17 +74,20 @@
 .noticeOpen {
   max-height: 20rem;
   transform: translateY(0);
-  transition: max-height 300ms ease, transform 250ms ease;
+  opacity: 1;
+  transition: max-height 300ms ease, transform 250ms ease, opacity 200ms ease 300ms;
 }
 
 .noticeClosed {
   max-height: 0; 
-  transform: translateY(0rem);
-  transition: max-height 300ms ease, transform 250ms ease;
+  transform: translateY(0);
+  transition: max-height 300ms ease, transform 250ms ease, opacity ease 300ms;
+  opacity: 0;
   border-bottom: none;
 }
 
 .category_item_list {
+    position: relative;
     width: 100%;
 }
 
@@ -116,8 +120,12 @@
 
 @media(min-width:1024px) {
 
+    .noticeInner {
+        padding: 3rem 1.6rem 2rem;
+    }
+
     .items_scroll_wrapper {
-        height: 60dvh;
+        height: auto;
         overflow-y: scroll;
     }
 
@@ -133,4 +141,5 @@
     .item_dip_name span {
         padding: 0 1rem;
     }
+
 }

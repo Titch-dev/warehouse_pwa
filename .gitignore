@@ -57,6 +57,10 @@ firebase-debug.*.log
 package-lock.json
 functions/package-lock.json
 
+# firebase sensitive json
+firebase-service-account.json
+*.service-account.json
+
 # emulator exports
 .firebase/emulator-data/
 firebase-export-1773259166441k2pU5j/

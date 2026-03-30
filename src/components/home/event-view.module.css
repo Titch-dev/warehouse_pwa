@@ -118,6 +118,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: pre-line;
+    text-align: justify;
 }
 
 .see_more {
