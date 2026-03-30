@@ -9,6 +9,10 @@
     width: 100%;
 }
 
+.container:last-child {
+    border-bottom: none;
+}
+
 .item_container:last-child {
     border-bottom: none;
 }
@@ -43,13 +47,14 @@
     text-transform: capitalize;
 }
 
-
-.item_brewery{
+.item_abv, .item_brewery {
     color: burlywood;
+    font-size: 1.7rem;
 }
 
-.content p {
+.description {
     font-size: 2rem;
+    text-align: justify;
     opacity: .8;
 }
 
@@ -102,10 +107,10 @@
 }
 
 
-.item_table th:first-child,
-.item_table th:last-child,
+.item_table th,
 .item_table td:last-child {
     border-right: none;
+    border-left: none;
 }
 
 .item_table th:first-child{
@@ -133,8 +138,8 @@
         flex: 1 1 auto;
         min-width: 0;
         max-width: none;
-        text-align: left;
         align-items: flex-start;
+        text-align: start;
     }
 
     .info_row {

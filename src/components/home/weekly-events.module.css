@@ -82,7 +82,6 @@
         position: relative;
         height: 4rem;
         width: 4rem;
-        fill: url(#Gradient1);
         transition: transform ease-in-out .2s;
         transform: scale(1);
         filter: drop-shadow(0 0 1rem black);
@@ -96,21 +95,9 @@
         top: .1rem;
     }
 
-    .stop1 {
-        stop-color: var(--color-pink);
-    }
-
-    .stop2 {
-        stop-color: var(--color-orange);
-    }
-
-    .stop3 {
-        stop-color: var(--color-yellow);
-    }
-
     .btn:disabled {
         opacity: 0;
-        cursor: not-allowed;
+        cursor: default;
     }
 
     .btn:disabled .btn_icon {

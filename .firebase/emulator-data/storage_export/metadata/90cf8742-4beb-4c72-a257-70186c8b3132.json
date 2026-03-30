@@ -1,0 +1,20 @@
+{
+  "name": "events/facebook/fb_3796568117316812.webp",
+  "bucket": "warehouse-37025.firebasestorage.app",
+  "metageneration": 2,
+  "generation": 1773304928151,
+  "contentType": "image/webp",
+  "storageClass": "STANDARD",
+  "downloadTokens": [
+    "b1a853f2-dc84-4098-9921-47886bf6ea3a"
+  ],
+  "etag": "Gw1HqtHfEoUJe9Q/4++ffrxW44U",
+  "customMetadata": {
+    "optimized": "true"
+  },
+  "timeCreated": "2026-03-12T08:42:08.151Z",
+  "updated": "2026-03-12T10:21:29.650Z",
+  "size": 91510,
+  "md5Hash": "HaCNfPad+Mz7Ohbn7LAUtg==",
+  "crc32c": "2458122573"
+}

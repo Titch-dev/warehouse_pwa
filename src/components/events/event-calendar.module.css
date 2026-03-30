@@ -44,18 +44,6 @@
   background-color: rgba(250, 128, 87, 0.8) !important;
 }
 
-.eventDot {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  width: 8px;
-  height: 8px;
-  background-color: var(--color-orange);
-  border-radius: 50%;
-  border: 0.1rem solid var(--color-grey-light-3);
-  pointer-events: none;
-}
-
 .info_container {
   display: flex;
   flex-wrap: wrap;
