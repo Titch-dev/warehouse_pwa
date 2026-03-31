@@ -8,7 +8,7 @@ import { getLowestPrice } from '@/lib/menu/index';
 import ScrollIndicator from '../ui/scroll-indicator';
 import SpecialsCarousel from '../specials/specials-carousel';
 import TornBorder from '../assets/patterns/torn-border';
-import { colors } from '@/lib/colors';
+import { colors } from '@/theme/colors';
 
 function NoticeBanner({ notice, onClose, isClosed }) {
   if (!notice) return null;

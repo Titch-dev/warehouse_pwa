@@ -26,6 +26,14 @@ export const BURGER_BADGES = [
   "vegetarian",
 ];
 
+export function getUniqueCategories(menuItems) {
+  const categoriesSet = new Set()
+  menuItems.forEach(item => {
+    if (item.category) categoriesSet.add(item.category)
+  })
+  return Array.from(categoriesSet)
+}
+
 export function getCategoriesForMenuType(menuType) {
   if (menuType === MENU_TYPES.FOOD) return FOOD_CATEGORIES;
   if (menuType === MENU_TYPES.DRINK) return DRINK_CATEGORIES;

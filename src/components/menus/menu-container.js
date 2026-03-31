@@ -2,8 +2,8 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import { getUniqueCategories } from '@/lib/utils';
-import { rubikFont } from '@/lib/fonts';
+import { getUniqueCategories } from '@/lib/menu/menu-config';
+import { rubikFont } from '@/theme/fonts';
 
 import MenuCategoryContent from './menu-category-content';
 import Chevron from '../assets/icons/chevron-svg';

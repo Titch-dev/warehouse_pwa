@@ -65,9 +65,14 @@ firebase-service-account.json
 .firebase/emulator-data/
 firebase-export-1773259166441k2pU5j/
 firebase-export-1773260574964hA97xI/
+firebase-export-*
+.firebase/
 
-# debuglogs
+# Logs
+*.log
 firestore-debug.log
+firebase-debug.log
+firebase-debug.*.log
 
 # node
 node_modules

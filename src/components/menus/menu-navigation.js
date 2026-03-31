@@ -10,8 +10,6 @@ import styles from './menu-navigation.module.css';
 import MenuContainer from './menu-container';
 import LoadingData from '../ui/loading-data';
 
-import styles from './menu-navigation.module.css';
-
 const menus = ['food', 'drinks'];
 
 export default function MenuNavigation() {

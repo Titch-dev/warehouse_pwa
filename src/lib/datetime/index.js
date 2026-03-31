@@ -80,12 +80,12 @@ export const formatEventDate = (dateString) => {
 };
 
 export const formatEventTime = (start_time, end_time = null) => {
-  const start = dayjs(start_time);
+    const start = dayjs(start_time);
 
-  if (!end_time) {
-    return `${start.format('h:mm a')} - late`;
-  }
+    if (!end_time) {
+      return `${start.format('H:mm')} - late`;
+    }
 
-  const end = dayjs(end_time);
-  return `${start.format('h:mm a')} - ${end.format('h:mm a')}`;
+    const end = dayjs(end_time);
+    return `${start.format('H:mm')} - ${end.format('H:mm')}`;
 };
